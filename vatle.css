@@ -1,0 +1,555 @@
+@charset "UTF-8";
+
+
+/* GLOBAL SETTINGS  * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+html, body {
+	border: 0;
+	margin: 0;
+	padding: 0;
+
+	/*For sticky footer: */
+	height: 100%;
+}
+
+body {
+	font: 100%/1.25 Georgia, "Times New Roman", Serif;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 1100px;
+	min-height: 500px;
+	min-width: 900px;
+
+	/*For sticky footer: */
+	position: relative;	
+}
+
+/* So firefox don't focus links with dotted-border on "back-one-page". */
+:focus {outline:none;}
+::-moz-focus-inner {border:0;}
+
+
+/* COMMON FORMATTING  * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+p, ul, ol {
+	margin: 0;
+	padding: 0 0 1.25em 0;
+}
+
+ul, ol {
+	padding: 0 0 1.25em 2.5em;
+}
+
+blockquote {
+	margin: 1.25em;
+	padding: 1.25em 1.25em 0 1.25em;
+}
+
+small {
+	font-size: 0.85em;
+}
+
+img {
+	border: 0;
+}
+
+
+/* LINKS  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+a,
+a:link,
+a:visited,
+a:hover {
+	text-decoration: none;
+	color: #555555;
+}
+
+
+/* GLOBAL CLASSES * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+.center {
+	text-align: center;
+}
+
+.floatRight {
+	float: right
+}
+
+.floatLeft {
+	float: left;
+}
+
+
+/* MAIN MENU  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+header#logoAndMainMenu {
+	width: 100%;
+	border-bottom: thin solid black;
+	display: inline-block;
+	margin-top: 10px;
+}
+
+header#logoAndMainMenu a {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: -16px;
+	width: 183px;
+}
+
+/* Logo: */
+header#logoAndMainMenu a img {
+	height: 45px;
+}
+
+
+nav#mainMenu section a {
+	position: relative;
+	display: inline-block;
+	text-indent: -9999px;
+	margin-left: 0.6em;
+	margin-right: 0.6em;
+	bottom: 5px;
+}
+
+nav#mainMenu section a.news {
+	background: url(Images/news.gif) no-repeat;
+	height: 19px; width: 60px;
+}
+
+nav#mainMenu section a.news span {
+	background: url(Images/news.gif) no-repeat;
+	position: absolute;
+	top: 0; left: 0; bottom: 0; right: 0;	
+	background-position: 0px -19px;
+	opacity: 0;	filter: alpha(opacity=0);
+}
+
+nav#mainMenu section a.collections {
+	background: url(Images/collections.gif) no-repeat;
+	height: 19px; width: 139px;
+}
+
+nav#mainMenu section a.collections span {
+	background: url(Images/collections.gif) no-repeat;
+	position: absolute;
+	top: 0; left: 0; bottom: 0; right: 0;	
+	background-position: 0px -19px;
+	opacity: 0;	filter: alpha(opacity=0);
+}
+
+nav#mainMenu section a.shop {
+	background: url(Images/shop.gif) no-repeat;
+	height: 19px; width: 55px;
+}
+
+nav#mainMenu section a.shop span {
+	background: url(Images/shop.gif) no-repeat;
+	position: absolute;
+	top: 0; left: 0; bottom: 0; right: 0;	
+	background-position: 0px -19px;
+	opacity: 0;	filter: alpha(opacity=0);
+}
+
+nav#mainMenu section a.press {
+	background: url(Images/press.gif) no-repeat;
+	height: 19px; width: 63px;
+}
+
+nav#mainMenu section a.press span {
+	background: url(Images/press.gif) no-repeat;
+	position: absolute;
+	top: 0; left: 0; bottom: 0; right: 0;	
+	background-position: 0px -19px;
+	opacity: 0;	filter: alpha(opacity=0);
+}
+
+nav#mainMenu section a.contact {
+	background: url(Images/contact.gif) no-repeat;
+	height: 19px; width: 95px;
+}
+
+nav#mainMenu section a.contact span {
+	background: url(Images/contact.gif) no-repeat;
+	position: absolute;
+	top: 0; left: 0; bottom: 0; right: 0;	
+	background-position: 0px -19px;
+	opacity: 0;	
+	filter: alpha(opacity=0);
+}
+
+nav#mainMenu section a.about {
+	background: url(Images/about.gif) no-repeat;
+	height: 19px; width: 71px;
+}
+
+nav#mainMenu section a.about span {
+	background: url(Images/about.gif) no-repeat;
+	position: absolute;
+	top: 0; left: 0; bottom: 0; right: 0;	
+	background-position: 0px -19px;
+	opacity: 0;	filter: alpha(opacity=0);
+}
+
+nav#mainMenu section a:hover span {
+	opacity: 1;
+	filter: alpha(opacity=100);
+}
+
+
+/* HEADER-MIDDLE WRAP * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+.text {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 400px;
+}
+
+.text h1 {
+	text-align: center;
+}
+
+.text img {
+	width: 200px;
+	float: right;
+}
+
+#startPic {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 4px;
+}
+
+section#wrap {
+	min-height: 100%;
+	height: auto !important;
+	height: 100%;
+	margin: 0 auto -45px; /* -:footer height */
+}
+
+
+/* FOOTER * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+footer, section#footerPush {
+	display: block;
+	height: 41px;
+}
+
+footer {
+	display: block;
+	width: 100%;
+	border-top: thin solid black;
+	clear: both;
+	overflow: auto;
+}
+
+footer section {
+	margin-top: 7px;
+	padding-right: 0.6em;
+}
+
+span.followVatle {
+	display: inline-block;
+	position: relative;
+	text-indent: -9999px;
+	height: 19px;
+	width: 152px;
+	background: url(Images/followVatle.gif) no-repeat;
+	margin-right: 4px;
+}
+
+.blog, .facebook, .twitter {
+	display: inline-block;
+	position: relative;
+	text-indent: -9999px;
+	height: 25px; width: 25px;
+}
+
+.blog {
+	background:url(Images/blog.gif) no-repeat;
+}
+
+.facebook {
+	background:url(Images/facebook.gif) no-repeat;
+}
+
+.twitter {
+	background:url(Images/twitter.gif) no-repeat;
+}
+
+.blog span {
+	background:url(Images/blog.gif) no-repeat;
+}
+
+.facebook span {
+	background:url(Images/facebook.gif) no-repeat;
+}
+
+.twitter span {
+	background:url(Images/twitter.gif) no-repeat;
+}
+
+.blog span, .facebook span, .twitter span {
+	position: absolute;
+	top: 0; left: 0; bottom: 0; right: 0;	
+	background-position: 0px -25px;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+
+.blog:hover span, .facebook:hover span, .twitter:hover span {
+	opacity: 1; filter: alpha(opacity=100);
+}
+
+
+/* COLLECTIONS NAVIGATION * * * * * * * * * * * * * * * * * * * * * * * * */
+
+section#collectionsHeight {
+	width: 1013px;
+	min-height: 370px;
+	height: 75%;
+	display: block;
+}
+
+nav#collections {
+	height: 360px;
+	width: 1013px;
+
+	position: absolute;
+
+	left: 50%;
+	top: 50%;
+
+	margin-left: -501px;
+	margin-top: -180px;
+}
+
+nav#collections a {
+	display: inline-block;
+	padding: 5px;
+	position: relative;
+	text-indent: -9999px;
+	height: 360px;
+	width: 240px;
+}
+
+nav#collections a span {
+	position: absolute;
+	top: 0; left: 0; bottom: 0; right: 0;
+	opacity: 0; filter: alpha(opacity=0);
+	-webkit-transition: opacity 0.7s;
+	-moz-transition: opacity 0.7s;
+	-o-transition: opacity 0.7s;
+}
+
+nav#collections a:hover span {
+	opacity: 1; filter: alpha(opacity=100);
+}
+
+a.ss2011 {
+	background: url(Images/2011SS/2011SS.jpg) no-repeat;
+}
+
+a.aw2010 {
+	background: url(Images/2010AW/2010AW.jpg) no-repeat;
+}
+
+a.ss2010 {
+	background: url(Images/2010SS/2010SS.jpg) no-repeat;
+}
+
+a.ss2009 {
+	background: url(Images/2009SS/2009SS.jpg) no-repeat;
+}
+
+a.ss2011 span {
+	background: url(Images/2011SS/2011SSHover.jpg) no-repeat;
+}
+
+a.aw2010 span {
+	background: url(Images/2010AW/2010AWHover.jpg) no-repeat;
+}
+
+a.ss2010 span {
+	background: url(Images/2010SS/2010SSHover.jpg) no-repeat;
+}
+
+a.ss2009 span {
+	background: url(Images/2009SS/2009SSHover.jpg) no-repeat;
+}
+
+
+/* Collections  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+.lookbook p, .mood p, .lookbook form, .mood form {
+	clear: right;
+}
+
+.lookbook a:hover, .mood a:hover, .text a:hover {
+	text-decoration: underline;
+}
+
+
+/* Lookbook * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+.lookbook {
+	display: block;
+	margin-top: 10px;
+	height: 75%; width: 820px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.lookbook #thumbnails {
+	float: left;
+	width: 410px;
+}
+
+.lookbook #thumbnails a {
+	display: inline-block;
+	height: 92px; width: 61px;
+	margin-bottom: 8.6px;
+	margin-right: 3px;
+	opacity: 0.6; filter: alpha(opacity=60);
+	text-indent: -9999px;
+}
+
+a#ss09-1 { background: url(Images/2009SS/Lookbook/t1.jpg) no-repeat; }
+a#ss09-2 { background: url(Images/2009SS/Lookbook/t2.jpg) no-repeat; }
+a#ss09-3 { background: url(Images/2009SS/Lookbook/t3.jpg) no-repeat; }
+a#ss09-4 { background: url(Images/2009SS/Lookbook/t4.jpg) no-repeat; }
+a#ss09-5 { background: url(Images/2009SS/Lookbook/t5.jpg) no-repeat; }
+a#ss09-6 { background: url(Images/2009SS/Lookbook/t6.jpg) no-repeat; }
+a#ss09-7 { background: url(Images/2009SS/Lookbook/t7.jpg) no-repeat; }
+a#ss09-8 { background: url(Images/2009SS/Lookbook/t8.jpg) no-repeat; }
+a#ss09-9 { background: url(Images/2009SS/Lookbook/t9.jpg) no-repeat; }
+a#ss09-10 { background: url(Images/2009SS/Lookbook/t10.jpg) no-repeat; }
+a#ss09-11 { background: url(Images/2009SS/Lookbook/t11.jpg) no-repeat; }
+a#ss09-12 { background: url(Images/2009SS/Lookbook/t12.jpg) no-repeat; }
+a#ss09-13 { background: url(Images/2009SS/Lookbook/t13.jpg) no-repeat; }
+a#ss09-14 { background: url(Images/2009SS/Lookbook/t14.jpg) no-repeat; }
+a#ss09-15 { background: url(Images/2009SS/Lookbook/t15.jpg) no-repeat; }
+a#ss09-16 { background: url(Images/2009SS/Lookbook/t16.jpg) no-repeat; }
+a#ss09-17 { background: url(Images/2009SS/Lookbook/t17.jpg) no-repeat; }
+a#ss09-18 { background: url(Images/2009SS/Lookbook/t18.jpg) no-repeat; }
+a#ss09-19 { background: url(Images/2009SS/Lookbook/t19.jpg) no-repeat; }
+a#ss09-20 { background: url(Images/2009SS/Lookbook/t20.jpg) no-repeat; }
+a#ss09-21 { background: url(Images/2009SS/Lookbook/t21.jpg) no-repeat; }
+a#ss09-22 { background: url(Images/2009SS/Lookbook/t22.jpg) no-repeat; }
+a#ss09-23 { background: url(Images/2009SS/Lookbook/t23.jpg) no-repeat; }
+a#ss09-24 { background: url(Images/2009SS/Lookbook/t24.jpg) no-repeat; }
+
+a#ss09-mood1 { background: url(Images/2009SS/Mood/t1.jpg) no-repeat; }
+a#ss09-mood2 { background: url(Images/2009SS/Mood/t2.jpg) no-repeat; }
+a#ss09-mood3 { background: url(Images/2009SS/Mood/t3.jpg) no-repeat; }
+a#ss09-mood4 { background: url(Images/2009SS/Mood/t4.jpg) no-repeat; }
+a#ss09-mood5 { background: url(Images/2009SS/Mood/t5.jpg) no-repeat; }
+a#ss09-mood6 { background: url(Images/2009SS/Mood/t6.jpg) no-repeat; }
+a#ss09-mood7 { background: url(Images/2009SS/Mood/t7.jpg) no-repeat; }
+a#ss09-mood8 { background: url(Images/2009SS/Mood/t8.jpg) no-repeat; }
+
+a#ss10-1 { background: url(Images/2010SS/Lookbook/t1.jpg) no-repeat; }
+a#ss10-2 { background: url(Images/2010SS/Lookbook/t2.jpg) no-repeat; }
+a#ss10-3 { background: url(Images/2010SS/Lookbook/t3.jpg) no-repeat; }
+a#ss10-4 { background: url(Images/2010SS/Lookbook/t4.jpg) no-repeat; }
+a#ss10-5 { background: url(Images/2010SS/Lookbook/t5.jpg) no-repeat; }
+a#ss10-6 { background: url(Images/2010SS/Lookbook/t6.jpg) no-repeat; }
+a#ss10-7 { background: url(Images/2010SS/Lookbook/t7.jpg) no-repeat; }
+a#ss10-8 { background: url(Images/2010SS/Lookbook/t8.jpg) no-repeat; }
+a#ss10-9 { background: url(Images/2010SS/Lookbook/t9.jpg) no-repeat; }
+a#ss10-10 { background: url(Images/2010SS/Lookbook/t10.jpg) no-repeat; }
+a#ss10-11 { background: url(Images/2010SS/Lookbook/t11.jpg) no-repeat; }
+a#ss10-12 { background: url(Images/2010SS/Lookbook/t12.jpg) no-repeat; }
+a#ss10-13 { background: url(Images/2010SS/Lookbook/t13.jpg) no-repeat; }
+a#ss10-14 { background: url(Images/2010SS/Lookbook/t14.jpg) no-repeat; }
+a#ss10-15 { background: url(Images/2010SS/Lookbook/t15.jpg) no-repeat; }
+a#ss10-16 { background: url(Images/2010SS/Lookbook/t16.jpg) no-repeat; }
+a#ss10-17 { background: url(Images/2010SS/Lookbook/t17.jpg) no-repeat; }
+
+a#aw10-1 { background: url(Images/2010AW/Lookbook/t1.jpg) no-repeat; }
+a#aw10-2 { background: url(Images/2010AW/Lookbook/t2.jpg) no-repeat; }
+a#aw10-3 { background: url(Images/2010AW/Lookbook/t3.jpg) no-repeat; }
+a#aw10-4 { background: url(Images/2010AW/Lookbook/t4.jpg) no-repeat; }
+a#aw10-5 { background: url(Images/2010AW/Lookbook/t5.jpg) no-repeat; }
+a#aw10-6 { background: url(Images/2010AW/Lookbook/t6.jpg) no-repeat; }
+a#aw10-7 { background: url(Images/2010AW/Lookbook/t7.jpg) no-repeat; }
+a#aw10-8 { background: url(Images/2010AW/Lookbook/t8.jpg) no-repeat; }
+a#aw10-9 { background: url(Images/2010AW/Lookbook/t9.jpg) no-repeat; }
+a#aw10-10 { background: url(Images/2010AW/Lookbook/t10.jpg) no-repeat; }
+a#aw10-11 { background: url(Images/2010AW/Lookbook/t11.jpg) no-repeat; }
+a#aw10-12 { background: url(Images/2010AW/Lookbook/t12.jpg) no-repeat; }
+a#aw10-13 { background: url(Images/2010AW/Lookbook/t13.jpg) no-repeat; }
+a#aw10-14 { background: url(Images/2010AW/Lookbook/t14.jpg) no-repeat; }
+a#aw10-15 { background: url(Images/2010AW/Lookbook/t15.jpg) no-repeat; }
+a#aw10-16 { background: url(Images/2010AW/Lookbook/t16.jpg) no-repeat; }
+a#aw10-17 { background: url(Images/2010AW/Lookbook/t17.jpg) no-repeat; }
+a#aw10-18 { background: url(Images/2010AW/Lookbook/t18.jpg) no-repeat; }
+a#aw10-19 { background: url(Images/2010AW/Lookbook/t19.jpg) no-repeat; }
+a#aw10-20 { background: url(Images/2010AW/Lookbook/t20.jpg) no-repeat; }
+a#aw10-21 { background: url(Images/2010AW/Lookbook/t21.jpg) no-repeat; }
+a#aw10-22 { background: url(Images/2010AW/Lookbook/t22.jpg) no-repeat; }
+a#aw10-23 { background: url(Images/2010AW/Lookbook/t23.jpg) no-repeat; }
+a#aw10-24 { background: url(Images/2010AW/Lookbook/t24.jpg) no-repeat; }
+a#aw10-25 { background: url(Images/2010AW/Lookbook/t25.jpg) no-repeat; }
+a#aw10-26 { background: url(Images/2010AW/Lookbook/t26.jpg) no-repeat; }
+a#aw10-27 { background: url(Images/2010AW/Lookbook/t27.jpg) no-repeat; }
+a#aw10-28 { background: url(Images/2010AW/Lookbook/t28.jpg) no-repeat; }
+a#aw10-29 { background: url(Images/2010AW/Lookbook/t29.jpg) no-repeat; }
+a#aw10-30 { background: url(Images/2010AW/Lookbook/t30.jpg) no-repeat; }
+a#aw10-31 { background: url(Images/2010AW/Lookbook/t31.jpg) no-repeat; }
+
+a#aw10-mood1 { background: url(Images/2010AW/Mood/t1.jpg) no-repeat; }
+a#aw10-mood2 { background: url(Images/2010AW/Mood/t2.jpg) no-repeat; }
+a#aw10-mood3 { background: url(Images/2010AW/Mood/t3.jpg) no-repeat; }
+a#aw10-mood4 { background: url(Images/2010AW/Mood/t4.jpg) no-repeat; }
+a#aw10-mood5 { background: url(Images/2010AW/Mood/t5.jpg) no-repeat; }
+a#aw10-mood6 { background: url(Images/2010AW/Mood/t6.jpg) no-repeat; }
+
+a#ss11-1 { background: url(Images/2011SS/Lookbook/t1.jpg) no-repeat; }
+a#ss11-2 { background: url(Images/2011SS/Lookbook/t2.jpg) no-repeat; }
+a#ss11-3 { background: url(Images/2011SS/Lookbook/t3.jpg) no-repeat; }
+a#ss11-4 { background: url(Images/2011SS/Lookbook/t4.jpg) no-repeat; }
+a#ss11-5 { background: url(Images/2011SS/Lookbook/t5.jpg) no-repeat; }
+a#ss11-6 { background: url(Images/2011SS/Lookbook/t6.jpg) no-repeat; }
+a#ss11-7 { background: url(Images/2011SS/Lookbook/t7.jpg) no-repeat; }
+a#ss11-8 { background: url(Images/2011SS/Lookbook/t8.jpg) no-repeat; }
+a#ss11-9 { background: url(Images/2011SS/Lookbook/t9.jpg) no-repeat; }
+a#ss11-10 { background: url(Images/2011SS/Lookbook/t10.jpg) no-repeat; }
+a#ss11-11 { background: url(Images/2011SS/Lookbook/t11.jpg) no-repeat; }
+a#ss11-12 { background: url(Images/2011SS/Lookbook/t12.jpg) no-repeat; }
+a#ss11-13 { background: url(Images/2011SS/Lookbook/t13.jpg) no-repeat; }
+a#ss11-14 { background: url(Images/2011SS/Lookbook/t14.jpg) no-repeat; }
+a#ss11-15 { background: url(Images/2011SS/Lookbook/t15.jpg) no-repeat; }
+a#ss11-16 { background: url(Images/2011SS/Lookbook/t16.jpg) no-repeat; }
+a#ss11-17 { background: url(Images/2011SS/Lookbook/t17.jpg) no-repeat; }
+a#ss11-18 { background: url(Images/2011SS/Lookbook/t18.jpg) no-repeat; }
+a#ss11-19 { background: url(Images/2011SS/Lookbook/t19.jpg) no-repeat; }
+a#ss11-20 { background: url(Images/2011SS/Lookbook/t20.jpg) no-repeat; }
+a#ss11-21 { background: url(Images/2011SS/Lookbook/t21.jpg) no-repeat; }
+a#ss11-22 { background: url(Images/2011SS/Lookbook/t22.jpg) no-repeat; }
+a#ss11-23 { background: url(Images/2011SS/Lookbook/t23.jpg) no-repeat; }
+a#ss11-24 { background: url(Images/2011SS/Lookbook/t24.jpg) no-repeat; }
+
+a#ss11-mood1 { background: url(Images/2011SS/Mood/t1.jpg) no-repeat; }
+a#ss11-mood2 { background: url(Images/2011SS/Mood/t2.jpg) no-repeat; }
+a#ss11-mood3 { background: url(Images/2011SS/Mood/t3.jpg) no-repeat; }
+a#ss11-mood4 { background: url(Images/2011SS/Mood/t4.jpg) no-repeat; }
+a#ss11-mood5 { background: url(Images/2011SS/Mood/t5.jpg) no-repeat; }
+a#ss11-mood6 { background: url(Images/2011SS/Mood/t6.jpg) no-repeat; }
+
+.lookbook #thumbnails a:hover, .lookbook #thumbnails a.it {
+	opacity: 1; filter: alpha(opacity=100);
+}
+
+.lookbook div#box {
+	display: block;
+	height: 600px;
+}
+
+.lookbook #style {
+	width: 398px;
+	float: right;
+	margin-bottom: 5px;
+}
