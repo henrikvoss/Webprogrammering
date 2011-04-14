@@ -20,6 +20,22 @@
 	<?php	printHeader(); ?>
 	<section class="text">
 		<h1>Stores</h1>
+		
+		<form id="login" action="login.php" method="post">
+			<p>Username:
+				<input type = "text" name = "username" size = 30>
+			</p>
+			
+			<p>Password:
+				<input type = "password" name = "password" size = 15>
+			</p>
+			
+			<p>
+				<input type = "submit" value = "login"/>
+			</p>
+			
+		</form>
+		
 		<p>
 			<em>
 			FLASHDANCE
