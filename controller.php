@@ -50,7 +50,7 @@ function printHeader() { ?>
 					</a>
 					<a href="collections.php" class="collections" title="Collections by VATLE">
 						COLLECTIONS
-						<span></span>
+						<span></span> 
 					</a>
 					<a href="shop.php" class="shop" title="Shop VATLE">
 						SHOP
@@ -70,7 +70,7 @@ function printHeader() { ?>
 					<a href="about.php" class="about" title="About VATLE">
 						ABOUT
 						<span></span>
-					</a>
+					</a> 
 				</section>
 			</nav>
 
