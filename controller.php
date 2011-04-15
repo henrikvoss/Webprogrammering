@@ -33,7 +33,7 @@ function printHeader() { ?>
 						NEWS
 						<span></span>
 					</a>
-					<a href="news.php" class="collections" title="Collections by VATLE">
+					<a href="collections.php" class="collections" title="Collections by VATLE">
 						COLLECTIONS
 						<span></span> 
 					</a>
