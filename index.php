@@ -26,7 +26,7 @@
 		
 		if(isset($_REQUEST["Register"]))
 		{
-			$_SESSION['database'] =
+			$_SESSION['Database'] =
 				new Database('cube.iu.hio.no', 's171172', '', 's171172');
 		}
 		
