@@ -1,4 +1,6 @@
-<?php session_start();
+<?php
+
+session_start();
 error_reporting(-1);
 
 function addLinkTags() {
@@ -14,23 +16,6 @@ function addLinkTags() {
 	<link rel="stylesheet" type="text/css" href="vatle.css" title="Normal style" />
 	<!--<![endif]-->
 	<link rel="shortcut icon" href="favicon.ico" /> <?php
-	addGATrackingCode();
-}
-
-function addGATrackingCode() { ?>
-	<script type="text/javascript">
-
-	  var _gaq = _gaq || [];
-	  _gaq.push(['_setAccount', 'UA-22622040-1']);
-	  _gaq.push(['_trackPageview']);
-
-	  (function() {
-		 var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-		 ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-		 var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-	  })();
-
-	</script> <?php
 }
 
 function printHeader() { ?>
@@ -48,34 +33,34 @@ function printHeader() { ?>
 						NEWS
 						<span></span>
 					</a>
-					<a href="collections.php" class="collections" title="Collections by VATLE">
+					<a href="news.php" class="collections" title="Collections by VATLE">
 						COLLECTIONS
 						<span></span> 
 					</a>
-					<a href="shop.php" class="shop" title="Shop VATLE">
+					<a href="index.php" class="shop" title="Shop VATLE">
 						SHOP
 						<span></span>
 					</a>
 				</section>
 
 				<section class="floatRight">
-					<a href="press.php" class="press" title="The press on VATLE">
+					<a href="news.php" class="press" title="The press on VATLE">
 						PRESS
 						<span></span>
 					</a>
-					<a href="contact.php" class="contact" title="Contact VATLE">
+					<a href="news.php" class="contact" title="Contact VATLE">
 						CONTACT
 						<span></span>
 					</a>
-					<a href="about.php" class="about" title="About VATLE">
+					<a href="news.php" class="about" title="About VATLE">
 						ABOUT
 						<span></span>
 					</a> 
 				</section>
 			</nav>
 
-		</header>
-<?php }
+		</header> <?php
+}
 
 function printFooter() { ?>
 		<section id="footerPush"></section>
@@ -95,6 +80,12 @@ function printFooter() { ?>
 				-Twitter<span></span>
 			</a>
 		</section>
-	</footer>
-<?php }
+	</footer> <?php
+}
+
+function printUnderConstruction() { ?>
+	<h3 class="center">This part of the site is currently under construction 
+	and will be up	soon. Please check back later.</h3> <?php
+}
+
 ?>
