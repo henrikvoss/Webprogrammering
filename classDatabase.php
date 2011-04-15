@@ -46,6 +46,10 @@ class Database {
 			return $table;
 		}
 	}
+	
+	public function addData($em, $pass, $first, $sur, $add, $post, $city, $country) {
+		$sql = "Insert into Customer (email, password, firstname, surname, address, postalcode, city, country) values ('$em', '$pass', '$first', '$sur', '$add', '$post', '$city', '$country')";
+	}
 }
 
 ?>

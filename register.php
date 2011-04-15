@@ -24,6 +24,18 @@
 		
 		<h1>Register with VATLEdesign</h1>
 		
+		<?php  
+		
+		if(isset($_REQUEST["Register"]))
+		{
+			$_SESSION['database'] =
+				new Database('cube.iu.hio.no', 's171172', '', 's171172');
+		}
+		
+		else
+		{
+		?>
+		
 		<form id="register" action="" method="post">
 			<table border="0" >
 		      <tr>
@@ -51,21 +63,21 @@
 		        <td><input type="text" name="country"></td>
 		      </tr>
 		      <tr>
-		        <td>Telephone:</td>
-		        <td><input type="text" name="tlf"></td>
-		      </tr>
-		      <tr>
 		        <td>E-mail:</td>
 		        <td><input type="text" name="email"></td>
 		      </tr>
 				<tr>
 		        <td>Password:</td>
-		        <td><input type="text" name="password"></td>
+		        <td><input type="password" name="password"></td>
 		      </tr>				
 		      <tr><td><input type="submit" name="send" VALUE="Register"></td></tr>
 		     </table>
 			
 		</form>
+		<?php 
+			}
+			$_SESSION['Database']->addData($_POST['email'],$_POST['password'], $_POST['first'], $_POST['surname'], $_POST['address'], $_POST['postalcode'], $_POST['city'], $_POST['country']);		
+		?>
 		</section>
 		
 		<?php printFooter(); ?>

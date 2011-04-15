@@ -26,7 +26,7 @@
 		
 		if(isset($_REQUEST["Register"]))
 		{
-			$_SESSION['database']
+			$_SESSION['database'] =
 				new Database('cube.iu.hio.no', 's171172', '', 's171172');
 		}
 		
@@ -38,11 +38,11 @@
 			<table border="0" cellspacing="5" cellpadding="5">
 				<tr>
 					<td>Username:</td>
-					<td><input type = "text" name = "username" size = 30></td>
+					<td><input type = "text" name = "username" size = 40></td>
 				</tr>
 				<tr>
 					<td>Password:</td>
-					<td><input type = "password" name = "password" size = 15></td>
+					<td><input type = "password" name = "password" size = 20></td>
 				</tr>
 				<tr>
 					<td><input type = "submit" value = "Login"/></td>
