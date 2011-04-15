@@ -22,6 +22,18 @@
 		
 		<h1>Login</h1>		
 		
+		<?php  
+		
+		if(isset($_REQUEST["Register"]))
+		{
+			$_SESSION['database']
+				new Database('cube.iu.hio.no', 's171172', '', 's171172');
+		}
+		
+		else
+		{
+		?>
+		
 		<form id="login" action="" method="post">
 			<table border="0" cellspacing="5" cellpadding="5">
 				<tr>
@@ -43,7 +55,9 @@
 				<tr><td><input type = "submit" value = "Register"/></td></tr>
 			</table>
 		</form>
-		
+		<?php 
+			}		
+		?>
 	</section>
 	
 	<?php printFooter();	?>
