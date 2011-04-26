@@ -50,7 +50,7 @@ class Database {
 	public function addData($em, $pass, $first, $sur, $add, $post, $city, $country) {
 		$db = $this->connectToDB();
 		$sql = "Insert into Customer (email, password, firstname, surname, address, postalcode, city, country) values ('$em', '$pass', '$first', '$sur', '$add', '$post', '$city', '$country')";
-		$resultat ? $db->query($sql);
+		$resultat = $db->query($sql);
 		if(!$resultat)
 		{
 			return false;
