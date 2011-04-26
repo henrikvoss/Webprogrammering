@@ -14,11 +14,6 @@ function printLookbook($no, $place, $id, $file) {
 	echo "</section>\n";
 }
 
-function printUnderConstruction() { ?>
-	<h3 class="center">This part of the site is currently under construction 
-	and will be up	soon. Please check back later.</h3>
-<?php }
-
 function photo2011SSCredit() { ?>
 	<p class="floatRight">Photo: Annie Andersson</p>
 <?php	}
