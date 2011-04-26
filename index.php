@@ -30,7 +30,7 @@
 				new Database('cube.iu.hio.no', 's171172', '', 's171172');
 
 			/* Sjekker om bruker som logger på eksisterer og om er admin. */
-			if ( $_SESSION["database"]->logIn() ) {
+			if ( $_SESSION["Database"]->logIn() ) {
 				/* cursor */
 			}
 		}
