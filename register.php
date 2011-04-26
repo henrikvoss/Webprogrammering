@@ -1,4 +1,5 @@
 <?php include('controller.php'); ?>
+<?php include('classDatabase.php'); ?>
 <!DOCTYPE HTML>
 
 <html lang="en">
@@ -26,7 +27,7 @@
 
 <?php  
 
-if(isset($_REQUEST["Register"]))
+if(isset($_REQUEST["send"]))
 {
 	$_SESSION['Database'] =
 		new Database('cube.iu.hio.no', 's171172', '', 's171172');

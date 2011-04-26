@@ -18,7 +18,7 @@ class Database {
 	 * opprette et mysqli-objekt.
 	 */
 	private function connectToDB() {
-		$db = new mysqli($host, $user, $password, $DBName);
+		$db = new mysqli($this->host, $this->user, $this->password, $this->DBName);
 		if ( !$db ) {
 			die("<p>Not able to connect to the database: ".$db->connect_error."</p>");
 		}
@@ -48,11 +48,13 @@ class Database {
 	}
 	
 	public function addData($em, $pass, $first, $sur, $add, $post, $city, $country) {
+		echo "hei";
 		$db = $this->connectToDB();
 		$sql = "Insert into Customer (email, password, firstname, surname, address, postalcode, city, country) values ('$em', '$pass', '$first', '$sur', '$add', '$post', '$city', '$country')";
-		$resultat ? $db->query($sql);
+		$resultat = $db->query($sql);
 		if(!$resultat)
 		{
+			echo $db->error;
 			return false;
 		}
 		else
@@ -65,7 +67,12 @@ class Database {
 			{
 				return true;
 			}
-		}	
+		}
+	}
+
+	public function logIn() {
+		$db = $this->connectToDB();
+
 	}
 }
 
