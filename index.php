@@ -28,13 +28,17 @@
 		{
 			$_SESSION['Database'] =
 				new Database('cube.iu.hio.no', 's171172', '', 's171172');
+
+			/* Sjekker om bruker som logger på eksisterer og om er admin. */
+			if ( $_SESSION["database"]->logIn() ) {
+				/* cursor */
+			}
 		}
-		
 		else
 		{
 		?>
 		
-		<form id="login" action="" method="post">
+		<form id="login" action="index.php" method="post">
 			<table border="0" cellspacing="5" cellpadding="5">
 				<tr>
 					<td>Username:</td>
