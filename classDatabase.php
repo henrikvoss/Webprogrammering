@@ -88,7 +88,9 @@ class Database {
 			}
 			else
 			{
+				/* TODO: */
 				/* Sjekker om brukernavn fra form er opprettet tidligere.
+ 				 *		-Må løpe gjennom radene.
  				 * Oppretter bruker objekt i session. */
 				return true;
 			}

@@ -24,11 +24,12 @@
 		
 		<?php  
 		
-		if(isset($_REQUEST["Register"]))
+		if(isset($_REQUEST["login"]))
 		{
 			$_SESSION['Database'] =
 				new Database('cube.iu.hio.no', 's171172', '', 's171172');
 
+			$_SESSION["username"] = $_POST["username"];
 			/* Sjekker om bruker som logger på eksisterer og om er admin. */
 			if ( $_SESSION["Database"]->logIn() ) {
 				/* cursor */
@@ -49,7 +50,7 @@
 					<td><input type = "password" name = "password" size = 20></td>
 				</tr>
 				<tr>
-					<td><input type = "submit" value = "Login"/></td>
+					<td><input type = "submit" name = "login" value = "Login"/></td>
 				</tr>
 			</table>
 		</form>
