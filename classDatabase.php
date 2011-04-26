@@ -47,7 +47,7 @@ class Database {
 		}
 	}
 	
-	public function addData($em, $pass, $first, $sur, $add, $post, $city, $country) {
+	public function addUserData($em, $pass, $first, $sur, $add, $post, $city, $country) {
 		$db = $this->connectToDB();
 		$sql = "Insert into Customer (email, password, firstname, surname, address, postalcode, city, country) values ('$em', '$pass', '$first', '$sur', '$add', '$post', '$city', '$country')";
 		$resultat = $db->query($sql);
@@ -70,9 +70,9 @@ class Database {
 		}
 	}
 
-	public function logIn() {
+	public function inTable($x, $table, $col) {
 		$db = $this->connectToDB();
-		$sql = "select * from Customer";
+		$sql = "select * from ".$table." where '".$x."' = ".$col;
 		$result = $db->query($sql);
 
 		if(!$result)
@@ -88,10 +88,6 @@ class Database {
 			}
 			else
 			{
-				/* TODO: */
-				/* Sjekker om brukernavn fra form er opprettet tidligere.
- 				 *		-Må løpe gjennom radene.
- 				 * Oppretter bruker objekt i session. */
 				return true;
 			}
 		}

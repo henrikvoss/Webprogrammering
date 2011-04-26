@@ -30,7 +30,7 @@ if(isset($_REQUEST["send"]))
 {
 	$_SESSION['Database'] =
 		new Database('cube.iu.hio.no', 's171172', '', 's171172');
-	$_SESSION['Database']->addData($_POST['email'],$_POST['password'], $_POST['first'], $_POST['surname'], $_POST['address'], $_POST['postalcode'], $_POST['city'], $_POST['country']);
+	$_SESSION['Database']->addUserData($_POST['email'],$_POST['password'], $_POST['first'], $_POST['surname'], $_POST['address'], $_POST['postalcode'], $_POST['city'], $_POST['country']);
 }
 else
 {
