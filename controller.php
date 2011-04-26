@@ -2,6 +2,11 @@
 
 session_start();
 error_reporting(-1);
+includeFiles();
+
+function includeFiles() {
+	include("classDatabase.php");
+}
 
 function addLinkTags() {
 	/*
