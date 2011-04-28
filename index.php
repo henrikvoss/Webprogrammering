@@ -44,13 +44,11 @@
 <?php  
 
 if (isset($_REQUEST["login"])) {
-	$_SESSION['Database'] =
-		new Database('cube.iu.hio.no', 's171172', '', 's171172');
 
 	/* TODO: */
 	/* Skrive ut beskjed til kunden om gammel bruker eller ikke eksiterer. */
-	if ( $_SESSION["Database"]->inTable($_REQUEST["username"], $Customer, "email") ) {
-		$_SESSION['user'] = new Customer($_REQUEST["username"]);
+	if ( $_SESSION["database"]->checkUser($_REQUEST["username"],$_REQUEST["password"]) ) {
+		$_SESSION["user"] = new Customer($_REQUEST["username"]);
 		/* Neste steg i classCustomer.php:
  		 * Sjekker om bruker er admin i konstruktøren og henter alle
 		 * data fra databasen for å opprette kunde-objektet. */

@@ -8,11 +8,7 @@
 
 		<meta name="description" content="Register at VATLE." />
 
-		<meta name="keywords" content="contact, Vatle,
-		clothing, women&#39;s clothing, soon men&#39;s clothing, designer clothing, Vatle
-		designs" />
-
-		<title>VATLE - Register at Vatle's webshop</title>
+		<title>VATLE - Register at VATLE's webshop</title>
 
 		<?php addLinkTags(); ?>
 	</head>
@@ -22,15 +18,13 @@
 
 		<section class="text">
 
-		<h1>Register with VATLEdesign</h1>
+		<h1>Register with VATLE</h1>
 
 <?php  
 
 if(isset($_REQUEST["send"]))
 {
-	$_SESSION['Database'] =
-		new Database('cube.iu.hio.no', 's171172', '', 's171172');
-	$_SESSION['Database']->addUserData($_POST['email'],$_POST['password'], $_POST['first'], $_POST['surname'], $_POST['address'], $_POST['postalcode'], $_POST['city'], $_POST['country']);
+	$_SESSION['database']->addUserData($_POST['email'],$_POST['password'], $_POST['first'], $_POST['surname'], $_POST['address'], $_POST['postalcode'], $_POST['city'], $_POST['country']);
 }
 else
 {

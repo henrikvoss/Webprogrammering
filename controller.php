@@ -4,23 +4,19 @@ session_start();
 error_reporting(-1);
 includeFiles();
 
+/* Sikrer at database-objektet er klart. */
+if (!isset($_SESSION["database"])) {
+	$_SESSION["database"] =
+		new Database('cube.iu.hio.no', 's171172', '', 's171172');
+}
+
 function includeFiles() {
 	include("classDatabase.php");
 }
 
-function addLinkTags() {
-	/*
-		<!--[if lte IE 8]>
-		<link rel="stylesheet" type="text/css" href="vatleIE.css" title="Normal style" />
-		<![endif]-->
-	**/?>
-	<!--[if gte IE 9]>
+function addLinkTags() {?>
 	<link rel="stylesheet" type="text/css" href="vatle.css" title="Normal style" />
-	<![endif]-->
-	<!--[if !IE]><!-->
-	<link rel="stylesheet" type="text/css" href="vatle.css" title="Normal style" />
-	<!--<![endif]-->
-	<link rel="shortcut icon" href="favicon.ico" /> <?php
+	<link rel="shortcut icon" href="favicon.ico" /><?php
 }
 
 function printHeader() { ?>

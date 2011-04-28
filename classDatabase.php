@@ -18,7 +18,9 @@ class Database {
 	 * opprette et mysqli-objekt.
 	 */
 	private function connectToDB() {
-		$db = new mysqli($this->host, $this->user, $this->password, $this->DBName);
+		$db =
+			new mysqli($this->host,$this->user,$this->password,$this->DBName);
+
 		if ( !$db ) {
 			die("<p>Not able to connect to the database: ".$db->connect_error."</p>");
 		}
@@ -70,6 +72,7 @@ class Database {
 		}
 	}
 
+	/*
 	public function inTable($x, $table, $col) {
 		$db = $this->connectToDB();
 		$sql = "select * from ".$table." where '".$x."' = ".$col;
@@ -92,6 +95,43 @@ class Database {
 			}
 		}
 	}
+	*/
+
+	public function checkUser($name, $pas) {
+		$db = connectToDB();
+
+		if ( $db ) {
+			$sql = "select * from Customer where '".$name."' = Username";
+			$result = $db->query($sql);
+
+			if(!$result) {
+				echo "<p>".$db->error."</p>";
+				return false;
+			}else {
+				if(($db->affected_rows) == 0) {
+					echo "<p>Non existing user.</p>";
+					return false;
+				}else {
+					/* Passord sjekk her: */
+					$sql = "select * from Customer where '".$pas."' = Password";
+					$result = $db->query($sql);
+
+					if ( !$result ) {
+						echo "<p>".$db->error."</p>";
+						return false;
+					} else {
+						if(($db->affected_rows) == 0) {
+							echo "<p>Wrong password.</p>";
+							return false;
+						}else {
+							return true;
+						}
+					}
+				}
+			}
+			
+		}
+	}	
 }
 
 ?>
