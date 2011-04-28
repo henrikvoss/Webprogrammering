@@ -1,5 +1,4 @@
 <?php include('controller.php'); ?>
-<?php include('classDatabase.php'); ?>
 
 <!DOCTYPE html>
 <html>
@@ -32,9 +31,9 @@
 			  	</td>
 				<td>Price range:</td>
 				<td align="right"><select name="price">
-					<option value="low">Low (0->1499)</option>
-					<option value="medium">Medium (1500->2999)</option>
-					<option value="high">Low (3000->)</option>
+					<option value="low">Low (0-&gt;1499)</option>
+					<option value="medium">Medium (1500-&gt;2999)</option>
+					<option value="high">Low (3000-&gt;)</option>
 	        	<td>Show wares:</td>
 	        	<td><input type="submit" name="show" VALUE="Show"></td>
 	      </tr>

@@ -7,10 +7,6 @@
 
 	<meta name="description" content="Shop at VATLE." />
 
-	<meta name="keywords" content="shop, webshop, Vatle,
-	clothing, women&#39;s clothing, soon men&#39;s clothing, designer clothing, Vatle
-	designs" />
-
 	<title>VATLE - Webshop login</title>
 
 	<?php addLinkTags(); ?>
@@ -48,10 +44,12 @@ if (isset($_REQUEST["login"])) {
 	/* TODO: */
 	/* Skrive ut beskjed til kunden om gammel bruker eller ikke eksiterer. */
 	if ( $_SESSION["database"]->checkUser($_REQUEST["username"],$_REQUEST["password"]) ) {
-		$_SESSION["user"] = new Customer($_REQUEST["username"]);
-		/* Neste steg i classCustomer.php:
- 		 * Sjekker om bruker er admin i konstruktøren og henter alle
-		 * data fra databasen for å opprette kunde-objektet. */
+		$_SESSION["user"] = getCustomer($_REQUEST["username"]);
+		/* Neste steg i controller.php:
+		 * Sjekker om bruker er admin i classCustomer-konstruktøren.  
+		 * controller.php henter alle
+		 * data fra databasen for å opprette kunde-objektet.
+		 **/
 	}
 }
 

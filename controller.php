@@ -14,6 +14,10 @@ function includeFiles() {
 	include("classDatabase.php");
 }
 
+function getCustomer($name) {
+	/* cursor */
+}
+
 function addLinkTags() {?>
 	<link rel="stylesheet" type="text/css" href="vatle.css" title="Normal style" />
 	<link rel="shortcut icon" href="favicon.ico" /><?php
