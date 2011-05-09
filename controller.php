@@ -105,8 +105,13 @@ function printFooter() { ?>
 	</section><?php
 	if (isset($_SESSION["user"])) {?>
 	<section class="floatLeft">
-		<a href="basket.php">Basket</a> |
 		<a href="logout.php">Logout</a>
+		|
+		<a href="basket.php">Basket</a>
+		<?php if ($_SESSION["user"]->isAdmin()) { ?>
+		|
+		<a href="index.php">Admin</a>
+		<?php } ?>
 	</section><?php
 	} else {?>
 	<section class="floatLeft">

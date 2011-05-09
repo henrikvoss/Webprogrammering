@@ -7,6 +7,7 @@ class User {
 	private $postalCode;
 	private $city;
 	private $country;
+	private $admin;
 
 	/**
 	 * Hvis det ikke sendes med parametere henter konstruktøren selv det 
@@ -24,6 +25,14 @@ class User {
 		$this->postalCode = $userdata[0]->postalcode;
 		$this->city = $userdata[0]->city;
 		$this->country = $userdata[0]->country;
+
+		$admindata =
+			$_SESSION["database"]->selectQuery("select * from Admin where email='".$this->email."';");
+		if ( isset($admindata[0]->email) ) {
+			$admin = true;
+		} else {
+			$admin = false;
+		}
 	}
 
 	public function getEmail() {
