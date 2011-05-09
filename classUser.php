@@ -17,13 +17,13 @@ class User {
 		 * Konstruktøren henter alt fra databasen. */
 		$this->email = $pEmail;
 		$userdata =
-			$_SESSION["database"]->selectQuery("select * from Customer where email='".$this->email.";'");
-		$this->firstName = $userdata[1];
-		$this->surname = $userdata[2];
-		$this->address = $userdata[3];
-		$this->postalCode = $userdata[4];
-		$this->city = $userdata[5];
-		$this->country = $userdata[6];
+			$_SESSION["database"]->selectQuery("select * from Customer where email='".$this->email."';");
+		$this->firstName = $userdata[0]->firstname;
+		$this->surname = $userdata[0]->surname;
+		$this->address = $userdata[0]->address;
+		$this->postalCode = $userdata[0]->postalcode;
+		$this->city = $userdata[0]->city;
+		$this->country = $userdata[0]->country;
 	}
 
 	public function getEmail() {

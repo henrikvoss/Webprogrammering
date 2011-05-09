@@ -8,10 +8,6 @@
 
 	<meta name="description" content="Shop for the Norwegian clothing brand VATLE." />
 
-	<meta name="keywords" content="news, Vatle,
-	clothing, women&#39;s clothing, soon men&#39;s clothing, designer clothing, Vatle
-	designs" />
-
 	<title>Customer Page</title>
 
 	<?php addLinkTags(); ?>

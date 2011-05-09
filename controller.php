@@ -2,7 +2,6 @@
 
 session_start();
 error_reporting(-1);
-includeFiles();
 
 /* Sikrer at database-objektet er klart. */
 if (!isset($_SESSION["database"])) {
@@ -17,12 +16,12 @@ input må ikke inneholde semikolon, erlik-tegn, sql-kommentar-tegn,
 visse sql-syntax-ord.
  */
 
-function includeFiles() {
-	include_once("classDatabase.php");
-	include_once("classUser.php");
+function __autoload($className) {
+	include_once("class".$className.".php");
 }
 
 /*
+ * TODO:
  * Sjekker om bruker er admin i classCustomer-konstruktøren.  
  * controller.php henter alle
  * data fra databasen for å opprette kunde-objektet.
@@ -32,18 +31,6 @@ function includeFiles() {
  **/
 function setUser($name) {
 	$_SESSION["user"] = new User($name);
-}
-
-/**
- * Sjekker om bruker er logget inn.
- * Brukes ikke i klasse-filer, men i filer med hoved delen av html'en for 
- * en side.
- */
-function loggedIn() {
-	if (isset($_SESSION["user"]))	{
-		return true;
-	}
-	else return false;
 }
 
 
@@ -99,29 +86,40 @@ function printHeader() { ?>
 }
 
 function printFooter() { ?>
-<section id="footerPush"></section>
+<div id="footerPush"></section>
 	</section>
 
 
 	<footer>
-		<section class="floatRight">
-			<span class="followVatle">Follow VATLE:</span>
-			<a href="http://vatlelate.blogspot.com/" class="blog" title="VATLE blog">
-				-Blog<span></span>
-			</a>
-			<a href="http://www.facebook.com/pages/VATLE/123522228489" class="facebook" title="VATLE on facebook">
-				-Facebook<span></span>
-			</a>
-			<a href="http://twitter.com/#!/vatle" class="twitter" title="VATLE on twitter">
-				-Twitter<span></span>
-			</a>
-		</section>
-		</footer> <?php
+	<section class="floatRight">
+		<span class="followVatle">Follow VATLE:</span>
+		<a href="http://vatlelate.blogspot.com/" class="blog" title="VATLE blog">
+			-Blog<span></span>
+		</a>
+		<a href="http://www.facebook.com/pages/VATLE/123522228489" class="facebook" title="VATLE on facebook">
+			-Facebook<span></span>
+		</a>
+		<a href="http://twitter.com/#!/vatle" class="twitter" title="VATLE on twitter">
+			-Twitter<span></span>
+		</a>
+	</section><?php
+	if (isset($_SESSION["user"])) {?>
+	<section class="floatLeft">
+		<a href="basket.php">Basket</a> |
+		<a href="logout.php">Logout</a>
+	</section><?php
+	} else {?>
+	<section class="floatLeft">
+	<a href="index.php">Login</a>
+	</section><?php
+	}?>
+
+	</footer> <?php
 }
 
 function printUnderConstruction() { ?>
-<h3 class="center">This part of the site is currently under construction 
-and will be up	soon. Please check back later.</h3> <?php
+<h1 class="center">This part of the site is currently under construction 
+and will be up	soon. Please check back later.</h1> <?php
 }
 
 ?>

@@ -232,7 +232,7 @@ section#wrap {
 
 /* FOOTER * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
-footer, section#footerPush {
+footer, div#footerPush {
 	display: block;
 	height: 41px;
 }
@@ -242,7 +242,7 @@ footer {
 	width: 100%;
 	border-top: thin solid black;
 	clear: both;
-	overflow: auto;
+	overflow: hidden;
 }
 
 footer section {

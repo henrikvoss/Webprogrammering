@@ -17,7 +17,20 @@
 	<section class="text">
 
 <?php
-if (!loggedIn() && !isset($_REQUEST["login"])) {
+if (isset($_REQUEST["login"])) {
+
+	if ( $_SESSION["database"]->checkUser($_REQUEST["username"],$_REQUEST["password"]) ) {
+		$_SESSION["user"] = setUser($_REQUEST["username"]);
+		/* Neste steg i controller.php:
+		 * Sjekker om bruker er admin i classCustomer-konstruktøren.  
+		 * controller.php henter alle
+		 * data fra databasen for å opprette kunde-objektet.
+		 **/
+	}
+}
+
+
+if (isset($_SESSION["user"])) {
 ?>
 
 <h1>Login</h1>
@@ -39,26 +52,29 @@ if (!loggedIn() && !isset($_REQUEST["login"])) {
 </form>
 
 <p class="floatRight"><a href="register.php">Not registered?</a></p>
-
 <?php
-}
+} else {?>
 
-if (isset($_REQUEST["login"])) {
+<h1>Here you can browse the items in the webshop.</h1>
 
-	if ( $_SESSION["database"]->checkUser($_REQUEST["username"],$_REQUEST["password"]) ) {
-		$_SESSION["user"] = setCustomer($_REQUEST["username"]);
-		/* Neste steg i controller.php:
-		 * Sjekker om bruker er admin i classCustomer-konstruktøren.  
-		 * controller.php henter alle
-		 * data fra databasen for å opprette kunde-objektet.
-		 **/
-	}
-}
-
-if ( loggedIn() ) {
-	/*
-	 * TODO:
-	 * Kanskje ha dashboard her istedet for egen fil? */
+<form id="request" action="" method="post" >
+	<table border="0" >
+		<tr>
+			<td>Choose style:</td>
+			<td align="right"><select name="style">
+					<option value="choose">--Choose a style--</option>
+					<option value="20SS10">Spring/Summer</option>
+				</td>
+				<td>Price range:</td>
+				<td align="right"><select name="price">
+						<option value="low">Low (0-&gt;1499)</option>
+						<option value="medium">Medium (1500-&gt;2999)</option>
+						<option value="high">Low (3000-&gt;)</option>
+						<td>Show wares:</td>
+						<td><input type="submit" name="show" VALUE="Show"></td>
+					</tr>
+				</table>
+				</form><?php
 }
 
 

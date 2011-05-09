@@ -30,9 +30,9 @@ class Database {
 
 	public function selectQuery($sql) {
 		$db = $this->connectToDB();
-		$resultat = $db->query($sql);
+		$result= $db->query($sql);
 
-		if ( !$resultat ) {
+		if ( !$result) {
 			echo "<p>Error in connection to the database.</p>";
 			return false;
 		}
@@ -52,7 +52,7 @@ class Database {
 
 	public function addUserData($em, $pass, $first, $sur, $add, $post, $city, $country) {
 		$db = $this->connectToDB();
-		$sql = "Insert into Customer (email, password, firstname, surname, address, postalcode, city, country) values ('$em', '".hashString($pass)."', '$first', '$sur', '$add', '$post', '$city', '$country')";
+		$sql = "Insert into Customer (email, password, firstname, surname, address, postalcode, city, country) values ('$em', '".$this->hashString($pass)."', '$first', '$sur', '$add', '$post', '$city', '$country')";
 		$resultat = $db->query($sql);
 
 		if(!$resultat) {
@@ -77,7 +77,7 @@ class Database {
 		$db = $this->connectToDB();
 
 		if ( $db ) {
-			$sql = "select * from Customer where '".$name."' = Username";
+			$sql = "select * from Customer where '".$name."' = email";
 			$result = $db->query($sql);
 
 			if(!$result) {
@@ -89,7 +89,7 @@ class Database {
 					return false;
 				}else {
 					/* Passord sjekk her: */
-					$sql = "select * from Customer where '".hashString($pas)."' = Password";
+					$sql = "select * from Customer where '".$this->hashString($pas)."' = password";
 					$result = $db->query($sql);
 
 					if ( !$result ) {
