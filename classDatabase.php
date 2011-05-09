@@ -24,6 +24,7 @@ class Database {
 		if ( !$db ) {
 			die("<p>Not able to connect to the database: ".$db->connect_error."</p>");
 		}
+
 		return $db;
 	}
 
@@ -48,57 +49,32 @@ class Database {
 			return $table;
 		}
 	}
-	
+
 	public function addUserData($em, $pass, $first, $sur, $add, $post, $city, $country) {
 		$db = $this->connectToDB();
-		$sql = "Insert into Customer (email, password, firstname, surname, address, postalcode, city, country) values ('$em', '$pass', '$first', '$sur', '$add', '$post', '$city', '$country')";
+		$sql = "Insert into Customer (email, password, firstname, surname, address, postalcode, city, country) values ('$em', '".hashString($pass)."', '$first', '$sur', '$add', '$post', '$city', '$country')";
 		$resultat = $db->query($sql);
 
-		if(!$resultat)
-		{
+		if(!$resultat) {
 			echo $db->error;
 			return false;
 		}
-		else
-		{
-			if(($db->affected_rows) == 0)
-			{
+		else {
+			if(($db->affected_rows) == 0) {
 				return false;
 			}
-			else
-			{
+			else {
 				return true;
 			}
 		}
 	}
 
-	/*
-	public function inTable($x, $table, $col) {
-		$db = $this->connectToDB();
-		$sql = "select * from ".$table." where '".$x."' = ".$col;
-		$result = $db->query($sql);
-
-		if(!$result)
-		{
-			echo $db->error;
-			return false;
-		}
-		else
-		{
-			if(($db->affected_rows) == 0)
-			{
-				return false;
-			}
-			else
-			{
-				return true;
-			}
-		}
-	}
-	*/
-
+	/* Metode som validerer om brukernavn og passord er riktig.
+	 * Oppretter ikke bruker-objekt.
+	 * 
+	 */
 	public function checkUser($name, $pas) {
-		$db = connectToDB();
+		$db = $this->connectToDB();
 
 		if ( $db ) {
 			$sql = "select * from Customer where '".$name."' = Username";
@@ -113,7 +89,7 @@ class Database {
 					return false;
 				}else {
 					/* Passord sjekk her: */
-					$sql = "select * from Customer where '".$pas."' = Password";
+					$sql = "select * from Customer where '".hashString($pas)."' = Password";
 					$result = $db->query($sql);
 
 					if ( !$result ) {
@@ -129,9 +105,13 @@ class Database {
 					}
 				}
 			}
-			
+
 		}
-	}	
+	}
+
+	private function hashString($pas) {
+		return sha1($pas);
+	}
 }
 
 ?>

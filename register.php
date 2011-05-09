@@ -1,7 +1,7 @@
 <?php include('controller.php'); ?>
 <!DOCTYPE HTML>
 
-<html lang="en">
+<html>
 
 	<head>
 		<meta charset="UTF-8" />
