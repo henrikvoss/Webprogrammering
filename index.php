@@ -18,19 +18,16 @@
 
 <?php
 if (isset($_REQUEST["login"])) {
-
 	if ( $_SESSION["database"]->checkUser($_REQUEST["username"],$_REQUEST["password"]) ) {
-		$_SESSION["user"] = setUser($_REQUEST["username"]);
-		/* Neste steg i controller.php:
+		setUser($_REQUEST["username"]);
+		/* så sjekker controller.php:
 		 * Sjekker om bruker er admin i classCustomer-konstruktøren.  
-		 * controller.php henter alle
-		 * data fra databasen for å opprette kunde-objektet.
 		 **/
 	}
 }
 
 
-if (isset($_SESSION["user"])) {
+if (!isset($_SESSION["user"])) {
 ?>
 
 <h1>Login</h1>
@@ -57,16 +54,18 @@ if (isset($_SESSION["user"])) {
 
 <h1>Here you can browse the items in the webshop.</h1>
 
-<form id="request" action="" method="post" >
+<form id="request" action="index.php" method="post" >
 	<table border="0" >
 		<tr>
 			<td>Choose style:</td>
-			<td align="right"><select name="style">
+			<td align="right">
+				<select name="style">
 					<option value="choose">--Choose a style--</option>
 					<option value="20SS10">Spring/Summer</option>
 				</td>
 				<td>Price range:</td>
-				<td align="right"><select name="price">
+				<td align="right">
+					<select name="price">
 						<option value="low">Low (0-&gt;1499)</option>
 						<option value="medium">Medium (1500-&gt;2999)</option>
 						<option value="high">Low (3000-&gt;)</option>

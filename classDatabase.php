@@ -41,12 +41,17 @@ class Database {
 			$antallRader = $db->affected_rows;
 			$table = array();
 
-			for ( $i = 0; $i < $antallRader; $i++ ) {
-				$row = $resultat->fetch_object();
-				$table[$i] = $row;
+			if ( $antallRader == 0 ) {
+				return false;
+				break;
 			}
-
-			return $table;
+			else {
+				for ( $i = 0; $i < $antallRader; $i++ ) {
+					$row = $result->fetch_object();
+					$table[$i] = $row;
+				}
+				return $table;
+			}
 		}
 	}
 
@@ -69,7 +74,8 @@ class Database {
 		}
 	}
 
-	/* Metode som validerer om brukernavn og passord er riktig.
+	/*
+ 	 * Metode som validerer om brukernavn og passord er riktig.
 	 * Oppretter ikke bruker-objekt.
 	 * 
 	 */
@@ -106,6 +112,26 @@ class Database {
 				}
 			}
 
+		}
+	}
+
+	public function checkIfAdmin($user) {
+		$db = $this->connectToDB();
+		
+		if ( $db ) {
+			$sql ="select email from Admin where email='".$user."'";
+			$result = $db->query($sql);
+
+			if ( !$result ) {
+				echo "<p>Could not check if you are admin: ".$db->error."</p>";
+				return false;
+			} else {
+				if ( ($db->affected_rows) == 0 ) {
+					return false;
+				} else {
+					return true;
+				}
+			}
 		}
 	}
 

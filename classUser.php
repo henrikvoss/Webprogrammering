@@ -26,41 +26,39 @@ class User {
 		$this->city = $userdata[0]->city;
 		$this->country = $userdata[0]->country;
 
-		$admindata =
-			$_SESSION["database"]->selectQuery("select * from Admin where email='".$this->email."';");
-		if ( isset($admindata[0]->email) ) {
-			$admin = true;
-		} else {
-			$admin = false;
-		}
+		$this->admin = $_SESSION["database"]->checkIfAdmin($this->email);
 	}
 
 	public function getEmail() {
-		return $email;
+		return $this->email;
 	}
 
 	public function getFirstName() {
-		return $firstName;
+		return $this->firstName;
 	}
 
 	public function getSurname() {
-		return $surname;
+		return $this->surname;
 	}
 
 	public function getAddress() {
-		return $address;
+		return $this->address;
 	}
 
 	public function getPostalCode() {
-		return $postalCode;
+		return $this->postalCode;
 	}
 
 	public function getCity() {
-		return $city;
+		return $this->city;
 	}
 
 	public function getCountry() {
-		return $country;
+		return $this->country;
+	}
+
+	public function getIfAdmin() {
+		return $this->admin;
 	}
 }
 ?>

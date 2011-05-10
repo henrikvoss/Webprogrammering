@@ -21,7 +21,6 @@ function __autoload($className) {
 }
 
 /*
- * TODO:
  * Sjekker om bruker er admin i classCustomer-konstruktøren.  
  * controller.php henter alle
  * data fra databasen for å opprette kunde-objektet.
@@ -108,7 +107,7 @@ function printFooter() { ?>
 		<a href="logout.php">Logout</a>
 		|
 		<a href="basket.php">Basket</a>
-		<?php if ($_SESSION["user"]->isAdmin()) { ?>
+		<?php if ($_SESSION["user"]->getIfAdmin()) { ?>
 		|
 		<a href="index.php">Admin</a>
 		<?php } ?>
@@ -124,7 +123,7 @@ function printFooter() { ?>
 
 function printUnderConstruction() { ?>
 <h1 class="center">This part of the site is currently under construction 
-and will be up	soon. Please check back later.</h1> <?php
+and will be up	soon. Please check back later.</h1><?php
 }
 
 ?>
