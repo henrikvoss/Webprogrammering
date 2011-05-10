@@ -1,5 +1,12 @@
 <?php
 
+/*
+TODO:
+En metode eller annen måte som sjekker for SQL-planting!
+input må ikke inneholde semikolon, erlik-tegn, sql-kommentar-tegn,
+visse sql-syntax-ord. Se uke 13 i webprog-fagstoff!
+ */
+
 session_start();
 error_reporting(-1);
 
@@ -8,13 +15,6 @@ if (!isset($_SESSION["database"])) {
 	$_SESSION["database"] =
 		new Database('cube.iu.hio.no', 's171172', '', 's171172');
 }
-
-/*
-TODO:
-En metode som sjekker for SQL-planting!
-input må ikke inneholde semikolon, erlik-tegn, sql-kommentar-tegn,
-visse sql-syntax-ord.
- */
 
 function __autoload($className) {
 	include_once("class".$className.".php");
@@ -109,7 +109,7 @@ function printFooter() { ?>
 		<a href="basket.php">Basket</a>
 		<?php if ($_SESSION["user"]->getIfAdmin()) { ?>
 		|
-		<a href="index.php">Admin</a>
+		<a href="admin.php">Admin</a>
 		<?php } ?>
 	</section><?php
 	} else {?>

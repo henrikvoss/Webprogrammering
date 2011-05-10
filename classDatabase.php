@@ -13,6 +13,10 @@ class Database {
 		$this->DBName = $dn;
 	}
 
+	private function hashString($pas) {
+		return sha1($pas);
+	}
+
 	/**
 	 * Sett $db til denne funksjonen i starten av hver funksjon for å 
 	 * opprette et mysqli-objekt.
@@ -133,10 +137,6 @@ class Database {
 				}
 			}
 		}
-	}
-
-	private function hashString($pas) {
-		return sha1($pas);
 	}
 }
 
