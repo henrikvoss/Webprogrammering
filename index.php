@@ -17,14 +17,21 @@
 	<section class="text">
 
 <?php
+
 if (isset($_REQUEST["login"])) {
+
 	if ( $_SESSION["database"]->checkUser($_REQUEST["username"],$_REQUEST["password"]) ) {
 		setUser($_REQUEST["username"]);
 		/* så sjekker controller.php:
 		 * Sjekker om bruker er admin i classCustomer-konstruktøren.  
 		 **/
 	}
+
+} else if(isset($_REQUEST["addNewUser"]))	{
+	$_SESSION['database']->addUserData($_POST['email'],$_POST['password'], $_POST['first'], $_POST['surname'], $_POST['address'], $_POST['postalcode'], $_POST['city'], $_POST['country']);
+	setUser($_REQUEST["email"]);
 }
+
 
 
 if (!isset($_SESSION["user"])) {
@@ -50,8 +57,11 @@ if (!isset($_SESSION["user"])) {
 
 <p class="floatRight"><a href="register.php">Not registered?</a></p>
 <?php
-} else {?>
+} else {
+	if ( !$_SESSION["user"]->getAdmin() ) {
+?>
 
+<!-- USER DASHBOARD -->
 <h1>Here you can browse the items in the webshop.</h1>
 
 <form id="request" action="index.php" method="post" >
@@ -62,18 +72,29 @@ if (!isset($_SESSION["user"])) {
 				<select name="style">
 					<option value="choose">--Choose a style--</option>
 					<option value="20SS10">Spring/Summer</option>
-				</td>
-				<td>Price range:</td>
-				<td align="right">
-					<select name="price">
-						<option value="low">Low (0-&gt;1499)</option>
-						<option value="medium">Medium (1500-&gt;2999)</option>
-						<option value="high">Low (3000-&gt;)</option>
-						<td>Show wares:</td>
-						<td><input type="submit" name="show" VALUE="Show"></td>
-					</tr>
-				</table>
-				</form><?php
+				</select>
+			</td>
+			<td>Price range:</td>
+			<td align="right">
+				<select name="price">
+					<option value="low">Low (0-&gt;1499)</option>
+					<option value="medium">Medium (1500-&gt;2999)</option>
+					<option value="high">Low (3000-&gt;)</option>
+				</select>
+			</td>
+			<td>Show wares:</td>
+			<td><input type="submit" name="show" VALUE="Show"></td>
+		</tr>
+	</table>
+</form>
+
+<?php
+
+	} else {
+?>
+<!-- ADMIN DASHBOARD -->
+<?php
+	}
 }
 
 
