@@ -13,10 +13,6 @@ class Database {
 		$this->DBName = $dn;
 	}
 
-	private function hashString($pas) {
-		return sha1($pas);
-	}
-
 	/**
 	 * Sett $db til denne funksjonen i starten av hver funksjon for å 
 	 * opprette et mysqli-objekt.
@@ -32,31 +28,8 @@ class Database {
 		return $db;
 	}
 
-	public function selectQuery($sql) {
-		$db = $this->connectToDB();
-		$result= $db->query($sql);
-
-		if ( !$result) {
-			echo "<p>Error in connection to the database.</p>";
-			return false;
-		}
-		else {
-
-			$antallRader = $db->affected_rows;
-			$table = array();
-
-			if ( $antallRader == 0 ) {
-				return false;
-				break;
-			}
-			else {
-				for ( $i = 0; $i < $antallRader; $i++ ) {
-					$row = $result->fetch_object();
-					$table[$i] = $row;
-				}
-				return $table;
-			}
-		}
+	private function hashString($pas) {
+		return sha1($pas);
 	}
 
 	public function addUserData($em, $pass, $first, $sur, $add, $post, $city, $country) {
@@ -74,6 +47,26 @@ class Database {
 			}
 			else {
 				return true;
+			}
+		}
+	}
+
+	public function checkIfAdmin($user) {
+		$db = $this->connectToDB();
+		
+		if ( $db ) {
+			$sql ="select email from Admin where email='".$user."'";
+			$result = $db->query($sql);
+
+			if ( !$result ) {
+				echo "<p>Could not check if you are admin: ".$db->error."</p>";
+				return false;
+			} else {
+				if ( ($db->affected_rows) == 0 ) {
+					return false;
+				} else {
+					return true;
+				}
 			}
 		}
 	}
@@ -119,25 +112,33 @@ class Database {
 		}
 	}
 
-	public function checkIfAdmin($user) {
+	public function selectQuery($sql) {
 		$db = $this->connectToDB();
-		
-		if ( $db ) {
-			$sql ="select email from Admin where email='".$user."'";
-			$result = $db->query($sql);
+		$result= $db->query($sql);
 
-			if ( !$result ) {
-				echo "<p>Could not check if you are admin: ".$db->error."</p>";
+		if ( !$result) {
+			echo "<p>Error in connection to the database.</p>";
+			return false;
+		}
+		else {
+
+			$antallRader = $db->affected_rows;
+			$table = array();
+
+			if ( $antallRader == 0 ) {
 				return false;
-			} else {
-				if ( ($db->affected_rows) == 0 ) {
-					return false;
-				} else {
-					return true;
+				break;
+			}
+			else {
+				for ( $i = 0; $i < $antallRader; $i++ ) {
+					$row = $result->fetch_object();
+					$table[$i] = $row;
 				}
+				return $table;
 			}
 		}
 	}
+
 }
 
 ?>

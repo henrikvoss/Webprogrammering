@@ -7,7 +7,7 @@
 
 	<meta name="description" content="Shop at VATLE." />
 
-	<title>VATLE - Webshop login</title>
+	<title>VATLE - Webshop</title>
 
 	<?php addLinkTags(); ?>
 </head>

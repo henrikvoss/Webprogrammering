@@ -16,6 +16,23 @@ if (!isset($_SESSION["database"])) {
 		new Database('cube.iu.hio.no', 's171172', '', 's171172');
 }
 
+/* Sjekker om vareobjekter er opprettet, hvis ikke:
+ * -Henter alle varene fra databasen og oppretter objekter for hver vare.
+ * -Alle varene er i en array i $_SESSION["styles"]. */
+if ( !isset($_SESSION["styles"]) ) {
+	$sql = "select * from Styles";
+	$styleTable = $_SESSION["database"]->selectQuery($sql);
+	$allStylesArray = array();
+
+	for ( $i = 0; $i < count($styleTable); $i++ ) {
+		/* TODO: send med alle kolonnene som parameter. */
+		$allStylesArray[$i] =
+			new Style($styleTable[$i]->stylename);
+	}
+
+	$_SESSION["styles"] = $allStylesArray;
+}
+
 function __autoload($className) {
 	include_once("class".$className.".php");
 }
