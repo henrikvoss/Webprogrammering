@@ -2,6 +2,10 @@
 
 /*
 TODO:
+create newStyle.php
+create basket.php
+create admin.php
+TODO:
 En metode eller annen måte som sjekker for SQL-planting!
 input må ikke inneholde semikolon, erlik-tegn, sql-kommentar-tegn,
 visse sql-syntax-ord. Se uke 13 i webprog-fagstoff!
@@ -55,7 +59,7 @@ function setUser($name) {
 /* TODO:
  * Lage mulighet til å legge til handlekurven og for admin og endre vare.
  */
-function printStyle($style) {?>
+function printStyle($style, $styleArrayKey) {?>
 <div class="browseStyles">
 
 	<img class="floatLeft" src="<?php echo $style->getImage(); ?>"
@@ -63,6 +67,15 @@ function printStyle($style) {?>
 	<p>Style: <?php echo $style->getName(); ?></p>
 	<p>Price: <?php echo $style->getPrice(); ?></p>
 	<p>Stock: <?php echo $style->getStock(); ?></p>
+	<form action="basket.php" method="post">
+		<input type="text" name="amount<?php echo $styleArrayKey; ?>" value="1" />
+		<input type="submit" name="<?php echo $styleArrayKey; ?>" value="Add to basket" />
+	</form>
+	<?php if ( $_SESSION["user"]->getIfAdmin() ) {
+	?><form action="index.php" method="post">
+		<input type="submit" name="<?php echo $styleArrayKey; ?>" value="Change item"/>
+	</form><?php
+	} ?>
 </div>
 <?php
 }	
@@ -134,15 +147,18 @@ function printFooter() { ?>
 			<a href="http://twitter.com/#!/vatle" class="twitter" title="VATLE on twitter">
 				-Twitter<span></span>
 			</a>
-			</section><?php
+			</section>
+
+<?php
+
 	if (isset($_SESSION["user"])) {?>
 	<section class="floatLeft">
 		<a href="logout.php">Logout</a>
 		|
 		<a href="basket.php">Basket</a>
 		<?php if ($_SESSION["user"]->getIfAdmin()) { ?>
-		|
-		<a href="admin.php">Admin</a>
+		| You are logged in as admin. See
+		<a href="admin.php">admin page</a>.
 		<?php } ?>
 		</section><?php
 	} else {?>
@@ -154,7 +170,7 @@ function printFooter() { ?>
 	</footer> <?php
 }
 
-function printUnderConstruction() { ?>
+function printUnderConstruction() {?>
 <h1 class="center">This part of the site is currently under construction 
 and will be up	soon. Please check back later.</h1><?php
 }

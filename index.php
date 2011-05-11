@@ -62,14 +62,15 @@ if (!isset($_SESSION["user"])) {
 } else {
 
 	/* Dashboard to browse and update items -------------------------------*/
-	if ( $_SESSION["user"]->getIfAdmin() ) {
-		?><h1>Browse and update items</h1><?php
+	if ( $_SESSION["user"]->getIfAdmin() ) {?>
+	<h1>Browse and update items</h1>
+	<p><a href="newStyle.php">Add a new item to the database</a></p><?php
 	} else {
 		?><h1>Browse items</h1><?php
 	}
 ?>
 
-<form id="request" action="index.php" method="post" >
+<form id="request" action="index.php" method="get" >
 	<table border="0" >
 		<tr>
 			<td>Choose style:</td>
@@ -118,9 +119,9 @@ if (!isset($_SESSION["user"])) {
 			with <?php echo $_REQUEST["price"]; ?> price</h2><?php
 
 			/* Liste varer som oppfyller begge kriterier: */
-			foreach ($_SESSION["style"] as $style) {
+			foreach ($_SESSION["style"] as $key=>$style) {
 				if ( ($style->getSeason() == $_REQUEST["season"]) && (($gtPrice <= $style->getPrice()) && ($style->getPrice() <= $ltPrice)) ) {
-					printStyle($style);
+					printStyle($style,$key);
 				}
 			}
 
@@ -128,9 +129,10 @@ if (!isset($_SESSION["user"])) {
 			?><h2>Styles in <?php echo $_REQUEST["season"]; ?></h2><?php
 
 			/* Liste aller varer for en sesong: */
-			foreach ($_SESSION["style"] as $style) {
+			foreach ($_SESSION["style"] as $key=>$style) {
+
 				if ( ($style->getSeason() == $_REQUEST["season"]) ) {
-					printStyle($style);
+					printStyle($style,$key);
 				}
 			}
 
@@ -138,22 +140,25 @@ if (!isset($_SESSION["user"])) {
 			?><h2>Styles with <?php echo $_REQUEST["price"]; ?> price</h2><?php
 
 			/* Liste aller varer for en priskategori: */
-			foreach ($_SESSION["style"] as $style) {
+			foreach ($_SESSION["style"] as $key=>$style) {
+
 				if ( (($gtPrice <= $style->getPrice()) && ($style->getPrice() <= $ltPrice)) ) {
-					printStyle($style);
+					printStyle($style,$key);
 				}
 			}
 
 		} else {
 			?><h2>All styles</h2><?php
 
-			/* Liste alle varer: *//*
-			foreach ($_SESSION["style"] as $style) {
-				printStyle($style);
-			}*/
+			/* Liste alle varer: */
+			foreach ($_SESSION["style"] as $key=>$style) {
+				printStyle($style,$key);
+			}
+			/*
 			for ( $i = 0; $i < count($_SESSION["style"]); $i++ ) {
 				printStyle($_SESSION["style"][$i]);
 			}
+			 */
 
 		}
 	}
@@ -161,11 +166,9 @@ if (!isset($_SESSION["user"])) {
 
 }
 ?>
-</section><!-- End text class -->
-<?php
 
-printFooter();
-?>
+</section><!-- End text class -->
+<?php printFooter(); ?>
 
 </section>
 </body>
