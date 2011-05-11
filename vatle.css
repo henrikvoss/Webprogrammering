@@ -203,10 +203,10 @@ nav#mainMenu section a:hover span {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
-	width: 400px;
+	width: 700px;
 }
 
-.text h1 {
+.text h1, .text h2 {
 	text-align: center;
 }
 
