@@ -19,18 +19,19 @@ if (!isset($_SESSION["database"])) {
 /* Sjekker om vareobjekter er opprettet, hvis ikke:
  * -Henter alle varene fra databasen og oppretter objekter for hver vare.
  * -Alle varene er i en array i $_SESSION["styles"]. */
-if ( !isset($_SESSION["styles"]) ) {
+if ( !isset($_SESSION["style"]) ) {
 	$sql = "select * from Styles";
 	$styleTable = $_SESSION["database"]->selectQuery($sql);
 	$allStylesArray = array();
 
 	for ( $i = 0; $i < count($styleTable); $i++ ) {
-		/* TODO: send med alle kolonnene som parameter. */
 		$allStylesArray[$i] =
-			new Style($styleTable[$i]->stylename);
+			new Style($styleTable[$i]->stylename, $styleTable[i]->season,
+				$styleTable[i]->pricePerStyle, $styleTable[i]->stock,
+				$styleTable[i]->image);
 	}
 
-	$_SESSION["styles"] = $allStylesArray;
+	$_SESSION["style"] = $allStylesArray;
 }
 
 function __autoload($className) {
@@ -49,12 +50,24 @@ function setUser($name) {
 	$_SESSION["user"] = new User($name);
 }
 
+/* TODO:
+ * Lage mulighet til å legge til handlekurven og for admin og endre vare.
+ */
+function printStyle($style) {?>
+<p>
+	<img class="floatLeft" src="<?php echo $style->getImage(); ?>"
+	alt="<?php echo $style->getName(); ?>"/>
+	<p>Style: <?php echo $style->getName(); ?></p>
+	<p>Price: <?php echo $style->getPrice(); ?></p>
+	<p>Stock: <?php echo $style->getStock(); ?></p>
+</p>
+<?php
+}	
 
 /* Methods that print out html-structure-code (eg. footer, header): */
 
 function addLinkTags() {?>
-<link rel="stylesheet" type="text/css" href="vatle.css" title="Normal style" />
-<link rel="shortcut icon" href="favicon.ico" /><?php
+	<link rel="stylesheet" type="text/css" href="vatle.css" title="Normal style" /><?php
 }
 
 function printHeader() { ?>

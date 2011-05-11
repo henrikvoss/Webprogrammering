@@ -56,10 +56,12 @@ if (!isset($_SESSION["user"])) {
 </form>
 
 <p class="floatRight"><a href="register.php">Not registered?</a></p>
+
 <?php
+
 } else {
 
-	/* DASHBOARD TO BROWSE AND UPDATE ITEMS */
+	/* Dashboard to browse and update items -------------------------------*/
 	if ( $_SESSION["user"]->getIfAdmin() ) {
 		?><h1>Browse and update items</h1><?php
 	} else {
@@ -95,32 +97,64 @@ if (!isset($_SESSION["user"])) {
 </form>
 
 <?php
-	if ( isset($_REQUEST["listStyles"]) ) {
-		$sql = "select image,stylename,pricePerStyle from Style";
 
-		$seasonChosen = false;
-		if ( $_REQUEST["season"] != "none" ) {
-			$seasonChosen = true;
-			$sql .= " where season='".$_REQUEST['season']."'";
-		}
+	if ( isset($_REQUEST["listStyles"]) ) {
+		$gtPrice = 0;
+		$ltPrice = 999999;
 
 		if ( $_REQUEST["price"] != "none" ) {
-			if ($seasonChosen) $sql .= " and pricePerStyle ";
-			else $sql .= " where pricePerStyle ";
-			/* Add to query what price ranges using if-loops. */
 			if ( $_REQUEST["price"] == "low" ) {
-				$sql .= "between 0 and 1499";
+				$ltPrice = 1499;
 			} else if ( $_REQUEST["price"] == "medium" ) {
-				$sql .= "between 1500 and 2999";
+				$gtPrice = 1500;
+				$ltPrice = 2999;
 			} else {
-				$sql .= "> 3000";
+				$gtPrice = 3000;
 			}
 		}
 
-		$styles = $_SESSION["database"]->selectQuery($sql);
+		if (($_REQUEST["season"] != "none") && ($_REQUEST["price"] != "none")) {
+			?><h2>Styles in <?php echo $_REQUEST["season"]; ?>
+			with <?php echo $_REQUEST["price"]; ?> price</h2><?php
 
-		/* TODO: print $styles */
+			/* Liste varer som oppfyller begge kriterier: */
+			foreach ($_SESSION["style"] as $style) {
+				if ( ($style->getSeason() == $_REQUEST["season"]) && (($gtPrice <= $style->getPrice()) && ($style->getPrice() <= $ltPrice)) ) {
+					printStyle($style);
+				}
+			}
+
+		} elseif ( ($_REQUEST["season"] != "none") && ($_REQUEST["price"] == "none") ) {
+			?><h2>Styles in <?php echo $_REQUEST["season"]; ?></h2><?php
+
+			/* Liste aller varer for en sesong: */
+			foreach ($_SESSION["style"] as $style) {
+				if ( ($style->getSeason() == $_REQUEST["season"]) ) {
+					printStyle($style);
+				}
+			}
+
+		} elseif ( ($_REQUEST["season"] == "none") && ($_REQUEST["price"] != "none") ) {
+			?><h2>Styles with <?php echo $_REQUEST["price"]; ?> price</h2><?php
+
+			/* Liste aller varer for en priskategori: */
+			foreach ($_SESSION["style"] as $style) {
+				if ( (($gtPrice <= $style->getPrice()) && ($style->getPrice() <= $ltPrice)) ) {
+					printStyle($style);
+				}
+			}
+
+		} else {
+			?><h2>All styles</h2><?php
+
+			/* Liste alle varer: */
+			foreach ($_SESSION["style"] as $style) {
+				printStyle($style);
+			}
+
+		}
 	}
+	/* END Dashboard to browse and update items ---------------------------*/
 
 }
 
