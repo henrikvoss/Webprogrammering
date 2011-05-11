@@ -147,9 +147,12 @@ if (!isset($_SESSION["user"])) {
 		} else {
 			?><h2>All styles</h2><?php
 
-			/* Liste alle varer: */
+			/* Liste alle varer: *//*
 			foreach ($_SESSION["style"] as $style) {
 				printStyle($style);
+			}*/
+			for ( $i = 0; $i < count($_SESSION["style"]); $i++ ) {
+				printStyle($_SESSION["style"][$i]);
 			}
 
 		}
@@ -157,7 +160,9 @@ if (!isset($_SESSION["user"])) {
 	/* END Dashboard to browse and update items ---------------------------*/
 
 }
-
+?>
+</section><!-- End text class -->
+<?php
 
 printFooter();
 ?>

@@ -210,11 +210,6 @@ nav#mainMenu section a:hover span {
 	text-align: center;
 }
 
-.text img {
-	width: 200px;
-	float: right;
-}
-
 #startPic {
 	display: block;
 	margin-left: auto;
@@ -229,10 +224,19 @@ section#wrap {
 	margin: 0 auto -45px; /* -:footer height */
 }
 
+.browseStyles {
+	border: 1px solid grey;
+	display: block;
+	float: left;
+	margin: 2px;
+	padding: 3px;
+}
+
 
 /* FOOTER * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 footer, div#footerPush {
+	clear: both;
 	display: block;
 	height: 41px;
 }
@@ -241,7 +245,6 @@ footer {
 	display: block;
 	width: 100%;
 	border-top: thin solid black;
-	clear: both;
 	overflow: hidden;
 }
 

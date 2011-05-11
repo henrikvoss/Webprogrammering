@@ -8,6 +8,10 @@ visse sql-syntax-ord. Se uke 13 i webprog-fagstoff!
  */
 
 session_start();
+/*
+error_reporting(0);
+For bruk under utvikling:
+ */
 error_reporting(-1);
 
 /* Sikrer at database-objektet er klart. */
@@ -20,15 +24,13 @@ if (!isset($_SESSION["database"])) {
  * -Henter alle varene fra databasen og oppretter objekter for hver vare.
  * -Alle varene er i en array i $_SESSION["styles"]. */
 if ( !isset($_SESSION["style"]) ) {
-	$sql = "select * from Styles";
+	$sql = "select * from Style";
 	$styleTable = $_SESSION["database"]->selectQuery($sql);
 	$allStylesArray = array();
 
 	for ( $i = 0; $i < count($styleTable); $i++ ) {
 		$allStylesArray[$i] =
-			new Style($styleTable[$i]->stylename, $styleTable[i]->season,
-				$styleTable[i]->pricePerStyle, $styleTable[i]->stock,
-				$styleTable[i]->image);
+			new Style($styleTable[$i]->stylename, $styleTable[$i]->season, $styleTable[$i]->pricePerStyle, $styleTable[$i]->stock, $styleTable[$i]->image);
 	}
 
 	$_SESSION["style"] = $allStylesArray;
@@ -54,13 +56,14 @@ function setUser($name) {
  * Lage mulighet til å legge til handlekurven og for admin og endre vare.
  */
 function printStyle($style) {?>
-<p>
+<div class="browseStyles">
+
 	<img class="floatLeft" src="<?php echo $style->getImage(); ?>"
 	alt="<?php echo $style->getName(); ?>"/>
 	<p>Style: <?php echo $style->getName(); ?></p>
 	<p>Price: <?php echo $style->getPrice(); ?></p>
 	<p>Stock: <?php echo $style->getStock(); ?></p>
-</p>
+</div>
 <?php
 }	
 
@@ -120,18 +123,18 @@ function printFooter() { ?>
 
 
 	<footer>
-	<section class="floatRight">
-		<span class="followVatle">Follow VATLE:</span>
-		<a href="http://vatlelate.blogspot.com/" class="blog" title="VATLE blog">
-			-Blog<span></span>
-		</a>
-		<a href="http://www.facebook.com/pages/VATLE/123522228489" class="facebook" title="VATLE on facebook">
-			-Facebook<span></span>
-		</a>
-		<a href="http://twitter.com/#!/vatle" class="twitter" title="VATLE on twitter">
-			-Twitter<span></span>
-		</a>
-	</section><?php
+		<section class="floatRight">
+			<span class="followVatle">Follow VATLE:</span>
+			<a href="http://vatlelate.blogspot.com/" class="blog" title="VATLE blog">
+				-Blog<span></span>
+			</a>
+			<a href="http://www.facebook.com/pages/VATLE/123522228489" class="facebook" title="VATLE on facebook">
+				-Facebook<span></span>
+			</a>
+			<a href="http://twitter.com/#!/vatle" class="twitter" title="VATLE on twitter">
+				-Twitter<span></span>
+			</a>
+			</section><?php
 	if (isset($_SESSION["user"])) {?>
 	<section class="floatLeft">
 		<a href="logout.php">Logout</a>
@@ -141,11 +144,11 @@ function printFooter() { ?>
 		|
 		<a href="admin.php">Admin</a>
 		<?php } ?>
-	</section><?php
+		</section><?php
 	} else {?>
 	<section class="floatLeft">
-	<a href="index.php">Login</a>
-	</section><?php
+		<a href="index.php">Login</a>
+		</section><?php
 	}?>
 
 	</footer> <?php
