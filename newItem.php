@@ -12,7 +12,7 @@
 		
 		function validate_name()
 		{
-			regEx = /^[a-zA-ZæøåÆØÅ .\-]{1,30}$/;
+			regEx = /^[a-zA-ZæøåÆØÅ0-9 .\-]{1,30}$/;
 			OK = regEx.test(document.addItems.itemName.value);
 			if(!OK)
 			{
