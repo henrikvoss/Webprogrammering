@@ -157,12 +157,9 @@ if ( isset($_SESSION["user"]) ) {
 			<td><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
 			</tr>
 		</table>
-		<img class="floatLeft" src="<?php echo $changeStyle->getImage(); ?>"
-	alt="<?php echo $changeStyle->getName(); ?>"/>
-	<input type="text" name="imageUrl" value="<?php echo $changeStyle->getImage(); ?>" />
 		<table>
 			<tr>
-				<td>Upload a new file:<input name="uploadedImg" type="file">
+				<td>Upload a new file:<input value="<?php echo $changeStyle->getImage(); ?>" name="uploadedImg" type="file">
 					<input type="submit" name="changeItem" value="Change Item">
 				</td>
 			</tr>
@@ -191,14 +188,20 @@ if ( isset($_SESSION["user"]) ) {
 
 		} else if ( isset($_REQUEST["changeItem"]) ) {
 			
-			$imageUrl = "Images/Lookbook/";
-			$imageUrl .= basename($_FILES["uploadedImg"]["name"]);
+			$imageUrl;
 
-			if(move_uploaded_file($_FILES['uploadedImg']['tmp_name'], $imageUrl)) {
-				echo "<p>The image ".basename( $_FILES['uploadedImg']['name']). 
-					" has been uploaded.</p>";
-			} else{
-				echo "<p>There was an error uploading your image, please try again.</p>";
+			if ( basename($_FILES["uploadedImg"]["name"]) != "" ) {
+				$imageUrl = "Images/Lookbook/";
+				$imageUrl .= basename($_FILES["uploadedImg"]["name"]);
+
+				if(move_uploaded_file($_FILES['uploadedImg']['tmp_name'], $imageUrl)) {
+					echo "<p>The image ".basename( $_FILES['uploadedImg']['name']). 
+						" has been uploaded.</p>";
+				} else{
+					echo "<p>There was an error uploading your image, please try again.</p>";
+				}
+			} else {
+				$imageUrl = $_SESSION["style"][$_REQUEST["styleKey"]]->getImage();
 			}
 
 			$style = $_SESSION["style"][$_REQUEST["styleKey"]];
