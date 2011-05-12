@@ -163,7 +163,7 @@ class Database {
 		$db = $this->connectToDB();
 
 		if ( $db ) {
-			$sql = "update Style set (name = '$n', season = '$s', price = $p, stock = $st, image = '$i') where name = '$n'";
+			$sql = "update Style set name = '$n', season = '$s', price = $p, stock = $st, image = '$i' where name = '$n'";
 			$result = $db->query($sql);
 
 			if ( !$result ) {
