@@ -162,14 +162,17 @@ class Database {
 		$db = $this->connectToDB();
 
 		if ( $db ) {
-			$sql = "update Style set stylename = '$n', season = '$s', pricePerStyle = $p, stock = $st, image = '$i' where name = '$n'";
+			$sql = "update Style set stylename = '$n', season = '$s', pricePerStyle = $p, stock = $st, image = '$i' where stylename = '$n'";
+			echo "update Style set stylename = '$n', season = '$s', pricePerStyle = $p, stock = $st, image = '$i' where stylename = '$n'";
 			$result = $db->query($sql);
 
 			if ( !$result ) {
 				echo "<p>Style could not be updated. Error in query.</p>";
+				echo "<p>".$db->error."</p>";
 				return false;
 			} else {
 				if ( ($db->affected_rows) == 0 ) {
+					echo "<p>No style selected. Error in query.</p>";
 					return false;
 				} else {
 					return true;
