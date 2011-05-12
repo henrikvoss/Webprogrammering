@@ -41,7 +41,7 @@ if ( isset($_SESSION["user"]) ) {
 	</table>
 	<table>
 		<tr>
-			<td>Choose a file to upload:<input name="uloadedImg" type="file"><input type="submit" name="addItem" value="Upload Item"></td>
+			<td>Choose a file to upload:<input name="uploadedImg" type="file"><input type="submit" name="addItem" value="Upload Item"></td>
 	</table>
 </form>
 
