@@ -64,7 +64,7 @@ if (!isset($_SESSION["user"])) {
 	/* Dashboard to browse and update items -------------------------------*/
 	if ( $_SESSION["user"]->getIfAdmin() ) {?>
 	<h1>Browse and update items</h1>
-	<p><a href="newStyle.php">Add a new item to the database</a></p><?php
+	<p><a href="newItem.php">Add a new item to the database</a></p><?php
 	} else {
 		?><h1>Browse items</h1><?php
 	}

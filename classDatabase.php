@@ -51,6 +51,26 @@ class Database {
 		}
 	}
 
+	public function addToDB($style) {
+		$db = $this->connectToDB();
+
+		if ( $db ) {
+			$sql = "insert into Style values ('".$style->getName()."', '".$style->getSeason()."', ".$style->getPrice().", ".$style->getStock().", '".$style->getImage()."')";
+			$result = $db->query($sql);
+
+			if ( !$result ) {
+				echo "<p>Style could not be added to the database. Error in query.</p>";
+				return false;
+			} else {
+				if ( ($db->affected_rows) == 0 ) {
+					return false;
+				} else {
+					return true;
+				}				
+			}
+		}
+	}
+
 	public function checkIfAdmin($user) {
 		$db = $this->connectToDB();
 		
