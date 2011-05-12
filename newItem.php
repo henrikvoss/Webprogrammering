@@ -12,7 +12,7 @@
 		
 		function validate_name()
 		{
-			regEx = /^[a-zA-ZæøåÆØÅ .\-](1,30)$/;
+			regEx = /^[a-zA-ZæøåÆØÅ .\-]{1,30}$/;
 			OK = regEx.test(document.addItems.itemName.value);
 			if(!OK)
 			{
@@ -25,7 +25,7 @@
 		
 		function validate_season()
 		{
-			regEx = /^[a-zA-ZæøåÆØÅ .\-](1,30)$/;
+			regEx = /^[a-zA-ZæøåÆØÅ .\-]{1,30}$/;
 			OK = regEx.test(document.addItems.itemSeason.value);
 			if(!OK)
 			{
@@ -38,7 +38,7 @@
 		
 		function validate_price()
 		{
-			regEx = /^[0-9](1,10)$/;
+			regEx = /^[0-9]{1,10}$/;
 			OK = regEx.test(document.addItems.itemPrice.value);
 			if(!OK)
 			{
@@ -51,7 +51,7 @@
 		
 		function validate_instock()
 		{
-			regEx = /^[0-9](1,10)$/;
+			regEx = /^[0-9]{1,10}$/;
 			OK = regEx.test(document.addItems.inStock.value);
 			if(!OK)
 			{

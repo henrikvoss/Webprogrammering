@@ -16,7 +16,7 @@
 		
 		function validate_first()
 		{
-			regEx = /^[a-zA-ZæøåÆØÅ .\-](2,20)$/;
+			regEx = /^[a-zA-ZæøåÆØÅ .\-]{2,20}$/;
 			OK = regEx.test(document.myForm.first.value);
 			if(!OK)
 			{
@@ -29,7 +29,7 @@
 		
 		function validate_surname()
 		{
-			regEx = /^[a-zA-ZæøåÆØÅ .\-](2,20)$/;
+			regEx = /^[a-zA-ZæøåÆØÅ .\-]{2,20}$/;
 			OK = regEx.test(document.myForm.surname.value);
 			if(!OK)
 			{
@@ -42,7 +42,7 @@
 		
 		function validate_address()
 		{
-			regEx = /^[a-zA-ZæøåÆØÅ0-9 .\-](2,30)$/;
+			regEx = /^[a-zA-ZæøåÆØÅ0-9 .\-]{2,30}$/;
 			OK = regEx.test(document.myForm.address.value);
 			if(!OK)
 			{
@@ -55,7 +55,7 @@
 		
 		function validate_city()
 		{
-			regEx = /^[a-zA-ZæøåÆØÅ .\-](2,20)$/;
+			regEx = /^[a-zA-ZæøåÆØÅ .\-]{2,20}$/;
 			OK = regEx.test(document.myForm.city.value);
 			if(!OK)
 			{
@@ -68,7 +68,7 @@
 		
 		function validate_postalcode()
 		{
-			regEx = /^[0-9 .\-](4,8)$/;
+			regEx = /^[0-9 .\-]{4,8}$/;
 			OK = regEx.test(document.myForm.postalcode.value);
 			if(!OK)
 			{
@@ -81,7 +81,7 @@
 		
 		function validate_country()
 		{
-			regEx = /^[a-zA-ZæøåÆØÅ .\-](2,15)$/;
+			regEx = /^[a-zA-ZæøåÆØÅ .\-]{2,15}$/;
 			OK = regEx.test(document.myForm.country.value);
 			if(!OK)
 			{
@@ -165,12 +165,12 @@ if (!isset($_SESSION["user"])) {
 		</tr>
 		<tr>
 			<td>Country:</td>
-			<td><input type="text" name="country" onChange="validate_country"></td>
+			<td><input type="text" name="country" onChange="validate_country()"></td>
 			<td><div id="wrongCountry">*</div></td>
 		</tr>
 		<tr>
 			<td>E-mail:</td>
-			<td><input type="text" name="email" onChange="validate_email"></td>
+			<td><input type="text" name="email" onChange="validate_email()"></td>
 			<td><div id="wrongEmail">*</div></td>
 		</tr>
 		<tr>
