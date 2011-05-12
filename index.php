@@ -173,6 +173,5 @@ if (!isset($_SESSION["user"])) {
 <?php printFooter(); ?>
 
 </body>
-
 </html>
 
