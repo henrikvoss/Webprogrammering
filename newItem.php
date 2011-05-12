@@ -16,7 +16,7 @@
 			OK = regEx.test(document.addItems.itemName.value);
 			if(!OK)
 			{
-				document.getElementById("wrongName").innerHTML="Error in your input. Only use letters.";
+				document.getElementById("wrongName").innerHTML="Error in your input.";
 				return false;
 			}
 			document.getElementById("wrongName").innerHTML="";
@@ -137,13 +137,12 @@ if ( isset($_SESSION["user"]) ) {
 		</tr>
 		<tr>
 			<td><input type="hidden" name="file" value="1000000" onChange="validate_image()">
-			</tr>
+		</tr>
+		<tr><td><div id="wrongImage"></div></td></tr>
 		</table>
 		<table border="0" cellspacing="5" cellpadding="5">
 			<tr>
-				<td>Choose a file to upload:<input type="file" name="uploadedImg"></td>
-				<td><div id="wrongImage"></div></td>
-				
+				<td>Choose a file to upload:<input type="file" name="uploadedImg"></td>				
 				<td><input type="submit" name="addItem" value="Upload Item">
 				</td>
 			</tr>
