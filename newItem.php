@@ -20,24 +20,29 @@ if ( isset($_SESSION["user"]) ) {
 ?>
 
 <h1>Add a new item</h1>
+
 <form enctype="multipart/form-data" action="newItem.php" method="post">
-	<p>
-		Item name:
-		<input type="text" name="itemName" />
-		Season:
-		<input type="text" name="itemSeason" />
-		Price:
-		<input type="text" name="itemPrice" />
-		In stock:
-		<input type="text" name="inStock" />
-	</p>
-	<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
-	<p>
-		Choose a file to upload: <input name="uploadedImg" type="file" />
-	</p>
-	<p>
-		<input type="submit" name="addItem" value="Upload Item" />
-	</p>
+	<table border="0" cellspacing="5" cellpadding="5">
+		<tr>
+			<td>Item name:</td>
+			<td><input type="text" name="itemName"></td>
+			<td>Season:</td>
+			<td><input type="text" name="itemSeason"></td>
+		</tr>
+		<tr>
+			<td>Price:</td>
+			<td><input type="text" name="itemPrice"></td>
+			<td>In Stock:</td>
+			<td><input type="text" name="inStock"></td>
+		</tr>
+		<tr>
+			<td><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+		</tr>
+	</table>
+	<table>
+		<tr>
+			<td>Choose a file to upload:<input name="uloadedImg" type="file"><input type="submit" name="addItem" value="Upload Item"></td>
+	</table>
 </form>
 
 <?php
