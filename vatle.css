@@ -200,6 +200,7 @@ nav#mainMenu section a:hover span {
 /* HEADER-MIDDLE WRAP * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 .text {
+	padding-bottom: 20px;
 	display: block;
 	margin-left: auto;
 	margin-right: auto;

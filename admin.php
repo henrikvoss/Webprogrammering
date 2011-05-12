@@ -15,9 +15,14 @@
 <body>
 	<?php	printHeader(); ?>
 	<section class="text">
-		<?php if ( $_SESSION["user"]->getIfAdmin() ) ?>
+		
+<?php if( isset($_SESSION["user"]) ) {
+	if( $_SESSION["user"]->getIfAdmin() )
+	}?>
+		
+	
+	
 	</section>
-
 <?php printFooter(); ?>
 
 </body>
