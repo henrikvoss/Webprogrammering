@@ -9,6 +9,7 @@
 	</title>
 	<?php addLinkTags(); ?>
 	<script type="text/javascript" charset="utf-8">
+		
 		function validate_name()
 		{
 			regEx = /^[a-zA-ZæøåÆØÅ .\-](1,30)$/;
