@@ -172,7 +172,7 @@ class Database {
 				return false;
 			} else {
 				if ( ($db->affected_rows) == 0 ) {
-					echo "<p>No style selected. Error in query.</p>";
+					echo "<p>No changes to style.</p>";
 					return false;
 				} else {
 					return true;
