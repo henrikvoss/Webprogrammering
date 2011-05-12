@@ -66,7 +66,9 @@ if (!isset($_SESSION["user"])) {
 	<h1>Browse and update items</h1>
 	<p><a href="newItem.php">Add a new item to the database</a></p><?php
 	} else {
-		?><h1>Browse items</h1><?php
+		?><h1>Browse items</h1>
+		<p>To view all styles and prices on our merchandise, leave the dropdown menus blank, and click "Show"</p>
+		<?php
 	}
 ?>
 
@@ -170,8 +172,6 @@ if (!isset($_SESSION["user"])) {
 </section><!-- End text class -->
 <?php printFooter(); ?>
 
-</section>
 </body>
-
 </html>
 
