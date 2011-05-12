@@ -191,20 +191,14 @@ if ( isset($_SESSION["user"]) ) {
 
 		} else if ( isset($_REQUEST["changeItem"]) ) {
 			
-			$imageUrl;
+			$imageUrl = "Images/Lookbook/";
+			$imageUrl .= basename($_FILES["uploadedImg"]["name"]);
 
-			if (isset($_REQUEST["uploadedImg"])) {
-				$imageUrl = "Images/Lookbook/";
-				$imageUrl .= basename($_FILES["uploadedImg"]["name"]);
-
-				if(move_uploaded_file($_FILES['uploadedImg']['tmp_name'], $imageUrl)) {
-					echo "<p>The image ".basename( $_FILES['uploadedImg']['name']). 
-						" has been uploaded.</p>";
-				} else{
-					echo "<p>There was an error uploading your image, please try again.</p>";
-				}
-			} else {
-				$imageUrl = $_REQUEST["imageUrl"];
+			if(move_uploaded_file($_FILES['uploadedImg']['tmp_name'], $imageUrl)) {
+				echo "<p>The image ".basename( $_FILES['uploadedImg']['name']). 
+					" has been uploaded.</p>";
+			} else{
+				echo "<p>There was an error uploading your image, please try again.</p>";
 			}
 
 			$style = $_SESSION["style"][$_REQUEST["styleKey"]];
