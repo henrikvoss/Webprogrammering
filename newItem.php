@@ -1,3 +1,4 @@
+<?php include("controller.php"); ?>
 <!DOCTYPE html>
 <html>
 
@@ -6,6 +7,7 @@
 	<title>
 		VATLE - Webshop - Add a new item
 	</title>
+	<?php addLinkTags(); ?>
 </head>
 
 <body>
@@ -29,7 +31,7 @@ if ( isset($_SESSION["user"]) ) {
 		In stock:
 		<input type="text" name="inStock" />
 	</p>
-	<input type="hidden" name="MAX_FILE_SIZE" value="100000" />
+	<input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 	<p>
 		Choose a file to upload: <input name="uploadedImg" type="file" />
 	</p>
@@ -41,18 +43,20 @@ if ( isset($_SESSION["user"]) ) {
 <?php
 
 		if ( isset($_REQUEST["addItem"]) ) {
-			$imageUrl = "Images/".$_REQUEST["itemSeason"]."/Lookbook/";
+			$imageUrl = "Images/Lookbook/";
 			$imageUrl .= basename($_FILES["uploadedImg"]["name"]);
 
 			if(move_uploaded_file($_FILES['uploadedImg']['tmp_name'], $imageUrl)) {
-				echo "<p>The image ".  basename( $_FILES['uploadedfile']['name']). 
+				echo "<p>The image ".basename( $_FILES['uploadedfile']['name']). 
 					" has been uploaded</p>";
 			} else{
 				echo "<p>There was an error uploading your image, please try again.</p>";
 			}
 			
 			$newItem = new Style($_REQUEST["itemName"], $_REQUEST["itemSeason"], $_REQUEST["itemPrice"], $_REQUEST["inStock"], $imageUrl);
-			$_SESSION["database"]->addToDB($newItem);
+			if ($_SESSION["database"]->addToDB($newItem)) {
+				$_SESSION["style"][count($_SESSION["style"])] = $newItem;
+			}
 		}
 	} else {
 		?><a href="index.php">Go to shop</a><?php
