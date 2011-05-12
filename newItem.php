@@ -8,7 +8,7 @@
 		VATLE - Webshop - Add a new item
 	</title>
 	<?php addLinkTags(); ?>
-	<script type="text/javascript" charset="utf-8">
+	<script type="text/javascript">
 		
 		function validate_name()
 		{
@@ -103,7 +103,7 @@ if ( isset($_SESSION["user"]) ) {
 
 <h1>Add a new item</h1>
 
-<form enctype="multipart/form-data" name="addItems" action="newItem.php" method="post" onsubmit="return validate_all()">
+<form enctype="multipart/form-data" name="addItems" action="newItem.php" onsubmit="return validate_all()" method="post">
 	<table border="0" cellspacing="5" cellpadding="5">
 		<tr>
 			<td>Item name:</td>

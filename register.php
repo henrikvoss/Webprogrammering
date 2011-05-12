@@ -12,12 +12,12 @@
 
 	<?php addLinkTags(); ?>
 	
-	<script type="text/javascript" charset="utf-8">
+	<script type="text/javascript">
 		
 		function validate_first()
 		{
 			regEx = /^[a-zA-ZæøåÆØÅ .\-](2,20)$/;
-			OK = regEx.test(document.registerForm.first.value);
+			OK = regEx.test(document.myForm.first.value);
 			if(!OK)
 			{
 				document.getElementById("wrongFirst").innerHTML="Error in your input.";
@@ -30,7 +30,7 @@
 		function validate_surname()
 		{
 			regEx = /^[a-zA-ZæøåÆØÅ .\-](2,20)$/;
-			OK = regEx.test(document.registerForm.surname.value);
+			OK = regEx.test(document.myForm.surname.value);
 			if(!OK)
 			{
 				document.getElementById("wrongSurname").innerHTML="Error in your input.";
@@ -43,7 +43,7 @@
 		function validate_address()
 		{
 			regEx = /^[a-zA-ZæøåÆØÅ0-9 .\-](2,30)$/;
-			OK = regEx.test(document.registerForm.address.value);
+			OK = regEx.test(document.myForm.address.value);
 			if(!OK)
 			{
 				document.getElementById("wrongAddress").innerHTML="Error in your input.";
@@ -56,7 +56,7 @@
 		function validate_city()
 		{
 			regEx = /^[a-zA-ZæøåÆØÅ .\-](2,20)$/;
-			OK = regEx.test(document.registerForm.city.value);
+			OK = regEx.test(document.myForm.city.value);
 			if(!OK)
 			{
 				document.getElementById("wrongCity").innerHTML="Error in your input.";
@@ -69,7 +69,7 @@
 		function validate_postalcode()
 		{
 			regEx = /^[0-9 .\-](4,8)$/;
-			OK = regEx.test(document.registerForm.postalcode.value);
+			OK = regEx.test(document.myForm.postalcode.value);
 			if(!OK)
 			{
 				document.getElementById("wrongPostalcode").innerHTML="Error in your input.";
@@ -82,7 +82,7 @@
 		function validate_country()
 		{
 			regEx = /^[a-zA-ZæøåÆØÅ .\-](2,15)$/;
-			OK = regEx.test(document.registerForm.country.value);
+			OK = regEx.test(document.myForm.country.value);
 			if(!OK)
 			{
 				document.getElementById("wrongCountry").innerHTML="Error in your input.";
@@ -95,7 +95,7 @@
 		function validate_email()
 		{
 			regEx = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-			OK = regEx.test(document.registerForm.email.value);
+			OK = regEx.test(document.myForm.email.value);
 			if(!OK)
 			{
 				document.getElementById("wrongEmail").innerHTML="Error in your input.";
@@ -136,7 +136,7 @@
 if (!isset($_SESSION["user"])) {
 
 ?>
-<form id="register" action="index.php" name="registerForm" method="post" onsubmit="return validate_all()">
+<form action="index.php" name="myForm" onsubmit="return validate_all()" method="post">
 	<table border="0" >
 		<tr>
 			<td>First name:</td>
