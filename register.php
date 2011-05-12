@@ -104,6 +104,23 @@
 			document.getElementById("wrongEmail").innerHTML="";
 			return true;
 		}
+		
+		function validate_all()
+		{
+			firstOK = validate_first();
+			surnameOK = validate_surname();
+			addressOK = validate_address();
+			cityOK = validate_city();
+			postalcodeOK = validate_postalcode();
+			countryOK = validate_country();
+			emailOK = validate_email();
+			
+			if(firstOK && surnameOK && addressOK && cityOK && postalcodeOK && countryOK && emailOK)
+			{
+				return true;
+			}
+			return false;
+		}
 	</script>
 	
 </head>
