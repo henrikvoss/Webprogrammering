@@ -163,7 +163,6 @@ class Database {
 
 		if ( $db ) {
 			$sql = "update Style set stylename = '$n', season = '$s', pricePerStyle = $p, stock = $st, image = '$i' where stylename = '$n'";
-			echo "update Style set stylename = '$n', season = '$s', pricePerStyle = $p, stock = $st, image = '$i' where stylename = '$n'";
 			$result = $db->query($sql);
 
 			if ( !$result ) {

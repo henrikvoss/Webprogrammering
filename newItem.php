@@ -193,14 +193,14 @@ if ( isset($_SESSION["user"]) ) {
 			if(move_uploaded_file($_FILES['uploadedImg']['tmp_name'], $imageUrl)) {
 				echo "<p>The image ".basename( $_FILES['uploadedImg']['name']). 
 					" has been uploaded.</p>";
+				$newItem = new Style($_REQUEST["itemName"], $_REQUEST["itemSeason"], $_REQUEST["itemPrice"], $_REQUEST["inStock"], $imageUrl);
+				if ($_SESSION["database"]->addToDB($newItem)) {
+					$_SESSION["style"][count($_SESSION["style"])] = $newItem;
+			}
 			} else{
 				echo "<p>There was an error uploading your image, please try again.</p>";
 			}
 
-			$newItem = new Style($_REQUEST["itemName"], $_REQUEST["itemSeason"], $_REQUEST["itemPrice"], $_REQUEST["inStock"], $imageUrl);
-			if ($_SESSION["database"]->addToDB($newItem)) {
-				$_SESSION["style"][count($_SESSION["style"])] = $newItem;
-			}
 
 		} else if ( isset($_REQUEST["changeItem"]) ) {
 			
@@ -226,6 +226,7 @@ if ( isset($_SESSION["user"]) ) {
 			$style->setPrice($_REQUEST["itemPrice"]);
 			$style->setStock($_REQUEST["inStock"]);
 			$style->setImage($imageUrl);
+
 			if($_SESSION["database"]->updateDB($_REQUEST["itemName"],$_REQUEST["itemSeason"],$_REQUEST["itemPrice"],$_REQUEST["inStock"],$imageUrl)) {
 				$_SESSION["style"][$_REQUEST["styleKey"]] = $style;
 			} else {

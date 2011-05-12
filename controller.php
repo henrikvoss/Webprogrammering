@@ -2,9 +2,10 @@
 
 /*
 TODO:
-create newStyle.php
 create basket.php
 create admin.php
+TODO:
+oppdatere tabell Style til å ha en primærnøkkel som ikke er navnet på plagget
 TODO:
 En metode eller annen måte som sjekker for SQL-planting!
 input må ikke inneholde semikolon, erlik-tegn, sql-kommentar-tegn,
@@ -67,10 +68,12 @@ function printStyle($style, $styleArrayKey) {?>
 	<p>Style: <?php echo $style->getName(); ?></p>
 	<p>Price: <?php echo $style->getPrice(); ?></p>
 	<p>Stock: <?php echo $style->getStock(); ?></p>
+	<?php if ($style->getStock() != 0) {?>
 	<form action="basket.php" method="post">
 		<input type="text" name="amount<?php echo $styleArrayKey; ?>" value="1" />
 		<input type="submit" name="<?php echo $styleArrayKey; ?>" value="Add to basket" />
 	</form>
+	<?php }?>
 	<?php if ( $_SESSION["user"]->getIfAdmin() ) { ?>
 	<form action="newItem.php" method="post">
 		<input type="submit" name="<?php echo $styleArrayKey; ?>" value="Change item"/>
