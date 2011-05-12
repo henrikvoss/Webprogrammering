@@ -65,7 +65,7 @@
 		function validate_image()
 		{
 			regEx = /^[a-zA-ZæøåÆØÅ0-9]{1,20}$/;
-			OK = regEx.test(document.addItems.uploadedImg.value);
+			OK = regEx.test(document.addItems.file.value);
 			if(!OK)
 			{
 				document.getElementById("wrongImage").innerHTML="You must choose an image.";
@@ -136,12 +136,12 @@ if ( isset($_SESSION["user"]) ) {
 			<td><div id="wrongInStock">*</div></td>
 		</tr>
 		<tr>
-			<td><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+			<td><input type="hidden" name="file" value="1000000" onChange="validate_image()">
 			</tr>
 		</table>
 		<table border="0" cellspacing="5" cellpadding="5">
 			<tr>
-				<td>Choose a file to upload:<input type="file" name="uploadedImg" onChange="validate_image()"></td>
+				<td>Choose a file to upload:<input type="file" name="uploadedImg"></td>
 				<td><div id="wrongImage"></div></td>
 				
 				<td><input type="submit" name="addItem" value="Upload Item">
