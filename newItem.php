@@ -11,11 +11,11 @@
 	<script type="text/javascript" charset="utf-8">
 		function validate_name()
 		{
-			regEx = /^[a-zA-ZæøåÆØÅ .\-](2,30)$/;
+			regEx = /^[a-zA-ZæøåÆØÅ .\-](1,30)$/;
 			OK = regEx.test(document.addItems.itemName.value);
 			if(!OK)
 			{
-				document.getElementById("wrongName").innerHTML="Error in your input. Only use letters."
+				document.getElementById("wrongName").innerHTML="Error in your input. Only use letters.";
 				return false;
 			}
 			document.getElementById("wrongName").innerHTML="";
@@ -24,11 +24,11 @@
 		
 		function validate_season()
 		{
-			regEx = /^[a-zA-ZæøåÆØÅ .\-](2,30)$/;
+			regEx = /^[a-zA-ZæøåÆØÅ .\-](1,30)$/;
 			OK = regEx.test(document.addItems.itemSeason.value);
 			if(!OK)
 			{
-				document.getElementById("wrongSeason").innerHTML="Error in your input. Only use letters and numbers"
+				document.getElementById("wrongSeason").innerHTML="Error in your input.";
 				return false;
 			}
 			document.getElementById("wrongSeason").innerHTML="";
@@ -37,11 +37,11 @@
 		
 		function validate_price()
 		{
-			regEx = /^[0-9](2,10)$/;
+			regEx = /^[0-9](1,10)$/;
 			OK = regEx.test(document.addItems.itemPrice.value);
 			if(!OK)
 			{
-				document.getElementById("wrongPrice").innerHTML="Error in your input. Only use numbers"
+				document.getElementById("wrongPrice").innerHTML="Error in your input.";
 				return false;
 			}
 			document.getElementById("wrongPrice").innerHTML="";
@@ -50,11 +50,11 @@
 		
 		function validate_instock()
 		{
-			regEx = /^[0-9](2,10)$/;
+			regEx = /^[0-9](1,10)$/;
 			OK = regEx.test(document.addItems.inStock.value);
 			if(!OK)
 			{
-				document.getElementById("wrongInStock").innerHTML="Error in your input. Only use numbers"
+				document.getElementById("wrongInStock").innerHTML="Error in your input.";
 				return false;
 			}
 			document.getElementById("wrongInStock").innerHTML="";
