@@ -33,5 +33,25 @@ class Style {
 	public function getStock() {
 		return $this->stock;
 	}
+
+	public function setImage($newimg) {
+		$this->imageUrl = $newimg;
+	}
+
+	public function setName($newname) {
+		$this->name = $newname;
+	}
+
+	public function setPrice($newprice) {
+		$this->price = $newprice;
+	}
+
+	public function setSeason($newseas) {
+		$this->season = $newseas;
+	}
+
+	public function setStock($newstock) {
+		$this->stock = $newstock;
+	}
 }
 ?>
