@@ -142,6 +142,11 @@ if ( isset($_SESSION["user"]) ) {
 			$style->setPrice($_REQUEST["itemPrice"]);
 			$style->setStock($_REQUEST["inStock"]);
 			$style->setImage($imageUrl);
+			if($_SESSION["database"]->updateDB($_REQUEST["itemName"],$_REQUEST["itemSeason"],$_REQUEST["itemPrice"],$_REQUEST["inStock"],$imageUrl)) {
+				$_SESSION["style"][$_REQUEST["styleKey"]] = $style;
+			} else {
+				?><p>The item could not be updated. Please try again.</p><?php
+			}
 		}
 
 	} else {
