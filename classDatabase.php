@@ -159,6 +159,25 @@ class Database {
 		}
 	}
 
+	public function updateDB($n,$s,$p,$st,$i) {
+		$db = $this->connectToDB();
+
+		if ( $db ) {
+			$sql = "update Style set (name = '$n', season = '$s', price = $p, stock = $st, image = '$i') where name = '$n'";
+			$result = $db->query($sql);
+
+			if ( !$result ) {
+				echo "<p>Style could not be updated. Error in query.</p>";
+				return false;
+			} else {
+				if ( ($db->affected_rows) == 0 ) {
+					return false;
+				} else {
+					return true;
+				}				
+			}
+		}
+	}
 }
 
 ?>

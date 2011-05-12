@@ -71,11 +71,11 @@ function printStyle($style, $styleArrayKey) {?>
 		<input type="text" name="amount<?php echo $styleArrayKey; ?>" value="1" />
 		<input type="submit" name="<?php echo $styleArrayKey; ?>" value="Add to basket" />
 	</form>
-	<?php if ( $_SESSION["user"]->getIfAdmin() ) {
-	?><form action="index.php" method="post">
+	<?php if ( $_SESSION["user"]->getIfAdmin() ) { ?>
+	<form action="newItem.php" method="post">
 		<input type="submit" name="<?php echo $styleArrayKey; ?>" value="Change item"/>
-	</form><?php
-	} ?>
+	</form>
+	<?php	} /* END ifAdmin */ ?>
 </div>
 <?php
 }	
@@ -147,7 +147,7 @@ function printFooter() { ?>
 			<a href="http://twitter.com/#!/vatle" class="twitter" title="VATLE on twitter">
 				-Twitter<span></span>
 			</a>
-			</section>
+		</section>
 
 <?php
 
