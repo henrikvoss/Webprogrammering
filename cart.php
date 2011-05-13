@@ -63,9 +63,9 @@ function printCart($cart) {
 if ( isset($_REQUEST["addToCart"]) ) {
 	foreach ($itemInStock as $key=>$value) {
 		if ( !$value ) {	
-			?><p><?php echo $_SESSION["style"]->getName(); ?> is out of stock.</p><?php
+			?><p>Item <?php echo $_SESSION["style"][$key]->getName(); ?> is out of stock.</p><?php
 		} else {
-			?><p><?php echo $value." ".$_SESSION["style"]->getName(); ?> is available.</p><?php
+			?><p><?php echo $value." of item ".$_SESSION["style"][$key]->getName(); ?> is available.</p><?php
 		}
 	}
 	?></p><?php

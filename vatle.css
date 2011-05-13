@@ -229,9 +229,13 @@ section#wrap {
 	border: 1px solid grey;
 	display: block;
 	float: left;
-	height: 200px; width: 200px;
+	height: 210px; width: 200px;
 	margin: 2px;
 	padding: 3px;
+}
+
+.wrongName, .wrongSeason, .wrongPrice, .wrongInStock, .wrongImage {
+	color: red;
 }
 
 
