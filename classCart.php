@@ -21,10 +21,15 @@ class Cart {
 	}
 
 	public function deleteItem($key) {
-		unset($cart[$key]);
+		unset($this->cart[$key]);
 	}
+
 	public function getCart() {
 		return $this->cart;
+	}
+
+	public function setItemAmount($amount,$key) {
+		$this->cart[$key]->setAmountInCart($amount);
 	}
 }
 ?>

@@ -14,7 +14,9 @@ function printStyle($style, $styleArrayKey) {?>
 		Add to cart:
 		<input type="text" name="amount<?php echo $style->getSessionKey(); ?>" value="0" />
 	</p>
-	<?php }?>
+	<?php } else { ?>
+	<p>None left in stock.</p>
+	<?php } ?>
 	<?php /*if ( $_SESSION["user"]->getIfAdmin() ) { ?>
 	<form action="newItem.php" method="post">
 		<input type="submit" name="<?php echo $style->getSessionKey(); ?>" value="Update item"/>

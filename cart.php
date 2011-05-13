@@ -69,15 +69,21 @@ if (!isset($_SESSION["user"])) {
 
 		foreach ($itemInStock as $key=>$value) {
 			if ( !$value ) {	
-				?><p>Item <?php echo $_SESSION["style"][$key]->getName(); ?> is out of stock.</p><?php
+				?><p>Item <?php echo $_SESSION["style"][$key]->getName(); ?> was out of stock.</p><?php
 			} else {
-				?><p><?php echo $value." of item ".$_SESSION["style"][$key]->getName(); ?> is available.</p><?php
+				?><p><?php echo $value." of item ".$_SESSION["style"][$key]->getName(); ?> was available.</p><?php
 			}
 		}
 	}
 
 	if ( isset($_REQUEST["deleteItem"]) ) {
 		$_SESSION["cart"]->deleteItem($_REQUEST["cartKey"]);
+	} else if ( isset($_REQUEST["updateItem"]) ) {
+		if ($_SESSION["cart"]->addItemAmount($_REQUEST["cartKey"], $_REQUEST["newAmount"])) {
+			?><p>Item <?php echo $_SESSION["style"][$key]->getName(); ?> was out of stock.</p><?php
+		} else {
+			?><p><?php echo $value." of item ".$_SESSION["style"][$key]->getName(); ?> was available.</p><?php
+		}
 	}
 
 	printCart($_SESSION["cart"]->getCart());
