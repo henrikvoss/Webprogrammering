@@ -122,23 +122,23 @@ if ( isset($_SESSION["user"]) ) {
 		<tr>
 			<td>Item name:</td>
 			<td><input type="text" name="itemName" onChange="validate_name()"></td>
-			<td><div id="wrongName">*</div></td>
+			<td><div style="color:red" id="wrongName">*</div></td>
 			<td>Season:</td>
 			<td><input type="text" name="itemSeason" onChange="validate_season()"></td>
-			<td><div id="wrongSeason">*</div></td>
+			<td><div style="color:red" id="wrongSeason">*</div></td>
 		</tr>
 		<tr>
 			<td>Price:</td>
 			<td><input type="text" name="itemPrice" onChange="validate_price()"></td>
-			<td><div id="wrongPrice">*</div></td>
+			<td><div style="color:red" id="wrongPrice">*</div></td>
 			<td>In Stock:</td>
 			<td><input type="text" name="inStock" onChange="validate_instock()"></td>
-			<td><div id="wrongInStock">*</div></td>
+			<td><div style="color:red" id="wrongInStock">*</div></td>
 		</tr>
 		<tr>
 			<td><input type="hidden" name="file" value="1000000" onChange="validate_image()">
 		</tr>
-		<tr><td><div id="wrongImage"></div></td></tr>
+		<tr><td><div style="color:red" id="wrongImage"></div></td></tr>
 		</table>
 		<table border="0" cellspacing="5" cellpadding="5">
 			<tr>
