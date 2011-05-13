@@ -21,10 +21,13 @@
 	if( isset($_SESSION["user"]) ) 
 	{
 		if( $_SESSION["user"]->getIfAdmin() )
-	}
+		{
+			
+		
+	
 ?>
 
-<form enctype="multipart/form-data" action="newItem.php" method="post">
+	<form enctype="multipart/form-data" action="newItem.php" method="post">
 	<table border="0" cellspacing="5" cellpadding="5">
 		<tr>
 			<td>Item name:</td>
@@ -51,26 +54,35 @@
 			</tr>
 		</table>
 	</form>
-
+	
 <?php 
 
-	else if ( isset($_REQUEST["changeItem"]) ) {
+	else if ( isset($_REQUEST["changeItem"]) ) 
+	
+	{
 
 		$imageUrl;
 
-		if ( basename($_FILES["uploadedImg"]["name"]) != "" ) {
+		if ( basename($_FILES["uploadedImg"]["name"]) != "" ) 
+		{
 			$imageUrl = "Images/Lookbook/";
 			$imageUrl .= basename($_FILES["uploadedImg"]["name"]);
 
-			if(move_uploaded_file($_FILES['uploadedImg']['tmp_name'], $imageUrl)) {
-				echo "<p>The image ".basename( $_FILES['uploadedImg']['name']). 
+				if(move_uploaded_file($_FILES['uploadedImg']['tmp_name'], $imageUrl)) 
+				{
+					echo "<p>The image ".basename( $_FILES['uploadedImg']['name']). 
 					" has been uploaded.</p>";
-			} else{
+				} 
+				else
+				{
 				echo "<p>There was an error uploading your image, please try again.</p>";
+				}
+		} 
+		
+		else 
+			{
+				$imageUrl = $_SESSION["style"][$_REQUEST["styleKey"]]->getImage();
 			}
-		} else {
-			$imageUrl = $_SESSION["style"][$_REQUEST["styleKey"]]->getImage();
-		}
 
 		$style = $_SESSION["style"][$_REQUEST["styleKey"]];
 		$style->setName($_REQUEST["itemName"]);
@@ -79,17 +91,17 @@
 		$style->setStock($_REQUEST["inStock"]);
 		$style->setImage($imageUrl);
 
-		if($_SESSION["database"]->updateDB($_REQUEST["itemName"],$_REQUEST["itemSeason"],$_REQUEST["itemPrice"],$_REQUEST["inStock"],$imageUrl)) {
+		if($_SESSION["database"]->updateDB($_REQUEST["itemName"],$_REQUEST["itemSeason"],$_REQUEST["itemPrice"],$_REQUEST["inStock"],$imageUrl)) 
+		{
 			$_SESSION["style"][$_REQUEST["styleKey"]] = $style;
 		} 
 		else 
-		
 		{
 			?><p>The item could not be updated. Please try again.</p>
-		<?php
+			<?php
 		}
-	}
-
+	
+	
 	} 
 	else 
 	{
@@ -97,15 +109,16 @@
 <?php
 	}
 } /* END if( isset(session[user]) ) */
-else 
-	{
-?>
+		else
+		 	
+			{
+			?>
+				<a href="index.php">Go to shop</a>
+	<?php
+			}
+	?>
 
-		<a href="index.php">Go to shop</a>
 
-<?php
-	}
-?>
 
 	</section>
 <?php printFooter(); ?>
