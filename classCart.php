@@ -20,6 +20,9 @@ class Cart {
 		}
 	}
 
+	public function deleteItem($key) {
+		unset($cart[$key]);
+	}
 	public function getCart() {
 		return $this->cart;
 	}
