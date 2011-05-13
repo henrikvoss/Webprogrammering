@@ -141,37 +141,37 @@ if (!isset($_SESSION["user"])) {
 		<tr>
 			<td>First name:</td>
 			<td><input type="text" name="first" onChange="validate_first()"></td>
-			<td><div style="color:red" id="wrongFirst">*</div></td>
+			<td><div id="wrongFirst">*</div></td>
 		</tr>
 		<tr>
 			<td>Surname:</td>
 			<td><input type="text" name="surname" onChange="validate_surname()"></td>
-			<td><div style="color:red" id="wrongSurname">*</div></td>
+			<td><div id="wrongSurname">*</div></td>
 		</tr>
 		<tr>
 			<td>Address:</td>
 			<td><input type="text" name="address" onChange="validate_address()"></td>
-			<td><div style="color:red" id="wrongAddress">*</div></td>
+			<td><div id="wrongAddress">*</div></td>
 		</tr>
 		<tr>
 			<td>City/State:</td>
 			<td><input type="text" name="city" onChange="validate_city()"></td>
-			<td><div style="color:red" id="wrongCity">*</div></td>
+			<td><div id="wrongCity">*</div></td>
 		</tr>
 		<tr>
 			<td>Zip code:</td>
 			<td><input type="text" name="postalcode" onChange="validate_postalcode()"></td>
-			<td><div style="color:red" id="wrongPostalcode">*</div></td>
+			<td><div id="wrongPostalcode">*</div></td>
 		</tr>
 		<tr>
 			<td>Country:</td>
 			<td><input type="text" name="country" onChange="validate_country()"></td>
-			<td><div style="color:red" id="wrongCountry">*</div></td>
+			<td><div id="wrongCountry">*</div></td>
 		</tr>
 		<tr>
 			<td>E-mail:</td>
 			<td><input type="text" name="email" onChange="validate_email()"></td>
-			<td><div style="color:red" id="wrongEmail">*</div></td>
+			<td><div id="wrongEmail">*</div></td>
 		</tr>
 		<tr>
 			<td>Password:</td>

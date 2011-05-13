@@ -234,7 +234,7 @@ section#wrap {
 	padding: 3px;
 }
 
-.wrongName, .wrongSeason, .wrongPrice, .wrongInStock, .wrongImage {
+.wrongName, .wrongSeason, .wrongPrice, .wrongInStock, .wrongImage, .wrongFirst, .wrongSurname, .wrongAddress, .wrongCity, .wrongPostalcode, .wrongCountry, .wrongEmail {
 	color: red;
 }
 
