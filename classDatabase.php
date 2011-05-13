@@ -131,6 +131,32 @@ class Database {
 		}
 	}
 
+	public function getVar($sql) {
+		$db = $this->connectToDB();
+		$result= $db->query($sql);
+
+		if ( !$result) {
+			echo "<p>Error in connection to the database.</p>";
+			return false;
+		}
+		else {
+
+			$antallRader = $db->affected_rows;
+
+			if ( $antallRader == 0 ) {
+				return false;
+			}
+			else if ( $antallRader == 1 ) {
+				$row = $result->fetch_object();
+				return $row->stock;
+			}
+			else {
+				return false;
+			}
+		}
+		
+	}
+
 	public function selectQuery($sql) {
 		$db = $this->connectToDB();
 		$result= $db->query($sql);
@@ -146,7 +172,6 @@ class Database {
 
 			if ( $antallRader == 0 ) {
 				return false;
-				break;
 			}
 			else {
 				for ( $i = 0; $i < $antallRader; $i++ ) {
@@ -158,10 +183,29 @@ class Database {
 		}
 	}
 
+	public function update($sql) {
+		$db = $this->connectToDB();
+
+			$result = $db->query($sql);
+
+			if ( !$result ) {
+				echo "<p>Stock could not be updated. Error in query. ";
+				echo $db->error."</p>";
+				return false;
+			} else {
+				if ( ($db->affected_rows) == 0 ) {
+					echo "<p>No updates made.</p>";
+					return false;
+				} else {
+					return true;
+				}				
+			}
+		
+	}
+
 	public function updateDB($n,$s,$p,$st,$i) {
 		$db = $this->connectToDB();
 
-		if ( $db ) {
 			$sql = "update Style set stylename = '$n', season = '$s', pricePerStyle = $p, stock = $st, image = '$i' where stylename = '$n'";
 			$result = $db->query($sql);
 
@@ -177,7 +221,6 @@ class Database {
 					return true;
 				}				
 			}
-		}
 	}
 }
 

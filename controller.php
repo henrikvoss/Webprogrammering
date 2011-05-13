@@ -35,7 +35,7 @@ if ( !isset($_SESSION["style"]) ) {
 
 	for ( $i = 0; $i < count($styleTable); $i++ ) {
 		$allStylesArray[$i] =
-			new Style($styleTable[$i]->stylename, $styleTable[$i]->season, $styleTable[$i]->pricePerStyle, $styleTable[$i]->stock, $styleTable[$i]->image);
+			new Style($styleTable[$i]->stylename, $styleTable[$i]->season, $styleTable[$i]->pricePerStyle, $styleTable[$i]->stock, $styleTable[$i]->image, $i);
 	}
 
 	$_SESSION["style"] = $allStylesArray;
@@ -45,8 +45,8 @@ function __autoload($className) {
 	include_once("class".$className.".php");
 }
 
-function curPageName() {
- return substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
+function currrentPage() {
+	return substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
 }
 
 /*
@@ -60,29 +60,6 @@ function curPageName() {
 function setUser($name) {
 	$_SESSION["user"] = new User($name);
 }
-
-function printStyle($style, $styleArrayKey) {?>
-<div class="browseStyles">
-
-	<img class="floatLeft" src="<?php echo $style->getImage(); ?>"
-	alt="<?php echo $style->getName(); ?>"/>
-	<p>Style: <?php echo $style->getName(); ?></p>
-	<p>Price: <?php echo $style->getPrice(); ?></p>
-	<p>Stock: <?php echo $style->getStock(); ?></p>
-	<?php if ($style->getStock() != 0) {?>
-	<form action="cart.php" method="post">
-		<input type="text" name="amount" value="1" />
-		<input type="submit" name="<?php echo $styleArrayKey; ?>" value="Add to cart" />
-	</form>
-	<?php }?>
-	<?php if ( $_SESSION["user"]->getIfAdmin() ) { ?>
-	<form action="newItem.php" method="post">
-		<input type="submit" name="<?php echo $styleArrayKey; ?>" value="Change item"/>
-	</form>
-	<?php	} /* END ifAdmin */ ?>
-</div>
-<?php
-}	
 
 /* Methods that print out html-structure-code (eg. footer, header): */
 

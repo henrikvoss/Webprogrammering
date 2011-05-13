@@ -1,4 +1,30 @@
-<?php include('controller.php'); ?>
+<?php
+include('controller.php');
+
+function printStyle($style, $styleArrayKey) {?>
+<div class="browseStyles">
+
+	<img class="floatLeft" src="<?php echo $style->getImage(); ?>"
+	alt="<?php echo $style->getName(); ?>"/>
+	<p>Style: <?php echo $style->getName(); ?></p>
+	<p>Price: <?php echo $style->getPrice(); ?></p>
+	<p>Stock: <?php echo $style->getStock(); ?></p>
+	<?php if ($style->getStock() != 0) {?>
+	<p>
+		Add to cart:
+		<input type="text" name="amount<?php echo $styleArrayKey; ?>" value="0" />
+	</p>
+	<?php }?>
+	<?php if ( $_SESSION["user"]->getIfAdmin() ) { ?>
+	<form action="newItem.php" method="post">
+		<input type="submit" name="<?php echo $styleArrayKey; ?>" value="Update item"/>
+	</form>
+	<?php	} /* END ifAdmin */ ?>
+</div>
+<?php
+}	
+
+?>
 <!DOCTYPE html>
 <html>
 
@@ -63,8 +89,8 @@ if (!isset($_SESSION["user"])) {
 
 	/* Dashboard to browse and update items -------------------------------*/
 	if ( $_SESSION["user"]->getIfAdmin() ) {?>
-	<h1>Browse and update items</h1>
-	<p><a href="newItem.php">Add a new item to the database</a></p><?php
+		<h1>Browse and update items</h1>
+		<p><a href="newItem.php">Add a new item to the database</a></p><?php
 	} else {
 		?><h1>Browse items</h1>
 		<p>To view all styles and prices on our merchandise, leave the dropdown menus blank, and click "Show"</p>
@@ -163,6 +189,11 @@ if (!isset($_SESSION["user"])) {
 			 */
 
 		}
+
+		?><form action="cart.php" method="post">
+			<input type="hidden" name="searchPage" value="<?php echo currrentPage(); ?>" />
+			<input type="submit" name="addToCart" value="Add to cart" />
+		</form><?php
 	}
 	/* END Dashboard to browse and update items ---------------------------*/
 
