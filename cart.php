@@ -61,14 +61,14 @@ if (!isset($_SESSION["user"])) {
 
 		for ( $i = 0; $i < count($_SESSION["style"]); $i++ ) {
 			if (isset($_REQUEST[("amount".$i)])){
-				if ( $_REQUEST[("amount".$i)] != 0) {
+				if ( $_REQUEST[("amount".$i)] > 0) {
 					$itemInStock[$i] = $_SESSION["cart"]->addToCart($i,$_REQUEST[("amount".$i)]);
 				}
 			}
 		}
 
 		foreach ($itemInStock as $key=>$value) {
-			if ( !$value ) {	
+			if ( $value == 0 ) {	
 				?><p>Item <?php echo $_SESSION["style"][$key]->getName(); ?> was out of stock.</p><?php
 			} else {
 				?><p><?php echo $value." of item ".$_SESSION["style"][$key]->getName(); ?> was available.</p><?php
@@ -79,9 +79,16 @@ if (!isset($_SESSION["user"])) {
 	if ( isset($_REQUEST["deleteItem"]) ) {
 		$_SESSION["cart"]->deleteItem($_REQUEST["cartKey"]);
 	} else if ( isset($_REQUEST["updateItem"]) ) {
-		if ($_SESSION["cart"]->addItemAmount($_REQUEST["cartKey"], $_REQUEST["newAmount"])) {
-			?><p>Item <?php echo $_SESSION["style"][$key]->getName(); ?> was out of stock.</p><?php
+		$key = $_REQUEST["cartKey"];
+		$value;
+		if ($_REQUEST["newAmount"] < $_SESSION["cart"]->getAmount($key)){
+			$value = $_SESSION["cart"]->updateInCart($key, ($_REQUEST["newAmount"] - $_SESSION["cart"]->getAmount($key)));
 		} else {
+			$value = $_SESSION["cart"]->updateInCart($key, $_REQUEST["newAmount"]);
+		}
+		if ($value == 0) {
+			?><p>No more of item <?php echo $_SESSION["style"][$key]->getName(); ?> on stock.</p><?php
+		} else if ( $value > 0 ) {
 			?><p><?php echo $value." of item ".$_SESSION["style"][$key]->getName(); ?> was available.</p><?php
 		}
 	}
