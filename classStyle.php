@@ -38,6 +38,10 @@ class Style {
 		return $this->season;
 	}
 
+	public function getSessionKey() {
+		return $this->sessionKey;
+	}
+
 	public function getStock() {
 		$sql = "select stock from Style where stylename = '$this->name'";
 		return $_SESSION["database"]->getVar($sql);

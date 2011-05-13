@@ -1,7 +1,7 @@
 <?php
 include("controller.php");
 
-$itemInStock = false;
+$itemInStock = array();
 
 if ( isset($_REQUEST["addToCart"]) ) {
 
@@ -10,9 +10,9 @@ if ( isset($_REQUEST["addToCart"]) ) {
 	}
 
 	for ( $i = 0; $i < count($_SESSION["style"]); $i++ ) {
-		if ( $_REQUEST[("amount".$i)] != 0) { /* Noen av de reqested kan være NULL, vil det funke da? */
-			if($_SESSION["cart"]->addToCart($i,$_REQUEST[("amount".$i)])) {
-				$itemInStock = true;
+		if (isset($_REQUEST[("amount".$i)])){
+			if ( $_REQUEST[("amount".$i)] != 0) {
+				$itemInStock[$i] = $_SESSION["cart"]->addToCart($i,$_REQUEST[("amount".$i)]);
 			}
 		}
 	}
@@ -26,8 +26,13 @@ function printCart($cart) {
 			alt="<?php echo $style->getName(); ?>"/>
 			<p>Style: <?php echo $style->getName(); ?></p>
 			<p>Price: <?php echo $style->getPrice(); ?></p>
-			<p>You have <?php echo $style->getAmountInCart(); ?> in you cart.</p>
-			<!-- Her en form for å slette og endre antall. -->
+			<p>You have <?php echo $style->getAmountInCart(); ?> in your cart.</p>
+			<!-- En form for å slette og endre antall. -->
+			<form action="cart.php" method="post">
+				<input type="text" name="newAmount" value="<?php echo $style->getAmountInCart(); ?>" />
+				<input type="submit" name="updateItem" value="Change amount" />
+				<input type="submit" name="deleteItem" value="Delete this item" />
+			</form>
 
 		</div><?php
 	}
@@ -56,13 +61,14 @@ function printCart($cart) {
 <?php
 
 if ( isset($_REQUEST["addToCart"]) ) {
-	?><p><?php
-	if ( $itemInStock ) {
-		?>The new item was added to your cart.<?php
-	} else {
-		?>The item you requested is out of stock.<?php
+	foreach ($itemInStock as $key=>$value) {
+		if ( !$value ) {	
+			?><p><?php echo $_SESSION["style"]->getName(); ?> is out of stock.</p><?php
+		} else {
+			?><p><?php echo $value." ".$_SESSION["style"]->getName(); ?> is available.</p><?php
+		}
 	}
-	?>Return to <a href="<?php echo $_REQUEST["searchPage"]; ?>">your search</a>.</p><?php
+	?></p><?php
 }
 
 ?>

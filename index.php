@@ -9,15 +9,15 @@ function printStyle($style, $styleArrayKey) {?>
 	<p>Style: <?php echo $style->getName(); ?></p>
 	<p>Price: <?php echo $style->getPrice(); ?></p>
 	<p>Stock: <?php echo $style->getStock(); ?></p>
-	<?php if ($style->getStock() != 0) {?>
+	<?php if ($style->getStock() > 0) {?>
 	<p>
 		Add to cart:
-		<input type="text" name="amount<?php echo $styleArrayKey; ?>" value="0" />
+		<input type="text" name="amount<?php echo $style->getSessionKey(); ?>" value="0" />
 	</p>
 	<?php }?>
-	<?php if ( $_SESSION["user"]->getIfAdmin() ) { ?>
+	<?php /*if ( $_SESSION["user"]->getIfAdmin() ) { ?>
 	<form action="newItem.php" method="post">
-		<input type="submit" name="<?php echo $styleArrayKey; ?>" value="Update item"/>
+		<input type="submit" name="<?php echo $style->getSessionKey(); ?>" value="Update item"/>
 	</form>
 	<?php	} /* END ifAdmin */ ?>
 </div>
@@ -89,12 +89,12 @@ if (!isset($_SESSION["user"])) {
 
 	/* Dashboard to browse and update items -------------------------------*/
 	if ( $_SESSION["user"]->getIfAdmin() ) {?>
-		<h1>Browse and update items</h1>
-		<p><a href="newItem.php">Add a new item to the database</a></p><?php
+	<h1>Browse and update items</h1>
+	<p><a href="newItem.php">Add a new item to the database</a></p><?php
 	} else {
-		?><h1>Browse items</h1>
-		<p>To view all styles and prices on our merchandise, leave the dropdown menus blank, and click "Show"</p>
-		<?php
+?><h1>Browse items</h1>
+<p>To view all styles and prices on our merchandise, leave the dropdown menus blank, and click "Show"</p>
+<?php
 	}
 ?>
 
@@ -125,6 +125,7 @@ if (!isset($_SESSION["user"])) {
 	</table>
 </form>
 
+<form action="cart.php" method="post">
 <?php
 
 	if ( isset($_REQUEST["listStyles"]) ) {
@@ -146,12 +147,12 @@ if (!isset($_SESSION["user"])) {
 			?><h2>Styles in <?php echo $_REQUEST["season"]; ?>
 			with <?php echo $_REQUEST["price"]; ?> price</h2><?php
 
-			/* Liste varer som oppfyller begge kriterier: */
-			foreach ($_SESSION["style"] as $key=>$style) {
-				if ( ($style->getSeason() == $_REQUEST["season"]) && (($gtPrice <= $style->getPrice()) && ($style->getPrice() <= $ltPrice)) ) {
-					printStyle($style,$key);
+				/* Liste varer som oppfyller begge kriterier: */
+				foreach ($_SESSION["style"] as $key=>$style) {
+					if ( ($style->getSeason() == $_REQUEST["season"]) && (($gtPrice <= $style->getPrice()) && ($style->getPrice() <= $ltPrice)) ) {
+						printStyle($style,$key);
+					}
 				}
-			}
 
 		} elseif ( ($_REQUEST["season"] != "none") && ($_REQUEST["price"] == "none") ) {
 			?><h2>Styles in <?php echo $_REQUEST["season"]; ?></h2><?php
@@ -184,16 +185,17 @@ if (!isset($_SESSION["user"])) {
 			}
 			/*
 			for ( $i = 0; $i < count($_SESSION["style"]); $i++ ) {
-				printStyle($_SESSION["style"][$i]);
+			printStyle($_SESSION["style"][$i]);
 			}
-			 */
+	 */
 
 		}
 
-		?><form action="cart.php" method="post">
-			<input type="hidden" name="searchPage" value="<?php echo currrentPage(); ?>" />
-			<input type="submit" name="addToCart" value="Add to cart" />
-		</form><?php
+?>
+<input type="hidden" name="searchPage" value="<?php echo currrentPage(); ?>" />
+<input type="submit" name="addToCart" value="Add to cart" />
+			</form>
+<?php
 	}
 	/* END Dashboard to browse and update items ---------------------------*/
 
