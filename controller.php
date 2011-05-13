@@ -45,6 +45,10 @@ function __autoload($className) {
 	include_once("class".$className.".php");
 }
 
+function curPageName() {
+ return substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
+}
+
 /*
  * Sjekker om bruker er admin i classCustomer-konstruktøren.  
  * controller.php henter alle
@@ -57,9 +61,6 @@ function setUser($name) {
 	$_SESSION["user"] = new User($name);
 }
 
-/* TODO:
- * Lage mulighet til å legge til handlekurven og for admin og endre vare.
- */
 function printStyle($style, $styleArrayKey) {?>
 <div class="browseStyles">
 
@@ -69,9 +70,9 @@ function printStyle($style, $styleArrayKey) {?>
 	<p>Price: <?php echo $style->getPrice(); ?></p>
 	<p>Stock: <?php echo $style->getStock(); ?></p>
 	<?php if ($style->getStock() != 0) {?>
-	<form action="basket.php" method="post">
-		<input type="text" name="amount<?php echo $styleArrayKey; ?>" value="1" />
-		<input type="submit" name="<?php echo $styleArrayKey; ?>" value="Add to basket" />
+	<form action="cart.php" method="post">
+		<input type="text" name="amount" value="1" />
+		<input type="submit" name="<?php echo $styleArrayKey; ?>" value="Add to cart" />
 	</form>
 	<?php }?>
 	<?php if ( $_SESSION["user"]->getIfAdmin() ) { ?>
@@ -158,7 +159,7 @@ function printFooter() { ?>
 	<section class="floatLeft">
 		<a href="logout.php">Logout</a>
 		|
-		<a href="basket.php">Basket</a>
+		<a href="cart.php">Cart</a>
 		<?php if ($_SESSION["user"]->getIfAdmin()) { ?>
 		| You are logged in as admin. See
 		<a href="admin.php">admin page</a>.

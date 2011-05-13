@@ -6,7 +6,7 @@
 	<meta charset="UTF-8" />
 
 	<title>
-		VATLE - Webshop - Basket
+		VATLE - Webshop - Shopping-cart
 	</title>
 
 	<?php addLinkTags(); ?>
@@ -14,6 +14,9 @@
 
 <body>
 	<?php printHeader(); ?>
+	<section class="text">
+		<h1>Your cart</h1>
+	</section>
 	<?php printFooter(); ?>
 </body>
 
