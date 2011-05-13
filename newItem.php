@@ -25,7 +25,7 @@
 		
 		function validate_season()
 		{
-			regEx = /^[a-zA-ZæøåÆØÅ .\-]{1,30}$/;
+			regEx = /^[a-zA-ZæøåÆØÅ0-9 .\-]{1,30}$/;
 			OK = regEx.test(document.addItems.itemSeason.value);
 			if(!OK)
 			{
