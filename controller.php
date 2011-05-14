@@ -2,8 +2,9 @@
 
 /*
 TODO:
-create basket.php
-create admin.php
+gjøre ferdig basket.php
+	-mangler total sum og send ordre og forskjellige frakttyper
+fikse admin.php, newItem.php
 TODO:
 oppdatere tabell Style til å ha en primærnøkkel som ikke er navnet på plagget
 TODO:
@@ -27,7 +28,12 @@ if (!isset($_SESSION["database"])) {
 
 /* Sjekker om vareobjekter er opprettet, hvis ikke:
  * -Henter alle varene fra databasen og oppretter objekter for hver vare.
- * -Alle varene er i en array i $_SESSION["styles"]. */
+ * -Alle varene er i en array i $_SESSION["styles"].
+ * 
+ * TODO: må han en sjekk hver gang bruker retunerer til denne siden som 
+ * sjekker om det er lagt til nye varer i databasen å legger de til i 
+ * arrayen.
+ */
 if ( !isset($_SESSION["style"]) ) {
 	$sql = "select * from Style";
 	$styleTable = $_SESSION["database"]->selectQuery($sql);

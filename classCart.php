@@ -2,52 +2,82 @@
 class Cart {
 	private $cart = array();
 
-	public function addToCart($key,$amount) {
+	public function addToCart($key,$quantity) {
 		if ( $_SESSION["style"][$key]->getStock() == 0 ) {
 			return 0;
 		} else {
 			$avail =	$_SESSION["style"][$key]->getStock();
 
-			if ($avail > $amount) {
-				$avail = $amount;
+			if ($avail > $quantity) {
+				$avail = $quantity;
 			}
 
 			$_SESSION["style"][$key]->updateStock(-$avail);
 
 			if ( !isset($this->cart[$key]) ) {
-				$this->cart[$key] = $_SESSION["style"][$key];
+				$this->cart[$key] = $avail;
+			} else {
+				$this->cart[$key] += $avail;
 			}
 
-			$this->cart[$key]->updateAmountInCart($avail);
+			$_SESSION["style"][$key]->updateAmountInCart($avail);
 
 			return $avail;
 		}
 	}
 
 	public function deleteItem($key) {
+		$quantityInCart = $_SESSION["style"][$key]->getAmountInCart();
+		$_SESSION["style"][$key]->updateStock($quantityInCart);
+		$_SESSION["style"][$key]->setAmountInCart(0);
 		unset($this->cart[$key]);
 	}
 
 	public function getAmount($key) {
-		return $this->cart[$key]->getAmountInCart();
+		return $this->cart[$key];
 	}
+
 	public function getCart() {
 		return $this->cart;
 	}
 
-	public function setItemAmount($amount,$key) {
-		$this->cart[$key]->setAmountInCart($amount);
+	public function setItemAmount($quantity,$key) {
+		$this->cart[$key]->setAmountInCart($quantity);
+		$this->cart[$key] = $quantity;
+	}
+
+	public function submitOrder() {
+		/* Lager ordre av hele $cart arrayen. */
+		/* Må lage ordrenr. ved å sjekke ordrenr av siste i historie-tabell += 
+ 		 * 1.
+		 */
+		$orderno = $_SESSION["database"]->getNewOrderNo();
+
+		foreach ($this->cart as $key=>$quantity) {
+			if ( $quantity > 0 ) {
+				$sql = "insert into History values ($orderno, '".$_SESSION['user']->getEmail()."', '".date( 'Y-m-d H:i:s', time() )."', '".$_SESSION['style'][$key]->getName()."', $quantity)";
+				
+				$_SESSION["database"]->insertQuery($sql);
+			}
+			unset($this->cart[$key]);
+		}
 	}
 
 	public function updateInCart($key,$amount) {
 		if ($amount < 0){
-			/* $amunt in this if is negative. */
-			if ( ($this->cart[$key]->getAmountInCart() + $amount) < 0 ) {
-				$amount = -($this->cart[$key]->getAmountInCart());
+			/* $amunt in this 'if' is negative. */
+			if ( ($this->cart[$key] + $amount) < 1 ) {
+				$_SESSION["style"][$key]->updateStock($this->cart[$key]);
+				$_SESSION["style"][$key]->updateAmountInCart(0);
+				$this->cart[$key] = 0;
+
+			} else {
+
+				/* '-' to get $amount positive: */
+				$_SESSION["style"][$key]->updateStock(-$amount);
+				$_SESSION["style"][$key]->updateAmountInCart($amount);
+				$this->cart[$key] += $amount;
 			}
-			/* '-' to get $amount positive: */
-			$_SESSION["style"][$key]->updateStock(-$amount);
-			$this->cart[$key]->updateAmountInCart($amount);
 			return -1;
 
 		} else {
@@ -63,7 +93,8 @@ class Cart {
 				}
 
 				$_SESSION["style"][$key]->updateStock(-$avail);
-				$this->cart[$key]->updateAmountInCart($avail);
+				$_SESSION["style"][$key]->updateAmountInCart($avail);
+				$this->cart[$key] += $avail;
 
 				return $avail;
 			}

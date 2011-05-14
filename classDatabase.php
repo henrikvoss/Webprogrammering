@@ -73,7 +73,7 @@ class Database {
 
 	public function checkIfAdmin($user) {
 		$db = $this->connectToDB();
-		
+
 		if ( $db ) {
 			$sql ="select email from Admin where email='".$user."'";
 			$result = $db->query($sql);
@@ -92,7 +92,7 @@ class Database {
 	}
 
 	/*
- 	 * Metode som validerer om brukernavn og passord er riktig.
+	 * Metode som validerer om brukernavn og passord er riktig.
 	 * Oppretter ikke bruker-objekt.
 	 * 
 	 */
@@ -154,7 +154,22 @@ class Database {
 				return false;
 			}
 		}
-		
+
+	}
+
+	public function getNewOrderNo() {
+		$db = $this->connectToDB();
+		$orderno;
+		$sql = "select orderno from History";
+		$result = $db->query($sql);
+
+		if ( !$result ) {
+			echo "<p>Error in query for orderno.</p>";
+			echo "<p>".$db->error."</p>";
+			return false;
+		} else {
+			return $db->affected_rows + 1;
+		}
 	}
 
 	public function selectQuery($sql) {
@@ -183,44 +198,61 @@ class Database {
 		}
 	}
 
+	public function insertQuery($sql) {
+		$db = $this->connectToDB();
+
+		$result = $db->query($sql);
+
+		if ( !$result ) {
+			echo "<p>Error in insert query.</p>";
+			echo "<p>".$db->error."</p>";
+			return false;
+		} else if ( $db->affected_rows == 0 ) {
+			echo "<p>Orderline $key was inserted.</p>";
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	public function update($sql) {
 		$db = $this->connectToDB();
 
-			$result = $db->query($sql);
+		$result = $db->query($sql);
 
-			if ( !$result ) {
-				echo "<p>Stock could not be updated. Error in query. ";
-				echo $db->error."</p>";
+		if ( !$result ) {
+			echo "<p>Stock could not be updated. Error in query. ";
+			echo $db->error."</p>";
+			return false;
+		} else {
+			if ( ($db->affected_rows) == 0 ) {
+				echo "<p>No updates made.</p>";
 				return false;
 			} else {
-				if ( ($db->affected_rows) == 0 ) {
-					echo "<p>No updates made.</p>";
-					return false;
-				} else {
-					return true;
-				}				
-			}
-		
+				return true;
+			}				
+		}
+
 	}
 
 	public function updateDB($n,$s,$p,$st,$i) {
 		$db = $this->connectToDB();
 
-			$sql = "update Style set stylename = '$n', season = '$s', pricePerStyle = $p, stock = $st, image = '$i' where stylename = '$n'";
-			$result = $db->query($sql);
+		$sql = "update Style set stylename = '$n', season = '$s', pricePerStyle = $p, stock = $st, image = '$i' where stylename = '$n'";
+		$result = $db->query($sql);
 
-			if ( !$result ) {
-				echo "<p>Style could not be updated. Error in query.</p>";
-				echo "<p>".$db->error."</p>";
+		if ( !$result ) {
+			echo "<p>Style could not be updated. Error in query.</p>";
+			echo "<p>".$db->error."</p>";
+			return false;
+		} else {
+			if ( ($db->affected_rows) == 0 ) {
+				echo "<p>No changes to style.</p>";
 				return false;
 			} else {
-				if ( ($db->affected_rows) == 0 ) {
-					echo "<p>No changes to style.</p>";
-					return false;
-				} else {
-					return true;
-				}				
-			}
+				return true;
+			}				
+		}
 	}
 }
 

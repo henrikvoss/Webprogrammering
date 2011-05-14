@@ -7,7 +7,7 @@ class Style {
 	private $stock;
 	private $imageUrl;
 	private $sessionKey;
-	private $amountInCart; /* classCart's style objects uses only this var and never by $sessions style objects. */
+	private $amountInCart;
 
 	function __construct($pName,$pSeas,$pPrice,$pStock,$pImg, $key) {
 		$this->name = $pName;
@@ -22,6 +22,7 @@ class Style {
 	public function getAmountInCart() {
 		return $this->amountInCart;
 	}
+
 	public function getImage() {
 		return $this->imageUrl;
 	}
@@ -50,6 +51,7 @@ class Style {
 	public function setAmountInCart($to) {
 		$this->amountInCart = $to;
 	}
+
 	public function setImage($newimg) {
 		$this->imageUrl = $newimg;
 	}
