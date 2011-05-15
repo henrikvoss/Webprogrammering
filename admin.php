@@ -1,13 +1,27 @@
-<?php include('controller.php') ?>
+<?php
+include('controller.php');
+
+function printStyle($style, $styleArrayKey) { ?>
+	<div class="browseStyles">
+
+		<img class="floatLeft" src="<?php echo $style->getImage(); ?>"
+		alt="<?php echo $style->getName(); ?>"/>
+		<p>Style: <?php echo $style->getName(); ?></p>
+		<p>Price: <?php echo $style->getPrice(); ?></p>
+		<p>Stock: <?php echo $style->getStock(); ?></p>
+		<form action="newItem.php" method="post">
+			<input type="submit" name="<?php echo $style->getSessionKey(); ?>" value="Update item"/>
+		</form>
+	</div>
+<?php } ?>
+
 <!DOCTYPE html>
 <html>
 
 <head>
 	<meta charset="UTF-8" />
 
-	<meta name="description" content="Shop at VATLE." />
-
-	<title>VATLE - Webshop</title>
+	<title>VATLE - Webshop - Admin</title>
 
 	<?php addLinkTags(); ?>
 </head>
@@ -15,113 +29,118 @@
 <body>
 	<?php	printHeader(); ?>
 	<section class="text">
-		
-<?php 
 
-	if( isset($_SESSION["user"]) ) 
-	{
-		if( $_SESSION["user"]->getIfAdmin() )
-		{
-			
-		
-	
+<?php if (!isset($_SESSION["user"])) { /* Er ikk pålogget: */ ?>
+	<a href="index.php">Please login</a>
+
+<?php } else if (!$_SESSION["user"]->getIfAdmin()) { /* Er ikke admin: */ ?>
+	<a href="index.php">Return to shop</a>
+
+<?php
+} else { /* Er både pålogget og admin: */
+
+	$seasons = $_SESSION["database"]->getAllSeasons();
 ?>
 
-	<form enctype="multipart/form-data" action="newItem.php" method="post">
-	<table border="0" cellspacing="5" cellpadding="5">
-		<tr>
-			<td>Item name:</td>
-			<input type="hidden" name="styleKey" value="<?php echo $styleKey; ?>" />
-			<td><input type="text" name="itemName" value="<?php echo $changeStyle->getName(); ?>"></td>
-			<td>Season:</td>
-			<td><input type="text" name="itemSeason" value="<?php echo $changeStyle->getSeason(); ?>"></td>
-		</tr>
-		<tr>
-			<td>Price:</td>
-			<td><input type="text" name="itemPrice" value="<?php echo $changeStyle->getPrice(); ?>"></td>
-			<td>In Stock:</td>
-			<td><input type="text" name="inStock" value="<?php echo $changeStyle->getStock(); ?>"></td>
-		</tr>
-		<tr>
-			<td><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
-			</tr>
-		</table>
-		<table>
+	<h1>Admin Page</h1>
+	<p><a href="newItem.php">Add a new item to the database</a></p>
+	<h2>Browse and update items</h2>
+	<p>To view all styles and prices on our merchandise, leave the dropdown menus blank, and click "Show"</p>
+
+	<form id="request" action="index.php" method="get" >
+		<table border="0" >
 			<tr>
-				<td>Upload a new file:<input value="<?php echo $changeStyle->getImage(); ?>" name="uploadedImg" type="file">
-					<input type="submit" name="changeItem" value="Change Item">
+				<td>Choose style:</td>
+				<td align="right">
+					<select name="season">
+						<option value="none">--Choose a season</option>
+
+						<?php	foreach ($seasons as $key=>$name) { ?>
+							<option value="<?php echo $name ?>"><?php echo $name; ?></option>
+						<?php } ?>
+
+					</select>
 				</td>
+
+				<td>Price range:</td>
+				<td align="right">
+					<select name="price">
+						<option value="none">--Choose price range</option>
+						<option value="low">Low (0-&gt;1499)</option>
+						<option value="medium">Medium (1500-&gt;2999)</option>
+						<option value="high">High (3000-&gt;)</option>
+					</select>
+				</td>
+
+				<td>Show wares:</td>
+				<td><input type="submit" name="listStyles" VALUE="Show"></td>
 			</tr>
 		</table>
 	</form>
-	
-<?php 
 
-	else if ( isset($_REQUEST["changeItem"]) ) 
-	
-	{
-
-		$imageUrl;
-
-		if ( basename($_FILES["uploadedImg"]["name"]) != "" ) 
-		{
-			$imageUrl = "Images/Lookbook/";
-			$imageUrl .= basename($_FILES["uploadedImg"]["name"]);
-
-				if(move_uploaded_file($_FILES['uploadedImg']['tmp_name'], $imageUrl)) 
-				{
-					echo "<p>The image ".basename( $_FILES['uploadedImg']['name']). 
-					" has been uploaded.</p>";
-				} 
-				else
-				{
-				echo "<p>There was an error uploading your image, please try again.</p>";
-				}
-		} 
-		
-		else 
-			{
-				$imageUrl = $_SESSION["style"][$_REQUEST["styleKey"]]->getImage();
-			}
-
-		$style = $_SESSION["style"][$_REQUEST["styleKey"]];
-		$style->setName($_REQUEST["itemName"]);
-		$style->setSeason($_REQUEST["itemSeason"]);
-		$style->setPrice($_REQUEST["itemPrice"]);
-		$style->setStock($_REQUEST["inStock"]);
-		$style->setImage($imageUrl);
-
-		if($_SESSION["database"]->updateDB($_REQUEST["itemName"],$_REQUEST["itemSeason"],$_REQUEST["itemPrice"],$_REQUEST["inStock"],$imageUrl)) 
-		{
-			$_SESSION["style"][$_REQUEST["styleKey"]] = $style;
-		} 
-		else 
-		{
-			?><p>The item could not be updated. Please try again.</p>
-			<?php
-		}
-	
-	
-	} 
-	else 
-	{
-		?><a href="index.php">Go to shop</a>
 <?php
-	}
-} /* END if( isset(session[user]) ) */
-		else
-		 	
-			{
-			?>
-				<a href="index.php">Go to shop</a>
-	<?php
+	if ( isset($_REQUEST["listStyles"]) ) {
+		$gtPrice = 0;
+		$ltPrice = 999999;
+
+		if ( $_REQUEST["price"] != "none" ) {
+			if ( $_REQUEST["price"] == "low" ) {
+				$ltPrice = 1499;
+			} else if ( $_REQUEST["price"] == "medium" ) {
+				$gtPrice = 1500;
+				$ltPrice = 2999;
+			} else {
+				$gtPrice = 3000;
 			}
-	?>
+		}
 
+		if (($_REQUEST["season"] != "none") && ($_REQUEST["price"] != "none")) {
+			?><h2>Styles in <?php echo $_REQUEST["season"]; ?>
+			with <?php echo $_REQUEST["price"]; ?> price</h2><?php
 
+				/* Liste varer som oppfyller begge kriterier: */
+				foreach ($_SESSION["style"] as $key=>$style) {
+					if ( ($style->getSeason() == $_REQUEST["season"]) && (($gtPrice <= $style->getPrice()) && ($style->getPrice() <= $ltPrice)) ) {
+						printStyle($style,$key);
+					}
+				}
 
-	</section>
-<?php printFooter(); ?>
+		} elseif ( ($_REQUEST["season"] != "none") && ($_REQUEST["price"] == "none") ) {
+			?><h2>Styles in <?php echo $_REQUEST["season"]; ?></h2><?php
 
+			/* Liste aller varer for en sesong: */
+			foreach ($_SESSION["style"] as $key=>$style) {
+
+				if ( ($style->getSeason() == $_REQUEST["season"]) ) {
+					printStyle($style,$key);
+				}
+			}
+
+		} elseif ( ($_REQUEST["season"] == "none") && ($_REQUEST["price"] != "none") ) {
+			?><h2>Styles with <?php echo $_REQUEST["price"]; ?> price</h2><?php
+
+			/* Liste aller varer for en priskategori: */
+			foreach ($_SESSION["style"] as $key=>$style) {
+
+				if ( (($gtPrice <= $style->getPrice()) && ($style->getPrice() <= $ltPrice)) ) {
+					printStyle($style,$key);
+				}
+			}
+
+		} else {
+			?><h2>All styles</h2><?php
+
+			/* Liste alle varer: */
+			foreach ($_SESSION["style"] as $key=>$style) {
+				printStyle($style,$key);
+			}
+		}
+	}
+}
+
+?>
+
+	</section><!-- End text class section. -->
+	<?php printFooter(); ?>
 </body>
 </html>

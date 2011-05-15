@@ -131,16 +131,41 @@ class Database {
 		}
 	}
 
+	public function getAllSeasons() {
+		$db = $this->connectToDB();
+		$sql = "select distinct season from style";
+		$result = $db->query($sql);
+
+		if ( !$result ) {
+			echo "<p>Error in sql-query for getting all collection seasons.</p>";
+			echo "<p>".$db->error."</p>";
+			return false;
+
+		} else if ( $db->affected_rows == 0 ) {
+			return false;
+
+		} else {
+			$seasons = array();
+
+			for ( $i = 0; $i < $db->affected_rows; $i++ ) {
+				$seasonName = $result->fetch_object()->season;
+				$seasons[$i] = $seasonName;
+			}
+
+			return $seasons;
+		}
+	}
+
 	public function getVar($sql) {
 		$db = $this->connectToDB();
 		$result= $db->query($sql);
 
 		if ( !$result) {
-			echo "<p>Error in connection to the database.</p>";
+			echo "<p>Error in sql-query.</p>";
+			echo "<p>".$db->error."</p>";
 			return false;
-		}
-		else {
 
+		} else {
 			$antallRader = $db->affected_rows;
 
 			if ( $antallRader == 0 ) {
@@ -154,7 +179,6 @@ class Database {
 				return false;
 			}
 		}
-
 	}
 
 	public function getNewOrderNo() {
@@ -169,6 +193,23 @@ class Database {
 			return false;
 		} else {
 			return $db->affected_rows + 1;
+		}
+	}
+
+	public function insertQuery($sql) {
+		$db = $this->connectToDB();
+
+		$result = $db->query($sql);
+
+		if ( !$result ) {
+			echo "<p>Error in insert query.</p>";
+			echo "<p>".$db->error."</p>";
+			return false;
+		} else if ( $db->affected_rows == 0 ) {
+			echo "<p>Orderline $key was inserted.</p>";
+			return false;
+		} else {
+			return true;
 		}
 	}
 
@@ -195,23 +236,6 @@ class Database {
 				}
 				return $table;
 			}
-		}
-	}
-
-	public function insertQuery($sql) {
-		$db = $this->connectToDB();
-
-		$result = $db->query($sql);
-
-		if ( !$result ) {
-			echo "<p>Error in insert query.</p>";
-			echo "<p>".$db->error."</p>";
-			return false;
-		} else if ( $db->affected_rows == 0 ) {
-			echo "<p>Orderline $key was inserted.</p>";
-			return false;
-		} else {
-			return true;
 		}
 	}
 

@@ -88,17 +88,19 @@ if (!isset($_SESSION["user"])) {
 <?php
 
 } else {
+	$seasons = $_SESSION["database"]->getAllSeasons();
 
 	/* Dashboard to browse and update items -------------------------------*/
-	if ( $_SESSION["user"]->getIfAdmin() ) {?>
-	<h1>Browse and update items</h1>
-	<p><a href="newItem.php">Add a new item to the database</a></p><?php
-	} else {
-?><h1>Browse items</h1>
-<p>To view all styles and prices on our merchandise, leave the dropdown menus blank, and click "Show"</p>
-<?php
-	}
-?>
+	?><h1>Browse items</h1>
+
+	<?php	if ( $_SESSION["user"]->getIfAdmin() ) { ?>
+		<p><a href="newItem.php">Add a new item to the database</a></p>
+		<p><a href="admin.php">Update items</a></p>
+	<?php	} else { ?>
+		<p>
+			To view all styles and prices on our merchandise, leave the dropdown menus blank, and click "Show"
+		</p>
+<?php } ?>
 
 <form id="request" action="index.php" method="get" >
 	<table border="0" >
@@ -107,7 +109,11 @@ if (!isset($_SESSION["user"])) {
 			<td align="right">
 				<select name="season">
 					<option value="none">--Choose a season</option>
-					<option value="SS2010">Spring/Summer 2010</option>
+
+					<?php	foreach ($seasons as $key=>$name) { ?>
+						<option value="<?php echo $name ?>"><?php echo $name; ?></option>
+					<?php } ?>
+
 				</select>
 			</td>
 
@@ -122,7 +128,7 @@ if (!isset($_SESSION["user"])) {
 			</td>
 
 			<td>Show wares:</td>
-			<td><input type="submit" name="listStyles" VALUE="Show"></td>
+			<td><input type="submit" name="listStyles" value="Show"></td>
 		</tr>
 	</table>
 </form>
@@ -185,16 +191,9 @@ if (!isset($_SESSION["user"])) {
 			foreach ($_SESSION["style"] as $key=>$style) {
 				printStyle($style,$key);
 			}
-			/*
-			for ( $i = 0; $i < count($_SESSION["style"]); $i++ ) {
-			printStyle($_SESSION["style"][$i]);
-			}
-	 */
-
 		}
 
 ?>
-<input type="hidden" name="searchPage" value="<?php echo currrentPage(); ?>" />
 <input type="submit" name="addToCart" value="Add to cart" />
 			</form>
 <?php
@@ -209,4 +208,3 @@ if (!isset($_SESSION["user"])) {
 
 </body>
 </html>
-
