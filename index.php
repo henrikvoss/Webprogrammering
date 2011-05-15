@@ -3,6 +3,7 @@ include('controller.php');
 
 function printStyle($style, $styleArrayKey) {
 ?>
+
 	<div class="browseStyles">
 
 		<img class="floatLeft" src="<?php echo $style->getImage(); ?>"
@@ -11,10 +12,10 @@ function printStyle($style, $styleArrayKey) {
 		<p>Price: <?php echo $style->getPrice(); ?></p>
 		<p>Stock: <?php echo $style->getStock(); ?></p>
 		<?php if ($style->getStock() > 0) {?>
-		<p>
-			Add to cart:
-			<input type="text" name="amount<?php echo $style->getSessionKey(); ?>" value="0" />
-		</p>
+			<p>
+				Add to cart:
+				<input type="text" name="amount<?php echo $style->getSessionKey(); ?>" value="0" />
+			</p>
 		<?php } else { ?>
 		<p>None left in stock.</p>
 		<?php } ?>
@@ -96,7 +97,7 @@ if (!isset($_SESSION["user"])) {
 		</ul>
 	<?php	} else { ?>
 		<p>
-			To view all styles and prices on our merchandise, leave the dropdown menus blank, and click "Show"
+			To view all styles and prices on our merchandise, leave the dropdown menus on default, and click "Show".
 		</p>
 <?php } ?>
 
@@ -198,10 +199,12 @@ if (!isset($_SESSION["user"])) {
 			}
 
 		} else {
-			?><h2>All styles</h2>
-<div class="clearBoth">
-<input type="submit" name="addToCart" value="Add chosen items to cart" />
-</div>
+?>
+			<h2>All styles</h2>
+			<div class="clearBoth">
+			<input type="submit" name="addToCart" value="Add chosen items to cart" />
+			</div>
+
 <?php
 
 			/* Liste alle varer: */

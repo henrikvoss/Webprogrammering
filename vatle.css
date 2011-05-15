@@ -213,6 +213,7 @@ nav#mainMenu section a:hover span {
 
 .text h1, .text h2 {
 	text-align: center;
+	font-size: 100%;
 }
 
 #startPic {
@@ -236,6 +237,10 @@ section#wrap {
 	height: 225px; width: 200px;
 	margin: 2px;
 	padding: 3px;
+}
+
+.browseStyles img {
+	width: 61px;
 }
 
 .wrongName, .wrongSeason, .wrongPrice, .wrongInStock, .wrongImage, .wrongFirst, .wrongSurname, .wrongAddress, .wrongCity, .wrongPostalcode, .wrongCountry, .wrongEmail {

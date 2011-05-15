@@ -80,6 +80,8 @@ class Cart {
 			}
 			return -1;
 
+		} else if ( $amount == 0 ) {
+			return -1;
 		} else {
 
 			if ( $_SESSION["style"][$key]->getStock() == 0 ) {

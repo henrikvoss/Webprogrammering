@@ -55,7 +55,7 @@ class Database {
 		$db = $this->connectToDB();
 
 		if ( $db ) {
-			$sql = "insert into Style values ('".$style->getName()."', '".$style->getSeason()."', ".$style->getPrice().", ".$style->getStock().", '".$style->getImage()."')";
+			$sql = "insert into Style values ('".$style->getName()."', '".$style->getSeason()."', ".$style->getPrice().", ".$style->getNewStock().", '".$style->getImage()."')";
 			$result = $db->query($sql);
 
 			if ( !$result ) {
@@ -98,6 +98,8 @@ class Database {
 	 */
 	public function checkUser($name, $pas) {
 		$db = $this->connectToDB();
+		$name = mysql_real_escape_string($name);
+		$pas = mysql_real_escape_string($pas);
 
 		if ( $db ) {
 			$sql = "select * from Customer where '".$name."' = email";
@@ -178,7 +180,7 @@ class Database {
 
 	public function getOrdersTable() {
 		$db = $this->connectToDB();
-		$sql = "select * from History";
+		$sql = "select * from History order by date desc";
 		$result = $db->query($sql);
 
 		if ( !$result) {
@@ -213,7 +215,7 @@ class Database {
 		if ( !$result ) {
 			echo "<p>Error in query for orderno.</p>";
 			echo "<p>".$db->error."</p>";
-			return false;
+			return 0;
 		} else {
 			return $db->affected_rows;
 		}

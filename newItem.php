@@ -144,7 +144,8 @@ if ( isset($_SESSION["user"]) ) {
 				<table border="0" cellspacing="5" cellpadding="5">
 					<tr>
 						<td>Choose a file to upload:<input type="file" name="uploadedImg"></td>				
-						<td><input type="submit" name="addItem" value="Upload Item">
+						<td>
+							<input type="submit" name="addItem" value="Upload Item">
 						</td>
 					</tr>
 				</table>
@@ -154,24 +155,28 @@ if ( isset($_SESSION["user"]) ) {
 		} else {
 ?>
 
-			<form enctype="multipart/form-data" action="newItem.php" method="post">
+			<form enctype="multipart/form-data" name="addItems" action="newItem.php" onsubmit="return validate_all()" method="post">
 				<table border="0" cellspacing="5" cellpadding="5">
 					<tr>
 						<input type="hidden" name="styleKey" value="<?php echo $styleKey; ?>" />
 						<input type="hidden" name="itemName" value="<?php echo $changeStyle->getName(); ?>" />
 						<td>Item name: &quot;<?php echo $changeStyle->getName(); ?>&quot;</td>
 						<td>Season:</td>
-						<td><input type="text" name="itemSeason" value="<?php echo $changeStyle->getSeason(); ?>"></td>
+						<td><input type="text" name="itemSeason" value="<?php echo $changeStyle->getSeason(); ?>" onChange="validate_season()"></td>
+						<td><div id="wrongSeason">*</div></td>
 					</tr>
 					<tr>
 						<td>Price:</td>
-						<td><input type="text" name="itemPrice" value="<?php echo $changeStyle->getPrice(); ?>"></td>
+						<td><input type="text" name="itemPrice" value="<?php echo $changeStyle->getPrice(); ?>" onChange="validate_price()"></td>
+						<td><div id="wrongPrice">*</div></td>
 						<td>In Stock:</td>
-						<td><input type="text" name="inStock" value="<?php echo $changeStyle->getStock(); ?>"></td>
+						<td><input type="text" name="inStock" value="<?php echo $changeStyle->getStock(); ?>" onChange="validate_instock()"></td>
+						<td><div id="wrongInStock">*</div></td>
 					</tr>
 					<tr>
-						<td><input type="hidden" name="MAX_FILE_SIZE" value="1000000">
+						<td><input type="hidden" name="MAX_FILE_SIZE" value="1000000" onChange="validate_image()">
 					</tr>
+					<tr><td><div id="wrongImage"></div></td></tr>
 				</table>
 				<table>
 					<tr>
@@ -199,9 +204,7 @@ if ( isset($_SESSION["user"]) ) {
 					echo "<p>The image ".basename( $_FILES['uploadedImg']['name']). 
 						" has been uploaded.</p>";
 					$newItem = new Style($_REQUEST["itemName"], $_REQUEST["itemSeason"], $_REQUEST["itemPrice"], $_REQUEST["inStock"], $imageUrl);
-					if ($_SESSION["database"]->addToDB($newItem)) {
-						$_SESSION["style"][count($_SESSION["style"])] = $newItem;
-					}
+					$_SESSION["database"]->addToDB($newItem);
 				} else{
 					echo "<p>There was an error uploading your image, please try again.</p>";
 				}

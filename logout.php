@@ -16,6 +16,7 @@
 	<?php	printHeader(); ?>
 	<section class="text">
 		<?php unset($_SESSION["user"]); ?>
+		<a href="index.php">Login</a>
 	</section><!-- End text class -->
 	<?php printFooter(); ?>
 </body>

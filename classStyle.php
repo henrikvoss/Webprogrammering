@@ -9,7 +9,7 @@ class Style {
 	private $sessionKey;
 	private $amountInCart;
 
-	function __construct($pName,$pSeas,$pPrice,$pStock,$pImg, $key) {
+	function __construct($pName, $pSeas, $pPrice, $pStock, $pImg, $key) {
 		$this->name = $pName;
 		$this->season = $pSeas;
 		$this->price = $pPrice;
@@ -48,6 +48,10 @@ class Style {
 		return $_SESSION["database"]->getVar($sql);
 	}
 
+	public function getNewStock() {
+		return $this->stock;
+	}
+
 	public function setAmountInCart($to) {
 		$this->amountInCart = $to;
 	}
@@ -77,7 +81,7 @@ class Style {
 	}
 
 	public function updateStock($to) {
-		$sql = "update Style set stock = stock + $to where stylename = $this->name";
+		$sql = "update Style set stock = stock + $to where stylename = '$this->name'";
 		$result = $_SESSION["database"]->update($sql);
 	}
 }

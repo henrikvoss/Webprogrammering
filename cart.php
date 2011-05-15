@@ -3,7 +3,10 @@ include("controller.php");
 
 function printCart($cart) {
 	$total = 0;
+	$emptycart = true;
+
 	foreach ($cart as $key=>$quantity) {
+		$emptycart = false;
 		$style = $_SESSION["style"][$key];
 ?>
 		<div class="browseStyles">
@@ -12,7 +15,7 @@ function printCart($cart) {
 			alt="<?php echo $style->getName(); ?>"/>
 			<p>Style: <?php echo $style->getName(); ?></p>
 			<p>Price: <?php echo $style->getPrice(); ?></p>
-			<p>You have <?php echo $style->getAmountInCart(); ?> in your cart.</p>
+			<p>You have <?php echo $quantity; ?> in your cart.</p>
 
 			<!-- En form for å slette og endre antall. -->
 			<?php if (!isset($_REQUEST["acceptDelivery"])) { ?>
@@ -26,17 +29,17 @@ function printCart($cart) {
 
 			<p>Sum: <?php echo ($style->getPrice() * $quantity); ?></p>
 
-		</div><?php
+			</div><?php
 		$total += ($style->getPrice() * $quantity);
 	}
-	?>
+?>
 
 	<form action="cart.php" method="post">
 
-		<?php if (!isset($_REQUEST["acceptDelivery"])) { ?>
-			<p>Total: <?php echo $total; ?> NOK</p>
-			<!-- Here checkboxes with different delivery types. -->
-			<?php if ($total > 0) { ?>
+	<?php if (!isset($_REQUEST["acceptDelivery"])) { ?>
+		<p>Total: <?php echo $total; ?> NOK</p>
+		<!-- Here checkboxes with different delivery types. -->
+		<?php if ($total > 0) { ?>
 			<p>
 				<input type="radio" name="delivery" checked="checked" value="regular" /> Regular delivery 50 NOK
 			</p>
@@ -46,21 +49,22 @@ function printCart($cart) {
 			<p>
 				<input type="submit" name="acceptDelivery" value="Accept delivery type" />
 			</p>
-			<?php } ?>
-<?php
-		} else {
-			if ( $_REQUEST["delivery"] == "regular" ) { ?>
-				<p>Total with regular delivery: <?php echo ($total + 50); ?> NOK</p>
-			<?php } else { ?>
-				<p>Total with express delivery: <?php echo ($total + 100); ?> NOK</p>
-			<?php	} ?>
-			<form action="cart.php" method="post">
-				<input type="submit" name="submitOrder" value="Submit your order" />
-			</form>
-			<a href="cart.php">or go back</a>
 		<?php } ?>
+<?php
+	} else {
+		if ( $_REQUEST["delivery"] == "regular" ) { ?>
+			<p>Total with regular delivery: <?php echo ($total + 50); ?> NOK</p>
+		<?php } else { ?>
+			<p>Total with express delivery: <?php echo ($total + 100); ?> NOK</p>
+		<?php	} ?>
+		<form action="cart.php" method="post">
+			<input type="submit" name="submitOrder" value="Submit your order" />
+		</form>
+		<a href="cart.php">or go back</a>
+	<?php } ?>
 	</form>
 <?php
+	if ($emptycart) unset($_SESSION["cart"]);
 }
 
 ?>
@@ -102,13 +106,13 @@ if (!isset($_SESSION["user"])) {
 
 		if ( isset($_REQUEST["addToCart"]) ) {
 
-			if ( !isset($_SESSION["cart"]) ) {
-				$_SESSION["cart"] = new Cart();
-			}
-
 			for ( $i = 0; $i < count($_SESSION["style"]); $i++ ) {
 				if (isset($_REQUEST[("amount".$i)])){
 					if ( $_REQUEST[("amount".$i)] > 0) {
+						if ( !isset($_SESSION["cart"]) ) {
+							$_SESSION["cart"] = new Cart();
+						}
+
 						$itemInStock[$i] = $_SESSION["cart"]->addToCart($i,$_REQUEST[("amount".$i)]);
 					}
 				}
@@ -131,10 +135,11 @@ if (!isset($_SESSION["user"])) {
 			/* UPDATE ITEM IN HERE: */
 			$key = $_REQUEST["cartKey"];
 			$value;
+			$change = $_REQUEST["newAmount"] - $_SESSION["cart"]->getAmount($key);
 			if ($_REQUEST["newAmount"] < $_SESSION["cart"]->getAmount($key)){
-				$value = $_SESSION["cart"]->updateInCart($key, ($_REQUEST["newAmount"] - $_SESSION["cart"]->getAmount($key)));
+				$value = $_SESSION["cart"]->updateInCart($key, $change);
 			} else {
-				$value = $_SESSION["cart"]->updateInCart($key, $_REQUEST["newAmount"]);
+				$value = $_SESSION["cart"]->updateInCart($key, $change);
 			}
 			if ($value == 0) {
 				?><p>No more of item <?php echo $_SESSION["style"][$key]->getName(); ?> on stock.</p><?php
@@ -143,7 +148,11 @@ if (!isset($_SESSION["user"])) {
 			}
 		}
 
-		printCart($_SESSION["cart"]->getCart());
+		if ( !isset($_SESSION["cart"]) ) {
+			?><p>Your cart is empty. Return to <a href="index.php">shop</a>.</p><?php
+		} else {
+			printCart($_SESSION["cart"]->getCart());
+		}
 	}
 }
 ?>

@@ -26,10 +26,6 @@ if (!isset($_SESSION["database"])) {
 /* Sjekker om vareobjekter er opprettet, hvis ikke:
  * -Henter alle varene fra databasen og oppretter objekter for hver vare.
  * -Alle varene er i en array i $_SESSION["styles"].
- * 
- * TODO: må han en sjekk hver gang bruker retunerer til denne siden som 
- * sjekker om det er lagt til nye varer i databasen å legger de til i 
- * arrayen.
  */
 if ( !isset($_SESSION["style"]) ) {
 	$sql = "select * from Style";
@@ -42,12 +38,23 @@ if ( !isset($_SESSION["style"]) ) {
 	}
 
 	$_SESSION["style"] = $allStylesArray;
+
 } else if ( $_SESSION['database']->getNumberOfItems() > count($_SESSION['style']) ) {
-	/* Det er lagt til en ny vare som må legges til i $_SESSION['style']: */
+	/* Henter nye varer som må legges til i $_SESSION['style']: */
 	$newItems = $_SESSION['database']->selectQuery("select * from Style");
 
-	for ( $i = count($_SESSION['style']); $i < count($newItems); $i++ ) {
-		$_SESSION['style'][$i] = new Style($newItems[$i]->stylename, $newItems[$i]->season, $newItems[$i]->pricePerStyle, $newItems[$i]->stock, $newItems[$i]->image);
+	for ( $i = 0; $i < count($newItems); $i++ ) {
+		if (isset($_SESSION['style'][$y])){
+			if ($newItems[$i]->stylename != $_SESSION["style"][$y]->getName()) {
+				$last = count($_SESSION['style']);
+				$_SESSION['style'][$last] = new Style($newItems[$i]->stylename, $newItems[$i]->season, $newItems[$i]->pricePerStyle, $newItems[$i]->stock, $newItems[$i]->image, $last);
+			} else {
+				$y++;
+			}
+		} else {
+				$last = count($_SESSION['style']);
+				$_SESSION['style'][$last] = new Style($newItems[$i]->stylename, $newItems[$i]->season, $newItems[$i]->pricePerStyle, $newItems[$i]->stock, $newItems[$i]->image, $last);		
+		}
 	}
 }
 
@@ -57,14 +64,14 @@ function __autoload($className) {
 
 function shutdownError() {
 	$feil = error_get_last(); /* returnerer en array */
-	skrivFeil($feil['type'], $feil['message'], $feil['file'], $feil['line']);
+	writeError($feil['type'], $feil['message'], $feil['file'], $feil['line']);
 }
 
 function writeError($feilnr, $feilmelding, $feilfil, $linjenr)	{
 	$dato = date('d-m-Y H:i');
 	$melding = $dato."\n";
 	$melding += $feilnr.": ".$feilmelding." i fil '".$feilfil."' paa linje ".$linjenr."\n\n";
-	error_log($melding, 3, './.phpfeil.log');
+	error_log($melding, 3, './phpfeil.log');
 	/* '3' for å skrive til en valgt fil. */
 }
 
@@ -90,7 +97,7 @@ function printHeader() { ?>
 <section id="wrap">
 	<header id="logoAndMainMenu">
 
-		<a title="VATLE home" href="index.php">
+		<a title="VATLE home" href="contact.php">
 			<img src="Images/vatle.gif" alt="VATLE HOME"
 			height="45" width="183" />
 		</a>
@@ -101,7 +108,7 @@ function printHeader() { ?>
 					NEWS
 					<span></span>
 				</a>
-				<a href="collections.php" class="collections" title="Collections by VATLE">
+				<a href="news.php" class="collections" title="Collections by VATLE">
 					COLLECTIONS
 					<span></span> 
 				</a>
@@ -116,7 +123,7 @@ function printHeader() { ?>
 					PRESS
 					<span></span>
 				</a>
-				<a href="news.php" class="contact" title="Contact VATLE">
+				<a href="contact.php" class="contact" title="Contact VATLE">
 					CONTACT
 					<span></span>
 				</a>
@@ -172,12 +179,16 @@ function printFooter() { ?>
 
 function printUnderConstruction() {
 ?>
-	<p>
-		Vi startet med å basere siden vår på et design som Johan Steinberg
-		utvikler for <a href="http://www.vatledesigns.com">VATLE</a>, derfor
-		er menylinjen egentlig bare til pynt i denne prosjektoppgave med
-		ikke funksjonelle lenker.
-	</p>
+	<div class="text">
+		<p>
+			Vi startet med &aring; basere siden v&aring;r p&aring; et design som
+			Johan Steinberg utvikler for VATLE
+			(<a href="http://www.vatledesigns.com">www.vatledesigns.com</a>),
+			derfor er menylinjen p&aring; toppen egentlig mest til pynt i denne
+			prosjektoppgaven med ikke funksjonelle
+			lenker, bortsett fra "Contact", "Shop" og VATLE-logoen.
+		</p>
+	</div>
 <?php
 }
 ?>
