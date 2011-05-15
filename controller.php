@@ -2,12 +2,6 @@
 
 /*
 TODO:
-gjøre ferdig basket.php
-	-mangler total sum og send ordre og forskjellige frakttyper
-fikse admin.php, newItem.php
-TODO:
-oppdatere tabell Style til å ha en primærnøkkel som ikke er navnet på plagget
-TODO:
 En metode eller annen måte som sjekker for SQL-planting!
 input må ikke inneholde semikolon, erlik-tegn, sql-kommentar-tegn,
 visse sql-syntax-ord. Se uke 13 i webprog-fagstoff!
@@ -19,6 +13,9 @@ error_reporting(0);
 For bruk under utvikling:
  */
 error_reporting(-1);
+set_error_handler('writeError', E_ALL);
+register_shutdown_function('shutdownError');
+
 
 /* Sikrer at database-objektet er klart. */
 if (!isset($_SESSION["database"])) {
@@ -45,14 +42,30 @@ if ( !isset($_SESSION["style"]) ) {
 	}
 
 	$_SESSION["style"] = $allStylesArray;
+} else if ( $_SESSION['database']->getNumberOfItems() > count($_SESSION['style']) ) {
+	/* Det er lagt til en ny vare som må legges til i $_SESSION['style']: */
+	$newItems = $_SESSION['database']->selectQuery("select * from Style");
+
+	for ( $i = count($_SESSION['style']); $i < count($newItems); $i++ ) {
+		$_SESSION['style'][$i] = new Style($newItems[$i]->stylename, $newItems[$i]->season, $newItems[$i]->pricePerStyle, $newItems[$i]->stock, $newItems[$i]->image);
+	}
 }
 
 function __autoload($className) {
 	include_once("class".$className.".php");
 }
 
-function currrentPage() {
-	return substr($_SERVER["SCRIPT_NAME"],strrpos($_SERVER["SCRIPT_NAME"],"/")+1);
+function shutdownError() {
+	$feil = error_get_last(); /* returnerer en array */
+	skrivFeil($feil['type'], $feil['message'], $feil['file'], $feil['line']);
+}
+
+function writeError($feilnr, $feilmelding, $feilfil, $linjenr)	{
+	$dato = date('d-m-Y H:i');
+	$melding = $dato."\n";
+	$melding += $feilnr.": ".$feilmelding." i fil '".$feilfil."' paa linje ".$linjenr."\n\n";
+	error_log($melding, 3, './.phpfeil.log');
+	/* '3' for å skrive til en valgt fil. */
 }
 
 /*
@@ -136,30 +149,35 @@ function printFooter() { ?>
 			</a>
 		</section>
 
+		<?php	if (isset($_SESSION["user"])) { ?>
+			<section class="floatLeft">
+				<a href="logout.php">Logout</a>
+				|
+				<a href="cart.php">Cart</a>
+				<?php if ($_SESSION["user"]->getIfAdmin()) { ?>
+				| You are logged in as admin. See
+				<a href="admin.php">admin page</a>.
+				<?php } ?>
+				</section>
+		<?php	} else { ?>
+			<section class="floatLeft">
+				<a href="index.php">Login</a>
+			</section>
+		<?php	} ?>
+
+	</footer>
+
 <?php
-
-	if (isset($_SESSION["user"])) {?>
-	<section class="floatLeft">
-		<a href="logout.php">Logout</a>
-		|
-		<a href="cart.php">Cart</a>
-		<?php if ($_SESSION["user"]->getIfAdmin()) { ?>
-		| You are logged in as admin. See
-		<a href="admin.php">admin page</a>.
-		<?php } ?>
-		</section><?php
-	} else {?>
-	<section class="floatLeft">
-		<a href="index.php">Login</a>
-		</section><?php
-	}?>
-
-	</footer> <?php
 }
 
-function printUnderConstruction() {?>
-<h1 class="center">This part of the site is currently under construction 
-and will be up	soon. Please check back later.</h1><?php
+function printUnderConstruction() {
+?>
+	<p>
+		Vi startet med å basere siden vår på et design som Johan Steinberg
+		utvikler for <a href="http://www.vatledesigns.com">VATLE</a>, derfor
+		er menylinjen egentlig bare til pynt i denne prosjektoppgave med
+		ikke funksjonelle lenker.
+	</p>
+<?php
 }
-
 ?>

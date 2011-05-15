@@ -55,7 +55,7 @@ class Cart {
 
 		foreach ($this->cart as $key=>$quantity) {
 			if ( $quantity > 0 ) {
-				$sql = "insert into History values ($orderno, '".$_SESSION['user']->getEmail()."', '".date( 'Y-m-d H:i:s', time() )."', '".$_SESSION['style'][$key]->getName()."', $quantity)";
+				$sql = "insert into History values ($orderno, '".$_SESSION['style'][$key]->getName()."', '".$_SESSION['user']->getEmail()."', '".date( 'Y-m-d H:i:s', time() )."', $quantity)";
 				
 				$_SESSION["database"]->insertQuery($sql);
 			}

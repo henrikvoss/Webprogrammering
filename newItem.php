@@ -157,9 +157,9 @@ if ( isset($_SESSION["user"]) ) {
 			<form enctype="multipart/form-data" action="newItem.php" method="post">
 				<table border="0" cellspacing="5" cellpadding="5">
 					<tr>
-						<td>Item name:</td>
 						<input type="hidden" name="styleKey" value="<?php echo $styleKey; ?>" />
-						<td>Style name: <?php echo $changeStyle->getName(); ?>"</td>
+						<input type="hidden" name="itemName" value="<?php echo $changeStyle->getName(); ?>" />
+						<td>Item name: &quot;<?php echo $changeStyle->getName(); ?>&quot;</td>
 						<td>Season:</td>
 						<td><input type="text" name="itemSeason" value="<?php echo $changeStyle->getSeason(); ?>"></td>
 					</tr>
@@ -175,7 +175,9 @@ if ( isset($_SESSION["user"]) ) {
 				</table>
 				<table>
 					<tr>
-						<td>Upload a new file:<input value="<?php echo $changeStyle->getImage(); ?>" name="uploadedImg" type="file">
+						<td>
+							Upload a new image:
+							<input value="<?php echo $changeStyle->getImage(); ?>" name="uploadedImg" type="file">
 							<input type="submit" name="changeItem" value="Change Item">
 						</td>
 					</tr>

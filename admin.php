@@ -30,7 +30,7 @@ function printStyle($style, $styleArrayKey) { ?>
 	<?php	printHeader(); ?>
 	<section class="text">
 
-<?php if (!isset($_SESSION["user"])) { /* Er ikk pålogget: */ ?>
+<?php if (!isset($_SESSION["user"])) { /* Er ikke pålogget: */ ?>
 	<a href="index.php">Please login</a>
 
 <?php } else if (!$_SESSION["user"]->getIfAdmin()) { /* Er ikke admin: */ ?>
@@ -43,11 +43,15 @@ function printStyle($style, $styleArrayKey) { ?>
 ?>
 
 	<h1>Admin Page</h1>
-	<p><a href="newItem.php">Add a new item to the database</a></p>
-	<h2>Browse and update items</h2>
-	<p>To view all styles and prices on our merchandise, leave the dropdown menus blank, and click "Show"</p>
+	<ul>
+		<li><a href="newItem.php">Add a new item to the database</a></li>
+		<li><a href="listOrders.php">List and edit orders</a></li>
+	</ul>
 
-	<form id="request" action="index.php" method="get" >
+	<h2>Browse and update items</h2>
+	<p class="info">To view all styles and prices on our merchandise, leave the dropdown menus blank, and click "Show".</p>
+
+	<form id="request" action="admin.php" method="get" >
 		<table border="0" >
 			<tr>
 				<td>Choose style:</td>

@@ -131,9 +131,28 @@ class Database {
 		}
 	}
 
+	public function delete($sql) {
+		$db = $this->connectToDB();
+
+		$result = $db->query($sql);
+
+		if ( !$result ) {
+			echo "<p>Error in delete query. ";
+			echo $db->error."</p>";
+			return false;
+		} else {
+			if ( ($db->affected_rows) == 0 ) {
+				echo "<p>Nothing was deleted.</p>";
+				return false;
+			} else {
+				return true;
+			}				
+		}
+	}
+
 	public function getAllSeasons() {
 		$db = $this->connectToDB();
-		$sql = "select distinct season from style";
+		$sql = "select distinct season from Style";
 		$result = $db->query($sql);
 
 		if ( !$result ) {
@@ -148,11 +167,55 @@ class Database {
 			$seasons = array();
 
 			for ( $i = 0; $i < $db->affected_rows; $i++ ) {
-				$seasonName = $result->fetch_object()->season;
+				$seasonName = $result->fetch_object();
+				$seasonName = $seasonName->season;
 				$seasons[$i] = $seasonName;
 			}
 
 			return $seasons;
+		}
+	}
+
+	public function getOrdersTable() {
+		$db = $this->connectToDB();
+		$sql = "select * from History";
+		$result = $db->query($sql);
+
+		if ( !$result) {
+			echo "<p>Error in sql-query.</p>";
+			echo "<p>".$db->error."</p>";
+			return false;
+
+		} else {
+
+			$antallRader = $db->affected_rows;
+			$table = array();
+
+			if ( $antallRader == 0 ) {
+				return false;
+			} else {
+
+				for ( $i = 0; $i < $antallRader; $i++ ) {
+					$row = $result->fetch_object();
+					$table[$i] = $row;
+				}
+
+				return $table;
+			}
+		}
+	}
+
+	public function getNumberOfItems() {
+		$db = $this->connectToDB();
+		$sql = "select stylename from Style";
+		$result = $db->query($sql);
+
+		if ( !$result ) {
+			echo "<p>Error in query for orderno.</p>";
+			echo "<p>".$db->error."</p>";
+			return false;
+		} else {
+			return $db->affected_rows;
 		}
 	}
 

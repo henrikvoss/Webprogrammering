@@ -1,32 +1,29 @@
 <?php
 include('controller.php');
 
-function printStyle($style, $styleArrayKey) {?>
-<div class="browseStyles">
+function printStyle($style, $styleArrayKey) {
+?>
+	<div class="browseStyles">
 
-	<img class="floatLeft" src="<?php echo $style->getImage(); ?>"
-	alt="<?php echo $style->getName(); ?>"/>
-	<p>Style: <?php echo $style->getName(); ?></p>
-	<p>Price: <?php echo $style->getPrice(); ?></p>
-	<p>Stock: <?php echo $style->getStock(); ?></p>
-	<?php if ($style->getStock() > 0) {?>
-	<p>
-		Add to cart:
-		<input type="text" name="amount<?php echo $style->getSessionKey(); ?>" value="0" />
-	</p>
-	<?php } else { ?>
-	<p>None left in stock.</p>
-	<?php } ?>
-	<?php /*if ( $_SESSION["user"]->getIfAdmin() ) { ?>
-	<form action="newItem.php" method="post">
-		<input type="submit" name="<?php echo $style->getSessionKey(); ?>" value="Update item"/>
-	</form>
-	<?php	} /* END ifAdmin */ ?>
-</div>
+		<img class="floatLeft" src="<?php echo $style->getImage(); ?>"
+		alt="<?php echo $style->getName(); ?>"/>
+		<p>Style: <?php echo $style->getName(); ?></p>
+		<p>Price: <?php echo $style->getPrice(); ?></p>
+		<p>Stock: <?php echo $style->getStock(); ?></p>
+		<?php if ($style->getStock() > 0) {?>
+		<p>
+			Add to cart:
+			<input type="text" name="amount<?php echo $style->getSessionKey(); ?>" value="0" />
+		</p>
+		<?php } else { ?>
+		<p>None left in stock.</p>
+		<?php } ?>
+	</div>
+
 <?php
 }	
-
 ?>
+
 <!DOCTYPE html>
 <html>
 
@@ -65,37 +62,38 @@ if (isset($_REQUEST["login"])) {
 if (!isset($_SESSION["user"])) {
 ?>
 
-<h1>Login</h1>
+	<h1>Login</h1>
 
-<form id="login" action="index.php" method="post">
-	<table border="0" cellspacing="5" cellpadding="5">
-		<tr>
-			<td>Email:</td>
-			<td><input type = "text" name = "username" size = 40></td>
-		</tr>
-		<tr>
-			<td>Password:</td>
-			<td><input type = "password" name = "password" size = 40></td>
-		</tr>
-		<tr>
-			<td><input type = "submit" name = "login" value = "Login"/></td>
-		</tr>
-	</table>
-</form>
+	<form id="login" action="index.php" method="post">
+		<table border="0" cellspacing="5" cellpadding="5">
+			<tr>
+				<td>Email:</td>
+				<td><input type = "text" name = "username" size = 40></td>
+			</tr>
+			<tr>
+				<td>Password:</td>
+				<td><input type = "password" name = "password" size = 40></td>
+			</tr>
+			<tr>
+				<td><input type = "submit" name = "login" value = "Login"/></td>
+			</tr>
+		</table>
+	</form>
 
-<p class="floatRight"><a href="register.php">Not registered?</a></p>
+	<p class="floatRight"><a href="register.php">Not registered?</a></p>
 
 <?php
-
 } else {
+
 	$seasons = $_SESSION["database"]->getAllSeasons();
 
 	/* Dashboard to browse and update items -------------------------------*/
 	?><h1>Browse items</h1>
 
 	<?php	if ( $_SESSION["user"]->getIfAdmin() ) { ?>
-		<p><a href="newItem.php">Add a new item to the database</a></p>
-		<p><a href="admin.php">Update items</a></p>
+		<ul>
+			<li><a href="admin.php">Go to admin page</a></li>
+		</ul>
 	<?php	} else { ?>
 		<p>
 			To view all styles and prices on our merchandise, leave the dropdown menus blank, and click "Show"
@@ -110,8 +108,8 @@ if (!isset($_SESSION["user"])) {
 				<select name="season">
 					<option value="none">--Choose a season</option>
 
-					<?php	foreach ($seasons as $key=>$name) { ?>
-						<option value="<?php echo $name ?>"><?php echo $name; ?></option>
+					<?php	foreach ($seasons as $name) { ?>
+						<option value="<?php echo $name; ?>"><?php echo $name; ?></option>
 					<?php } ?>
 
 				</select>
@@ -153,7 +151,12 @@ if (!isset($_SESSION["user"])) {
 
 		if (($_REQUEST["season"] != "none") && ($_REQUEST["price"] != "none")) {
 			?><h2>Styles in <?php echo $_REQUEST["season"]; ?>
-			with <?php echo $_REQUEST["price"]; ?> price</h2><?php
+			with <?php echo $_REQUEST["price"]; ?> price</h2>
+<div class="clearBoth">
+<input type="submit" name="addToCart" value="Add chosen items to cart" />
+</div>
+
+<?php
 
 				/* Liste varer som oppfyller begge kriterier: */
 				foreach ($_SESSION["style"] as $key=>$style) {
@@ -163,7 +166,12 @@ if (!isset($_SESSION["user"])) {
 				}
 
 		} elseif ( ($_REQUEST["season"] != "none") && ($_REQUEST["price"] == "none") ) {
-			?><h2>Styles in <?php echo $_REQUEST["season"]; ?></h2><?php
+			?><h2>Styles in <?php echo $_REQUEST["season"]; ?></h2>
+<div class="clearBoth">
+<input type="submit" name="addToCart" value="Add chosen items to cart" />
+</div>
+
+<?php
 
 			/* Liste aller varer for en sesong: */
 			foreach ($_SESSION["style"] as $key=>$style) {
@@ -174,7 +182,12 @@ if (!isset($_SESSION["user"])) {
 			}
 
 		} elseif ( ($_REQUEST["season"] == "none") && ($_REQUEST["price"] != "none") ) {
-			?><h2>Styles with <?php echo $_REQUEST["price"]; ?> price</h2><?php
+			?><h2>Styles with <?php echo $_REQUEST["price"]; ?> price</h2>
+<div class="clearBoth">
+<input type="submit" name="addToCart" value="Add chosen items to cart" />
+</div>
+
+<?php
 
 			/* Liste aller varer for en priskategori: */
 			foreach ($_SESSION["style"] as $key=>$style) {
@@ -185,7 +198,11 @@ if (!isset($_SESSION["user"])) {
 			}
 
 		} else {
-			?><h2>All styles</h2><?php
+			?><h2>All styles</h2>
+<div class="clearBoth">
+<input type="submit" name="addToCart" value="Add chosen items to cart" />
+</div>
+<?php
 
 			/* Liste alle varer: */
 			foreach ($_SESSION["style"] as $key=>$style) {
@@ -194,8 +211,12 @@ if (!isset($_SESSION["user"])) {
 		}
 
 ?>
-<input type="submit" name="addToCart" value="Add to cart" />
-			</form>
+
+	<div class="clearBoth">
+	<input type="submit" name="addToCart" value="Add chosen items to cart" />
+	</div>
+</form>
+
 <?php
 	}
 	/* END Dashboard to browse and update items ---------------------------*/
